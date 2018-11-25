@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	private float playerSpeed = 0.0f;
 	private float playerJumpSpeed = 0.0f;
 	private Vector3 normalScale = new Vector3(1, 1, 1);
+	private int playerHealth = 100;
 
 	private Vector3 movementDir;
 	private CharacterController player;
@@ -77,8 +78,10 @@ public class PlayerController : MonoBehaviour {
 
 			//Updates based on player input.
 			movementDir = Vector3.zero;
-			movementDir.x = Input.GetAxis ("Horizontal") * playerSpeed;
-			movementDir.z = Input.GetAxis ("Vertical") * playerSpeed;
+			movementDir.x = Input.GetAxis ("Horizontal");
+			movementDir.z = Input.GetAxis ("Vertical");
+			//Normalizes the vector to prevent diagnonal input from moving too fast.
+			movementDir = movementDir.normalized * playerSpeed;
 
 			movementDir = transform.TransformDirection (movementDir);
 
