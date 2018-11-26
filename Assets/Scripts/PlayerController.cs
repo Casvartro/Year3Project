@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 	public float gravity = 20.0f;
 	public Transform cameraPos;
 	public float cameraSpeed;
+	public Text healthText;
 
 	private float rotY = 0.0f;
 	private float rotX = 0.0f;
@@ -26,6 +28,8 @@ public class PlayerController : MonoBehaviour {
 		player = this.GetComponent<CharacterController> ();
 		cameraPos.position = new Vector3 (this.transform.position.x, this.transform.position.y - 0.5f,
 			this.transform.position.z);
+		healthText.text = playerHealth.ToString();
+		healthText.color = Color.green;
 	}
 	
 	// Update is called once per frame

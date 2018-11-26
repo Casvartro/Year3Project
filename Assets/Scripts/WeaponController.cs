@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour {
 
@@ -8,12 +9,17 @@ public class WeaponController : MonoBehaviour {
 	public Transform bulletSpawn;
 	public float bulletSpeed;
 	public int maxAmmo;
+	public Text weaponNameText;
+	public Text ammoCountText;
 
 	private int currentAmmo;
+	private string weaponName = "Test Weapon";
 
 	// Use this for initialization
 	void Start () {
 		currentAmmo = maxAmmo;
+		weaponNameText.text = weaponName;
+		ammoCountText.text = currentAmmo + " / " + maxAmmo;
 	}
 
 	void LateUpdate () {
@@ -21,6 +27,7 @@ public class WeaponController : MonoBehaviour {
 			if (Input.GetMouseButtonDown (0)) {
 				fire ();
 				currentAmmo = currentAmmo - 1;
+				ammoCountText.text = currentAmmo + " / " + maxAmmo;
 			}
 		}
 	}
