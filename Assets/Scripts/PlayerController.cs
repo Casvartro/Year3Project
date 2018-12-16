@@ -7,7 +7,6 @@ public class PlayerController : MonoBehaviour {
 
 	public float movementSpeed;
 	public float jumpSpeed;
-	public Vector3 crouchScale;
 	public float gravity = 20.0f;
 	public Transform cameraPos;
 	public float cameraSpeed;
@@ -15,10 +14,12 @@ public class PlayerController : MonoBehaviour {
 
 	private float rotY = 0.0f;
 	private float rotX = 0.0f;
-	private float playerSpeed = 0.0f;
-	private float playerJumpSpeed = 0.0f;
-	private Vector3 normalScale = new Vector3(1, 1, 1);
 	private int playerHealth = 100;
+	private float playerHeight;
+
+	private float slopeForce = 5;
+	private float slopeForceRayLength = 1.5f;
+	private bool currentlyJumping;
 
 	private Vector3 movementDir;
 	private CharacterController player;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		player = this.GetComponent<CharacterController> ();
+		playerHeight = player.height;
 		cameraPos.position = new Vector3 (this.transform.position.x, this.transform.position.y - 0.5f,
 			this.transform.position.z);
 		healthText.text = playerHealth.ToString();
@@ -34,8 +36,14 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+		playerCameraSight ();
+
+	}
+
+	private void playerCameraSight(){
 		//Updates camera rotation based on player input from mouse movement
+
 		rotX += cameraSpeed * Input.GetAxis("Mouse X");
 		rotY -= cameraSpeed * Input.GetAxis("Mouse Y");
 
@@ -52,33 +60,33 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
-
 	void FixedUpdate () {
+
+		playerMovement ();
+		
+	}
+
+	private void playerMovement(){
+		//Function that handles all player movement
+
+		float height = playerHeight;
+		float playerSpeed = movementSpeed;
+		float playerJumpSpeed = jumpSpeed;
 
 		if (player.isGrounded) {
 
-			//Modifies the player speed based on keys pressed down.
-			if (!Input.GetButton ("Sprint") || !Input.GetButton("Crouch")) {
-				if (this.transform.localScale.y == crouchScale.y){
-					this.transform.localScale = normalScale;
-				}
-				playerSpeed = movementSpeed;
-				playerJumpSpeed = jumpSpeed;
-			}
-				
+			currentlyJumping = false;
+
 			if (Input.GetButton ("Sprint")) {
-				playerSpeed = movementSpeed * 2;
-				playerJumpSpeed = jumpSpeed * 1.5f;
+				playerSpeed = playerSpeed * 2;
+				playerJumpSpeed = playerJumpSpeed * 1.5f;
 			}
 
 			if (Input.GetButton("Crouch")){
-				if (this.transform.localScale.y != crouchScale.y){
-					this.transform.localScale = crouchScale;
-					this.transform.position = new Vector3 (this.transform.position.x, 
-						crouchScale.y, this.transform.position.z);
-				}
-				playerSpeed = movementSpeed - 0.5f;
+				height = 0.5f * height;
+				playerSpeed = playerSpeed - 0.5f;
 			}
+
 
 			//Updates based on player input.
 			movementDir = Vector3.zero;
@@ -91,16 +99,52 @@ public class PlayerController : MonoBehaviour {
 
 			if (Input.GetButton ("Jump")) {
 				movementDir.y = playerJumpSpeed;
+				currentlyJumping = true;
 			}
 
-
 		}
-			
+
+		setPlayerHeight (height);
+
 		//Gravity is applied to the vertical axis
-		movementDir.y = movementDir.y - (gravity * Time.deltaTime);
+		movementDir.y = movementDir.y - (gravity * Time.fixedDeltaTime);
 		//Player is moved
 		player.Move (movementDir * Time.deltaTime);
-		
+
+		if ((movementDir.x != 0 || movementDir.z != -0) && OnSlope (currentlyJumping)) {
+			player.Move (Vector3.down * player.height / 2 * slopeForce * Time.fixedDeltaTime);
+		}
+
+	}
+
+	private bool OnSlope(bool isJump){
+		//Function for checking if the player is moving on a slope.
+
+		if (isJump) {
+			return false;
+		}
+
+		RaycastHit hit;
+
+		if (Physics.Raycast (this.transform.position, Vector3.down, out hit, player.height / 2 * slopeForceRayLength)) {
+			if (hit.normal != Vector3.up) {
+				return true;
+			}
+		}
+		return false;
+
+	}
+
+	private void setPlayerHeight(float height){
+		//Modifies the players height based on whether or not they are crouching.
+
+		//Crouch/Standup Smoother
+		float lastHeight = player.height; 
+		player.height = Mathf.Lerp (player.height, height, 5 * Time.fixedDeltaTime);
+		//Fixes Y position
+		float fixedHeight = (player.height - lastHeight) / 2;
+		this.transform.position = new Vector3 (this.transform.position.x,
+			this.transform.position.y + fixedHeight, this.transform.position.z);
 	}
 
 }
