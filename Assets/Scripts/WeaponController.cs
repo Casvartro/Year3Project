@@ -32,10 +32,27 @@ public class WeaponController : MonoBehaviour {
 		}
 	}
 
-	void fire(){
+	private void fire(){
+		//Function for creating and firing bullets based on its rigidbody's velocity.
 
 		var bullet = Instantiate (bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
 		bullet.GetComponent<Rigidbody> ().velocity = bullet.transform.forward * bulletSpeed;
 		Destroy (bullet, 5.0f);
+	}
+
+	public int getCurrentAmmo(){
+		//Returns the current ammo of the weapon.
+
+		return currentAmmo;
+	}
+
+	public void setCurrentAmmo(int ammoIncrease){
+		//Adds to the current ammo based on the ammo item making sure it does not go past the max.
+
+		currentAmmo = currentAmmo + ammoIncrease;
+		if (currentAmmo > maxAmmo) {
+			currentAmmo = maxAmmo;
+		}
+		ammoCountText.text = currentAmmo + " / " + maxAmmo;
 	}
 }

@@ -11,10 +11,11 @@ public class PlayerController : MonoBehaviour {
 	public Transform cameraPos;
 	public float cameraSpeed;
 	public Text healthText;
+	public int maxHealth = 100;
 
 	private float rotY = 0.0f;
 	private float rotX = 0.0f;
-	private int playerHealth = 100;
+	private int playerHealth = 50;
 	private float playerHeight;
 
 	private float slopeForce = 5;
@@ -30,8 +31,9 @@ public class PlayerController : MonoBehaviour {
 		playerHeight = player.height;
 		cameraPos.position = new Vector3 (this.transform.position.x, this.transform.position.y - 0.5f,
 			this.transform.position.z);
+		playerHealth = maxHealth;
 		healthText.text = playerHealth.ToString();
-		healthText.color = Color.green;
+		setHealthTextColor ();
 	}
 	
 	// Update is called once per frame
@@ -147,4 +149,32 @@ public class PlayerController : MonoBehaviour {
 			this.transform.position.y + fixedHeight, this.transform.position.z);
 	}
 
+	private void setHealthTextColor(){
+		//Sets players health text color depending on the value.
+
+		if (playerHealth >= 75) {
+			healthText.color = Color.green;
+		} else if (playerHealth >= 40 && playerHealth < 75) {
+			healthText.color = Color.yellow;
+		} else {
+			healthText.color = Color.red;
+		}
+	}
+
+	public int getPlayerHealth(){
+		//Returns the players current health.
+
+		return playerHealth;
+	}
+
+	public void setPlayerHealth(int healthIncrease){
+		//Adds health item value to players health setting text as well.#
+
+		playerHealth = playerHealth + healthIncrease;
+		if (playerHealth > maxHealth) {
+			playerHealth = maxHealth;
+		}
+		healthText.text = playerHealth.ToString();
+		setHealthTextColor ();
+	}
 }
