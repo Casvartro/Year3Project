@@ -11,6 +11,8 @@ TagManager:
   - floor
   - bullet
   - enemy
+  - Wall
+  - PathNode
   layers:
   - Default
   - TransparentFX

@@ -53,15 +53,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\BulletCollision.cs" />
-     <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\EnemyController.cs" />
-     <Compile Include="Assets\Scripts\ItemCollision.cs" />
-     <Compile Include="Assets\Scripts\ItemController.cs" />
-     <Compile Include="Assets\Scripts\PlayerController.cs" />
-     <Compile Include="Assets\Scripts\ScoreController.cs" />
+     <Compile Include="Assets\Scripts\ItemScripts\ItemCollision.cs" />
+     <Compile Include="Assets\Scripts\ItemScripts\ItemController.cs" />
+     <Compile Include="Assets\Scripts\NodeController.cs" />
+     <Compile Include="Assets\Scripts\PathFinder.cs" />
+     <Compile Include="Assets\Scripts\PlayerScripts\BulletCollision.cs" />
+     <Compile Include="Assets\Scripts\PlayerScripts\CameraController.cs" />
+     <Compile Include="Assets\Scripts\PlayerScripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\PlayerScripts\ScoreController.cs" />
+     <Compile Include="Assets\Scripts\PlayerScripts\WeaponController.cs" />
+     <Compile Include="Assets\Scripts\PriorityQueue.cs" />
+     <Compile Include="Assets\Scripts\TestPath.cs" />
      <Compile Include="Assets\Scripts\WaveController.cs" />
-     <Compile Include="Assets\Scripts\WeaponController.cs" />
      <Compile Include="Assets\Unity Assets\CursorsAndCrosshairs\CursorChanger.cs" />
      <None Include="Assets\Unity Assets\Rainer_AK\RELEASE NOTE.txt" />
  <Reference Include="UnityEditor.StandardEvents">
