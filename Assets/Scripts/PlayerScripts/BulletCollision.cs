@@ -8,11 +8,8 @@ public class BulletCollision : MonoBehaviour {
 
 	void OnCollisionEnter(Collision col){
 		Destroy (gameObject);
-	}
-
-	void OnTriggerEnter(Collider hit){
-		if (hit.gameObject.tag == "enemy") {
-			EnemyController enemy = hit.gameObject.GetComponent<EnemyController> ();
+		if (col.gameObject.tag == "enemy") {
+			EnemyController enemy = col.gameObject.GetComponent<EnemyController> ();
 			enemy.damageTaken (bulletDamage);
 		}
 	}

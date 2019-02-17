@@ -53,19 +53,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\EnemyController.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\BehaviourContext.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\BehaviourTools.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\NodeController.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\PathFinder.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\PatrolMovement.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\PriorityQueue.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\Selector.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\Sequence.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\SetRandomPatrolNodes.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\TestPath.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\ZombieBehaviourTree.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyController.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\WaveController.cs" />
      <Compile Include="Assets\Scripts\ItemScripts\ItemCollision.cs" />
      <Compile Include="Assets\Scripts\ItemScripts\ItemController.cs" />
-     <Compile Include="Assets\Scripts\NodeController.cs" />
-     <Compile Include="Assets\Scripts\PathFinder.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\BulletCollision.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\ScoreController.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\WeaponController.cs" />
-     <Compile Include="Assets\Scripts\PriorityQueue.cs" />
-     <Compile Include="Assets\Scripts\TestPath.cs" />
-     <Compile Include="Assets\Scripts\WaveController.cs" />
      <Compile Include="Assets\Unity Assets\CursorsAndCrosshairs\CursorChanger.cs" />
      <None Include="Assets\Unity Assets\Rainer_AK\RELEASE NOTE.txt" />
  <Reference Include="UnityEditor.StandardEvents">

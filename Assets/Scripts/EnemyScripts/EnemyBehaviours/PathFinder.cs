@@ -78,8 +78,12 @@ public class PathFinder {
 			NodeQueue.Remove (nodeInfo);
 		}
 
-		Debug.LogError("Goal Not Found");
+		//if (nodeInfo != targetNodeInfo) {
+		Debug.LogError ("Goal Not Found");
 		return null;
+		//}
+
+		//return calculatePath (nodeInfo);
 
 	}
 
