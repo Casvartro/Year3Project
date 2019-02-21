@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BehaviourContext : BehaviourState {
 
+	//Context specific to this instance of the enemy and its current behaviour and personal information.
+
 	public CharacterController enemy;
 	public EnemyController enemyPhysics;
 	public Animator enemyAnimation;

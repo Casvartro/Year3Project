@@ -112,4 +112,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthValue: 25
   ammoValue: 10
+  powerTime: 30
   rotateSpeed: 25
+  itemColor: bullet

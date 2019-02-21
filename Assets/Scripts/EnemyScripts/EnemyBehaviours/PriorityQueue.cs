@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PriorityQueue {
 
+	//Custom class responsible for creating a priority queue in an array list as
+	//C# does not have a built in one.
+
 	private ArrayList nodes = new ArrayList();
 
 	public int Length {

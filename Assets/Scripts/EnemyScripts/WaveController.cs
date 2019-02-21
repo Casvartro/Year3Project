@@ -29,18 +29,22 @@ public class WaveController : MonoBehaviour {
 		}
 	}
 
+	//Returns the wave number.
 	public int getWaveNumber(){
 		return waveNumber;
 	}
 
+	//Returns the number of enemnies remaining.
 	public int getEnemyCount(){
 		return enemyCount;
 	}
 
+	//Reduces the enemy count when an enemy is destroyed.
 	public void reduceEnemyCount(){
 		enemyCount = enemyCount - 1;
 	}
 
+	//In charge of spawning the enemies every wave.
 	private void spawnWaves(){
 
 		int multiplier = 0;
@@ -61,6 +65,7 @@ public class WaveController : MonoBehaviour {
 			
 	}
 
+	//Returns the distance from the spawn point to the player to prevent spawning too close.
 	private float distanceToPlayer(Transform enemyTransform){
 		return Vector3.Distance (enemyTransform.position, playerTransform.position);
 	}

@@ -14,39 +14,61 @@ public class EnemyController : MonoBehaviour {
 	private float slopeForceRayLength = 1.5f;
 
 	private WaveController waveController;
-	private ScoreController scoreController;
+	private GameController scoreController;
 	private CharacterController enemy;
 	private Animator enemyAnimation;
 	private NodeController startInfo;
+	private enum EnemyState{ ALIVE, DYING, DEAD }
+	private EnemyState state;
 
-	// Use this for initialization
 	void Start(){
-
+		state = EnemyState.ALIVE;
 	}
 
 	void Awake () {
 		
 		waveController = GameObject.FindObjectOfType<WaveController> ();
-		scoreController = GameObject.FindObjectOfType<ScoreController> ();
+		scoreController = GameObject.FindObjectOfType<GameController> ();
 		this.enemy = this.GetComponent<CharacterController> ();
 		this.enemyAnimation = this.GetComponent<Animator> ();
 		this.enemyAnimation.speed = enemyAnimationSpeed;
  	}
 
 	void Update(){
-		
-		if (enemyHealth <= 0) {
-			waveController.reduceEnemyCount ();
-			scoreController.setScoreText (enemyScore);
-			Destroy (this.gameObject);
+
+		switch(state){
+
+			case EnemyState.ALIVE:
+				if (enemyHealth <= 0) {
+					waveController.reduceEnemyCount ();
+					scoreController.setScoreText (enemyScore);
+					state = EnemyState.DYING;
+				}
+				break;
+
+			case EnemyState.DYING:
+				enemyAnimation.Play ("fallingback");
+				state = EnemyState.DEAD;
+				break;
+
+			case EnemyState.DEAD:
+				Destroy (this.gameObject, 5.0f);
+				break;
 		}
 
 	}
 
+	//Returns the enemy health.
+	public int getEnemyHealth(){
+		return enemyHealth;
+	}
+
+	//Subtracts damage to the enemy based on the projectile they recieved.
 	public void damageTaken(int damage){
 		enemyHealth = enemyHealth - damage;
 	}
 
+	//Returns the closest node to the enemy, the start of their path.
 	public GameObject getInitialNode(GameObject[] pathNodes){
 
 		GameObject closestNode = null;
@@ -63,6 +85,7 @@ public class EnemyController : MonoBehaviour {
 
 	}
 
+	//Retrieves the end node of their path the destination.
 	public GameObject getEndNode(GameObject[] pathNodes, GameObject startNode){
 
 		GameObject endNode = null;
@@ -79,6 +102,7 @@ public class EnemyController : MonoBehaviour {
 
 	}
 
+	//Turns the enemy towards the direction of the next node or target
 	public void enemyRotation (NodeController node){
 
 		Vector3 direction = node.transform.position - this.enemy.transform.position;
@@ -88,6 +112,7 @@ public class EnemyController : MonoBehaviour {
 
 	}
 
+	//Moves the enemy to the next target/node
 	public void enemyMovement(NodeController node){
 
 		float angle = 10;

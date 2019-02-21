@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PatrolMovement : Leaf {
 
+	//Class responsible for the patrol movements of the enemy characters in the OnBehave.
+
 	private ArrayList patrolPath =  new ArrayList();
 	private int pathCounter = 0;
 
@@ -18,9 +20,6 @@ public class PatrolMovement : Leaf {
 
 		if (patrolPath.Count == 0) {
 			patrolPath = PathFinder.getPath (enemyContext.startNode, enemyContext.endNode);
-			//Debug.Log ("Start: " + enemyContext.startNode);
-			//Debug.Log ("End: " + enemyContext.endNode);
-			//Debug.Log (patrolPath[1]);
 		}
 
 		if (patrolPath.Count > 0) {
@@ -49,6 +48,7 @@ public class PatrolMovement : Leaf {
 		return BehaviourStatus.RUNNING;
 	}
 
+	//Checks if the character has reached its destination.
 	private bool atDestination(Transform currentPosition, Transform destPosition){
 
 		Vector3 direction = destPosition.position - currentPosition.position;
@@ -61,6 +61,7 @@ public class PatrolMovement : Leaf {
 
 	}
 
+	//Resets Leaf nodes information.
 	public override void OnReset(){
 		patrolPath = new ArrayList ();
 		pathCounter = 0;

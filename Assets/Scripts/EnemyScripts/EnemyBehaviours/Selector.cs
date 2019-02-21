@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Selector : Composite {
 
+	//Composite node responsible for selecting the child behaviour that returns success.
+	//Comparable to a OR in logic.
+
 	int currentChild = 0;
 
 	public Selector (string compositeName, params BehaviourNode[] bNodes) : base (compositeName, bNodes){

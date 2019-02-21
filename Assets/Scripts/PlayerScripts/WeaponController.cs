@@ -14,17 +14,19 @@ public class WeaponController : MonoBehaviour {
 
 	private int currentAmmo;
 	private string weaponName = "Test Weapon";
+	private GameController gameStatus;
 
 	// Use this for initialization
 	void Start () {
 		currentAmmo = maxAmmo;
 		weaponNameText.text = weaponName;
 		ammoCountText.text = currentAmmo + " / " + maxAmmo;
+		gameStatus = GameObject.Find ("UICanvas").GetComponent<GameController> ();
 	}
 
 	void LateUpdate () {
-		if (currentAmmo != 0) {
-			if (Input.GetMouseButtonDown (0)) {
+		if (!gameStatus.checkPause ()) {
+			if (currentAmmo != 0 && Input.GetMouseButtonDown (0)) {
 				fire ();
 				currentAmmo = currentAmmo - 1;
 				ammoCountText.text = currentAmmo + " / " + maxAmmo;

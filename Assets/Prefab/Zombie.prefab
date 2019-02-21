@@ -390,7 +390,6 @@ GameObject:
   - component: {fileID: 4051543500647734}
   - component: {fileID: 95667975269586042}
   - component: {fileID: 143853404548620344}
-  - component: {fileID: 136997244195500644}
   - component: {fileID: 114416233783583612}
   - component: {fileID: 114666015686751984}
   m_Layer: 0
@@ -1266,19 +1265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24cd9ab287dba6b43a86fefedfdf9e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!136 &136997244195500644
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1527570617207920}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  m_Radius: 0.35
-  m_Height: 1.8
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0.15}
 --- !u!137 &137102377330628886
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -2205,4 +2191,4 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1.05, z: 0.25}

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Sequence : Composite {
 
+	//Responsible for running all the children nodes in a row. Returns successful if all of its
+	//child nodes are successful. Comparable to a AND in logic.
+
 	int currentChild = 0;
 
 	public Sequence(string compositeName, params BehaviourNode[] nodes) : base(compositeName, nodes){

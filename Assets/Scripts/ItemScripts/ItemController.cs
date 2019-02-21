@@ -4,46 +4,61 @@ using UnityEngine;
 
 public class ItemController : MonoBehaviour {
 
-	public GameObject healthCratePrefab;
-	public GameObject ammoCratePrefab;
-	public int spawnTime;
+	public int healthValue = 25;
+	public int ammoValue = 10;
+	public float powerTime = 30.0f;
+	public float rotateSpeed = 25;
+	public string itemColor;
 
-	private GameObject[] itemSpawnArray;
-	private List<GameObject> itemObjectList;
-	 
-	// Use this for initialization
-	void Start () {
-		itemSpawnArray = GameObject.FindGameObjectsWithTag("Item");
-		itemObjectList = new List<GameObject>();
-		InvokeRepeating ("spawnItems", 5.0f, 20.0f);
+	private int currentAmmo;
+	private int playerHealth;
+
+	void Update(){
+		this.transform.Rotate (Vector3.up, rotateSpeed * Time.deltaTime);
 	}
 
-	private void spawnItems(){
-		//Function responsible for randomly spawning items at the designated spawns.
-
-		GameObject item;
-		Transform itemSpawnLocation;
-
-		if (itemObjectList.Count != 0) {
-			foreach (GameObject itemObject in itemObjectList){
-				Destroy (itemObject);
-			}
-			itemObjectList.Clear ();
-		}
-	
-		foreach (GameObject itemSpawn in itemSpawnArray) {
-			itemSpawnLocation = itemSpawn.transform;
-			if (Random.value<0.5f) {
-				item = Instantiate (healthCratePrefab, 
-					                        itemSpawnLocation.position, itemSpawnLocation.rotation);
+	void OnTriggerEnter(Collider col){
+		/*
+		 Checks to see if the collider is the player.
+		 If it is a health item then it checks to see if player is at max health to restore health.
+			If not the player passes through without destroing.
+			Same works for the ammo items but with the players current ammo.
+			Power Up functionality has being added as well.
+`		*/
+		
+		if (col.gameObject.CompareTag ("Player")) {
+			if (this.gameObject.CompareTag ("healthItem")) {
 				
-			} else {
-				item = Instantiate (ammoCratePrefab, 
-					itemSpawnLocation.position, itemSpawnLocation.rotation);
+				PlayerController playerController = col.GetComponent<PlayerController> ();
+				playerHealth = playerController.getPlayerHealth ();
+				if (playerHealth < playerController.maxHealth) {
+					playerController.setPlayerHealth (healthValue);
+					Destroy (this.gameObject);
+				} else {
+					Physics.IgnoreCollision (col, GetComponent<Collider> ());			
+				}
+
+			} else if (this.gameObject.CompareTag ("ammoItem")) {
+				
+				WeaponController weaponController = GameObject.Find ("Weapon").GetComponent<WeaponController> ();
+				currentAmmo = weaponController.getCurrentAmmo ();
+				if (currentAmmo < weaponController.maxAmmo) {
+					weaponController.setCurrentAmmo (ammoValue);
+					Destroy (this.gameObject);
+				} else {
+					Physics.IgnoreCollision (col, GetComponent<Collider> ());	
+				}
+
+			} else if(this.gameObject.CompareTag("powerItem")){
+				
+				PlayerController playerController = col.GetComponent<PlayerController> ();
+				playerController.setPowerUpBar (this.gameObject, powerTime, itemColor);
+				Destroy (this.gameObject);
+
 			}
 
-			itemObjectList.Add (item);
 		}
+
 	}
 
 }

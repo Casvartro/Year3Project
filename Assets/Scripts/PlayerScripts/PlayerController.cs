@@ -12,35 +12,57 @@ public class PlayerController : MonoBehaviour {
 	public float cameraSpeed;
 	public Text healthText;
 	public int maxHealth = 100;
+	public Image powerUpPanel;
+	public Text powerUpText;
+	public int powerMultiplier = 2;
+	public enum powerUpState{ NONE, BLUE, RED, GREEN};
 
 	private float rotY = 0.0f;
 	private float rotX = 0.0f;
 	private int playerHealth = 50;
 	private float playerHeight;
-
 	private float slopeForce = 5;
 	private float slopeForceRayLength = 1.5f;
 	private bool currentlyJumping;
-
+	private bool powerUpOn = false;
+	private float powerTime;
+	private powerUpState currentPower;
 	private Vector3 movementDir;
 	private CharacterController player;
+	private GameController gameStatus;
 
 	// Use this for initialization
 	void Start () {
+
+		currentPower = powerUpState.NONE;
+		gameStatus = GameObject.Find ("UICanvas").GetComponent<GameController> ();
 		player = this.GetComponent<CharacterController> ();
 		playerHeight = player.height;
-		cameraPos.position = new Vector3 (this.transform.position.x, this.transform.position.y - 0.5f,
-			this.transform.position.z);
 		playerHealth = maxHealth;
 		healthText.text = playerHealth.ToString();
 		setHealthTextColor ();
+
+		cameraPos.position = new Vector3 (this.transform.position.x, this.transform.position.y - 0.5f,
+			this.transform.position.z);
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		playerCameraSight ();
+		if (!gameStatus.checkPause ()) {
+			playerCameraSight ();
+			if (powerUpOn) {
+				activatePowerUp ();
+			}
+		}
 
+	}
+
+	void FixedUpdate () {
+
+		playerMovement ();
+		
 	}
 
 	private void playerCameraSight(){
@@ -62,17 +84,15 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
-	void FixedUpdate () {
-
-		playerMovement ();
-		
-	}
-
 	private void playerMovement(){
 		//Function that handles all player movement
 
 		float height = playerHeight;
 		float playerSpeed = movementSpeed;
+		if (currentPower == powerUpState.BLUE) {
+			playerSpeed *= powerMultiplier; 
+		}
+
 		float playerJumpSpeed = jumpSpeed;
 
 		if (player.isGrounded) {
@@ -177,4 +197,39 @@ public class PlayerController : MonoBehaviour {
 		healthText.text = playerHealth.ToString();
 		setHealthTextColor ();
 	}
+		
+	public void setPowerUpBar(GameObject powerUp, float powerUpTime, string powerColor){
+		//Sets the type of power to the power up bar when collided with
+
+		powerUpPanel.color = powerUp.GetComponent<Renderer> ().material.color;
+		powerTime = powerUpTime;
+		powerUpOn = true;
+
+		if (powerColor == "red") {
+			currentPower = powerUpState.RED;
+		} else if (powerColor == "green") {
+			currentPower = powerUpState.GREEN;
+		} else if (powerColor == "blue") {
+			currentPower = powerUpState.BLUE;
+		}
+	}
+
+	private void activatePowerUp(){
+		//Sets timer for player power as well as monitors how long is left.
+		
+		powerUpText.text = ((int)powerTime).ToString ();
+		powerTime -= Time.deltaTime;
+		if (powerTime < 0) {
+			powerUpPanel.color = Color.black;
+			powerUpText.text = "";
+			powerUpOn = false;
+			currentPower = powerUpState.NONE;
+		}
+	}
+		
+	public powerUpState getCurrentPower(){
+		//Returns the current power of the player
+		return currentPower;
+	}
+
 }

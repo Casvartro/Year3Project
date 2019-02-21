@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ZombieBehaviourTree : MonoBehaviour {
 
+	//Behaviour tree class responsible for the base zombies behaviours.
+	//Utilizies composite and leaf nodes for the zombies to operate.
+
 	BehaviourNode behaviourTree;
 	BehaviourContext behaviourState;
 	CharacterController enemy;
@@ -20,7 +23,9 @@ public class ZombieBehaviourTree : MonoBehaviour {
 	}
 
 	void FixedUpdate(){
-		this.behaviourTree.Behave (behaviourState);
+		if (this.enemyPhysics.getEnemyHealth () > 0) {
+			this.behaviourTree.Behave (behaviourState);
+		}
 	}
 
 	BehaviourNode createBehaviourTree(){

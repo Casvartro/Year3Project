@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class PathFinder {
 
+	//Class responsible for finding the path between the start and the end nodes.
+
 	private static PriorityQueue NodeQueue; 
 	private static List<NodeController> resetList;
 
+	//Returns the most optimal path based on the nodes calculated and resets all the node's info at the end.
 	private static ArrayList calculatePath(NodeController node){
 		ArrayList pathList = new ArrayList ();
 		while (node != null) {
@@ -26,6 +29,8 @@ public class PathFinder {
 		return pathList;
 	}
 
+	//This function is responsible for finding the most optimal path using the A* search method.
+	//Compares node distances between nodes as well as their children and neighbors.
 	public static ArrayList getPath(GameObject currentNode, GameObject targetNode){
 		
 		NodeQueue = new PriorityQueue ();

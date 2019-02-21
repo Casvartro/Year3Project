@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SetRandomPatrolNodes : Leaf {
 
+	//Leaf node responsible for getting the start node and the end node responsible for the enemy
+	//patrolling.
+
 	public override BehaviourStatus OnBehave(BehaviourState state){
 
 		BehaviourContext enemyContext = (BehaviourContext)state;
