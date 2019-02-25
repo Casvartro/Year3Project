@@ -13,12 +13,15 @@ public class BehaviourContext : BehaviourState {
 	public GameObject startNode = null;
 	public NodeController startInfo = null;
 	public GameObject endNode = null;
+	public Sight enemySight;
 
-	public BehaviourContext(CharacterController enemy, EnemyController enemyPhy, Animator enemyAn){
+	public BehaviourContext(CharacterController enemy, EnemyController enemyPhy, Animator enemyAn, Sight sight){
 		this.enemy = enemy;
 		this.enemyPhysics = enemyPhy;
 		this.enemyAnimation = enemyAn;
+		this.enemySight = sight;
 		pathNodes = GameObject.FindGameObjectsWithTag("PathNode");
+
 	}
 		
 }

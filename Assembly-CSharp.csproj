@@ -55,16 +55,23 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\BehaviourContext.cs" />
      <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\BehaviourTools.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\NodeController.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\PathFinder.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\ChasePlayer.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\CloseToPlayer.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\MeleePlayer.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\NoTargetVisible.cs" />
      <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\PatrolMovement.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\PriorityQueue.cs" />
      <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\Selector.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\Sense.cs" />
      <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\Sequence.cs" />
      <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\SetRandomPatrolNodes.cs" />
-     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\TestPath.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\Sight.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\TargetVisible.cs" />
      <Compile Include="Assets\Scripts\EnemyScripts\EnemyBehaviours\ZombieBehaviourTree.cs" />
      <Compile Include="Assets\Scripts\EnemyScripts\EnemyController.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyPathing\NodeController.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyPathing\PathFinder.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyPathing\PriorityQueue.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\EnemyPathing\TestPath.cs" />
      <Compile Include="Assets\Scripts\EnemyScripts\WaveController.cs" />
      <Compile Include="Assets\Scripts\ItemScripts\ItemController.cs" />
      <Compile Include="Assets\Scripts\ItemScripts\ItemSpawner.cs" />

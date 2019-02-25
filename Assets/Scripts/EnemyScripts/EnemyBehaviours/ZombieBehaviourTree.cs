@@ -12,14 +12,16 @@ public class ZombieBehaviourTree : MonoBehaviour {
 	CharacterController enemy;
 	EnemyController enemyPhysics;
 	Animator enemyAnimation;
+	Sight enemySight;
 
 	void Start(){
 
 		this.enemy = this.GetComponent<CharacterController> ();
 		this.enemyPhysics = this.GetComponent<EnemyController>();
 		this.enemyAnimation = this.GetComponent<Animator> ();
+		this.enemySight = this.GetComponent<Sight>();
 		this.behaviourTree = createBehaviourTree ();
-		this.behaviourState = new BehaviourContext (enemy, enemyPhysics, enemyAnimation); 
+		this.behaviourState = new BehaviourContext (enemy, enemyPhysics, enemyAnimation, enemySight); 
 	}
 
 	void FixedUpdate(){
@@ -30,9 +32,20 @@ public class ZombieBehaviourTree : MonoBehaviour {
 
 	BehaviourNode createBehaviourTree(){
 
-		Sequence patrol = new Sequence ("patrol", new SetRandomPatrolNodes (), new PatrolMovement ());
+		Sequence patrol = new Sequence ("patrol", 
+										new NoTargetVisible(), 
+										new SetRandomPatrolNodes (), 
+										new PatrolMovement ());
 
-		return patrol;
+		Sequence chase = new Sequence ("chase",
+			                 			new TargetVisible (),
+			                			new ChasePlayer ());
+
+		Selector patrolOrChase = new Selector ("patrolOrChase", 
+			                         			patrol, 
+												chase);
+
+		return patrolOrChase;
 	}
 
 }

@@ -21,7 +21,7 @@ public abstract class BehaviourState{
 
 public abstract class BehaviourNode{
 
-	protected bool debug = false;
+	protected bool debug = true;
 
 	public bool starting = true;
 	public int ticks = 0;

@@ -103,9 +103,9 @@ public class EnemyController : MonoBehaviour {
 	}
 
 	//Turns the enemy towards the direction of the next node or target
-	public void enemyRotation (NodeController node){
+	public void enemyRotation (Vector3 nodePos){
 
-		Vector3 direction = node.transform.position - this.enemy.transform.position;
+		Vector3 direction = nodePos - this.enemy.transform.position;
 		direction.y = 0;
 		Quaternion toRotation = Quaternion.LookRotation (direction);
 		this.enemy.transform.rotation = Quaternion.Lerp (this.enemy.transform.rotation, toRotation, enemyRotateSpeed * Time.deltaTime);
@@ -113,10 +113,10 @@ public class EnemyController : MonoBehaviour {
 	}
 
 	//Moves the enemy to the next target/node
-	public void enemyMovement(NodeController node){
+	public void enemyMovement(Vector3 nodePos){
 
 		float angle = 10;
-		Vector3 direction = node.transform.position - this.enemy.transform.position;
+		Vector3 direction = nodePos - this.enemy.transform.position;
 		direction.y = 0;
 		if (direction.magnitude > .1f && Vector3.Angle(this.enemy.transform.forward, direction) < angle) {
 			Vector3 dirOffset = direction.normalized * enemySpeed;

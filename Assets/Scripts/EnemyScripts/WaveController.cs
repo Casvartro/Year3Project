@@ -15,18 +15,18 @@ public class WaveController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		spawnCheck = new int[enemySpawns.Length];
-		spawnWaves ();
+		//spawnCheck = new int[enemySpawns.Length];
+		//spawnWaves ();
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(enemyCount == 0){
-			spawnCheck = new int[enemySpawns.Length];
-			waveNumber = waveNumber + 1;
-			spawnWaves ();
-		}
+		//if(enemyCount == 0){
+		//	spawnCheck = new int[enemySpawns.Length];
+		//	waveNumber = waveNumber + 1;
+		//	spawnWaves ();
+		//}
 	}
 
 	//Returns the wave number.
