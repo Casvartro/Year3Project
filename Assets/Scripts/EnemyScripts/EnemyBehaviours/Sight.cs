@@ -51,9 +51,7 @@ public class Sight : Sense {
 	}
 
 	public float distanceToPlayer(){
-		Vector3 distance = playerTransform.position - transform.position;
-		distance.y = 0;
-		return distance.magnitude;
+		return Vector3.Distance(playerTransform.position, this.transform.position);
 	}
 
 	void onDrawGizmos(){

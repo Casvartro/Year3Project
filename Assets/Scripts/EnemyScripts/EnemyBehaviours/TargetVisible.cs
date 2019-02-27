@@ -4,20 +4,23 @@ using UnityEngine;
 
 public class TargetVisible : Leaf {
 
-	public float range = 2.0f;
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 
 		BehaviourContext enemyContext = (BehaviourContext)state;
-		if (enemyContext.enemySight.getPlayerSeen () && enemyContext.enemySight.distanceToPlayer() > range) {
+
+		if (enemyContext.enemyInSight() && !enemyContext.enemyInRange(0.5f)) {
+
 			if (enemyContext.enemySight.enableDebug) {
 				Debug.Log ("Player Found");
 			}
+
 			enemyContext.startNode = null;
 			return BehaviourStatus.SUCCESS;
-		} else {
-			return BehaviourStatus.FAILURE;
-		}
+
+		} 
+
+		return BehaviourStatus.FAILURE;
 
 	}
 

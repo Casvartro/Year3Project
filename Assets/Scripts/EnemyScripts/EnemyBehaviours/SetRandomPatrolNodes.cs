@@ -10,6 +10,11 @@ public class SetRandomPatrolNodes : Leaf {
 	public override BehaviourStatus OnBehave(BehaviourState state){
 
 		BehaviourContext enemyContext = (BehaviourContext)state;
+
+		if (enemyContext.enemyInSight () || enemyContext.enemyInRange (0.5f)) {
+			return BehaviourStatus.FAILURE;
+		}
+
 		if (enemyContext.startNode == null) {
 			enemyContext.startNode = enemyContext.enemyPhysics.getInitialNode (enemyContext.pathNodes);
 			enemyContext.startInfo = enemyContext.startNode.GetComponent<NodeController> ();
@@ -20,7 +25,6 @@ public class SetRandomPatrolNodes : Leaf {
 	}
 
 	public override void OnReset(){
-		
 	}
 
 }

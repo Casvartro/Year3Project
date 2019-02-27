@@ -7,12 +7,13 @@ public class ZombieBehaviourTree : MonoBehaviour {
 	//Behaviour tree class responsible for the base zombies behaviours.
 	//Utilizies composite and leaf nodes for the zombies to operate.
 
-	BehaviourNode behaviourTree;
-	BehaviourContext behaviourState;
-	CharacterController enemy;
-	EnemyController enemyPhysics;
-	Animator enemyAnimation;
-	Sight enemySight;
+	public float enemyRange;
+	private BehaviourNode behaviourTree;
+	private BehaviourContext behaviourState;
+	private CharacterController enemy;
+	private EnemyController enemyPhysics;
+	private Animator enemyAnimation;
+	private Sight enemySight;
 
 	void Start(){
 
@@ -21,7 +22,8 @@ public class ZombieBehaviourTree : MonoBehaviour {
 		this.enemyAnimation = this.GetComponent<Animator> ();
 		this.enemySight = this.GetComponent<Sight>();
 		this.behaviourTree = createBehaviourTree ();
-		this.behaviourState = new BehaviourContext (enemy, enemyPhysics, enemyAnimation, enemySight); 
+		this.behaviourState = new BehaviourContext (enemy, enemyPhysics, enemyAnimation, 
+			enemySight, enemyRange); 
 	}
 
 	void FixedUpdate(){
@@ -41,11 +43,16 @@ public class ZombieBehaviourTree : MonoBehaviour {
 			                 			new TargetVisible (),
 			                			new ChasePlayer ());
 
-		Selector patrolOrChase = new Selector ("patrolOrChase", 
-			                         			patrol, 
-												chase);
+		Sequence attack = new Sequence ("attack",
+			                 			 new CloseToPlayer (),
+			                 			 new MeleePlayer ());
 
-		return patrolOrChase;
+		Selector patrolOrChaseOrAttack = new Selector ("patrolOrChaseOrAttack", 
+			                         			patrol, 
+												chase,
+												attack);
+
+		return patrolOrChaseOrAttack;
 	}
 
 }

@@ -13,17 +13,16 @@ public class PatrolMovement : Leaf {
 
 		BehaviourContext enemyContext = (BehaviourContext)state;
 
-		if (enemyContext.enemySight.getPlayerSeen()) {
-			enemyContext.enemyAnimation.Play ("idle");
+		if (enemyContext.enemySight.getPlayerSeen() || enemyContext.enemyInRange (0.5f)) {
 			return BehaviourStatus.FAILURE;
 		}
 			
 
 		if (patrolPath.Count == 0) {
 			patrolPath = PathFinder.getPath (enemyContext.startNode, enemyContext.endNode);
-			Debug.Log (enemyContext.startNode);
-			Debug.Log (enemyContext.endNode);
-			Debug.Log (patrolPath [1]);
+			//Debug.Log ("Start Node: " + enemyContext.startNode);
+			//Debug.Log ("End Node: " + enemyContext.endNode);
+			//Debug.Log ("Next Node: " + patrolPath [1]);
 		}
 
 		if (patrolPath.Count > 0) {

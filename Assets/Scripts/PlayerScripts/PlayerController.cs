@@ -232,4 +232,12 @@ public class PlayerController : MonoBehaviour {
 		return currentPower;
 	}
 
+	void OnControllerColliderHit(ControllerColliderHit hit){
+
+		if(hit.gameObject.CompareTag("enemyMelee")){
+			Debug.Log("im hit!");
+		}
+
+	}
+
 }

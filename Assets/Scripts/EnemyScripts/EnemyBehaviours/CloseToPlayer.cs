@@ -2,14 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : Leaf {
+public class CloseToPlayer : Leaf {
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 
+		BehaviourContext enemyContext = (BehaviourContext)state;
+
+		if (enemyContext.enemyInRange(0.0f)) {
+
+			if (enemyContext.enemySight.enableDebug) {
+				Debug.Log ("Player Near");
+			}
+
+			enemyContext.startNode = null;
+			return BehaviourStatus.SUCCESS;
+
+		}
+
+		return BehaviourStatus.FAILURE;
+		
+			
 	}
 
 	public override void OnReset(){
-
 	}
 
 }

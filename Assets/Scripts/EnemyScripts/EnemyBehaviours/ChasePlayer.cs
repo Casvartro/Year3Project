@@ -14,15 +14,12 @@ public class ChasePlayer : Leaf {
 
 			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
 
-		} else if(!enemyContext.enemySight.getPlayerSeen() 
-			&& atPlayer(enemyContext.enemy.transform, playerPosition)){
-
+		}
+		if(!enemyContext.enemyInSight() || enemyContext.enemyInRange(0.5f)){
 			return BehaviourStatus.FAILURE;
-		
 		}
 			
-		if (atPlayer (enemyContext.enemy.transform, playerPosition)) {
-			enemyContext.enemyAnimation.Play ("idle");
+		if (atPlayer (enemyContext.enemy.transform, playerPosition, enemyContext.enemyRange)) {
 			return BehaviourStatus.SUCCESS;
 		}
 
@@ -36,14 +33,12 @@ public class ChasePlayer : Leaf {
 	}
 
 	//Checks if the character has reached its destination.
-	private bool atPlayer(Transform currentPosition, Vector3 destPosition){
+	private bool atPlayer(Transform currentPosition, Vector3 destPosition, float range){
 
-		Vector3 direction = destPosition - currentPosition.position;
-		direction.y = 0;
-		if (direction.magnitude < 2f){
+		float distance = Vector3.Distance (destPosition, currentPosition.position);
+		if (distance < range ){
 			return true;
 		}
-
 		return false;
 
 	}

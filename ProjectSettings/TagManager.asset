@@ -14,6 +14,7 @@ TagManager:
   - Wall
   - PathNode
   - powerItem
+  - enemyMelee
   layers:
   - Default
   - TransparentFX
