@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MeleePlayer : Leaf {
-	
+
+	//Node responsible for handling and triggering the melee attack as well as setting the animation 
+	//state to attack or walk.
+
 	Vector3 playerPosition;
 
 	public override BehaviourStatus OnBehave(BehaviourState state){

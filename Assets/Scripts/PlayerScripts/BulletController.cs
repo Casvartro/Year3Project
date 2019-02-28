@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour {
 
+	//Class responsible for inflicting damage to the enemies when the weapons bullet collides.
+
 	public int defaultDamage = 100;
 
 	private int bulletDamage;

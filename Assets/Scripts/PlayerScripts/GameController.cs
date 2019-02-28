@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
@@ -14,6 +15,7 @@ public class GameController : MonoBehaviour {
 	private float gameTime;
 	private WaveController waveController;
 	private int totalScore;
+	private PlayerController player;
 
 	// Use this for initialization
 	void Start(){
@@ -22,6 +24,7 @@ public class GameController : MonoBehaviour {
 		
 	void Awake () {
 		waveController = GameObject.FindObjectOfType<WaveController> ();
+		player =  GameObject.Find ("Player").GetComponent<PlayerController> ();
 	}
 	
 	// Update is called once per frame
@@ -32,6 +35,10 @@ public class GameController : MonoBehaviour {
 		enemyCountText.text = waveController.getEnemyCount ().ToString ();
 		totalScoreText.text = totalScore.ToString ();
 		togglePause ();
+
+		if (player.getPlayerHealth () == 0) {
+			SceneManager.LoadScene ("GameOverScene");
+		}
 
 	}
 

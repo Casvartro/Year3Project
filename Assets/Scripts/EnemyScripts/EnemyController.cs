@@ -8,6 +8,8 @@ public class EnemyController : MonoBehaviour {
 	public float enemySpeed = 5;
 	public float enemyRotateSpeed = 5f;
 	public float enemyAnimationSpeed = 2.0f;
+	public int enemyMeleeDamage = 3;
+	public float enemyColor;
 
 	private int enemyHealth = 100;
 	private float slopeForce = 5;

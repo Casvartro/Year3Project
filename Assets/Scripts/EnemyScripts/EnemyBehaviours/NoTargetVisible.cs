@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NoTargetVisible : Leaf {
 
+	//Node that checks whether or not the target is not seen so it can patrol.
+
 	public override BehaviourStatus OnBehave(BehaviourState state){
 
 		BehaviourContext enemyContext = (BehaviourContext)state;

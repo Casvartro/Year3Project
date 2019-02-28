@@ -72,6 +72,7 @@
      <Compile Include="Assets\Scripts\EnemyScripts\EnemyPathing\PathFinder.cs" />
      <Compile Include="Assets\Scripts\EnemyScripts\EnemyPathing\PriorityQueue.cs" />
      <Compile Include="Assets\Scripts\EnemyScripts\EnemyPathing\TestPath.cs" />
+     <Compile Include="Assets\Scripts\EnemyScripts\MeleeDamageController.cs" />
      <Compile Include="Assets\Scripts\EnemyScripts\WaveController.cs" />
      <Compile Include="Assets\Scripts\ItemScripts\ItemController.cs" />
      <Compile Include="Assets\Scripts\ItemScripts\ItemSpawner.cs" />

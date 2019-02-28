@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ChasePlayer : Leaf {
 
+	//Node that chases the player until it is right next to it for a melee attack.
+
 	Vector3 playerPosition;
 
 	public override BehaviourStatus OnBehave(BehaviourState state){

@@ -51,7 +51,12 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 
 		if (!gameStatus.checkPause ()) {
+			
 			playerCameraSight ();
+
+			healthText.text = playerHealth.ToString();
+			setHealthTextColor ();
+
 			if (powerUpOn) {
 				activatePowerUp ();
 			}
@@ -232,10 +237,13 @@ public class PlayerController : MonoBehaviour {
 		return currentPower;
 	}
 
-	void OnControllerColliderHit(ControllerColliderHit hit){
+	//Responsible for showing damage when taken from enemy attacks.
+	public void takeDamage(int damage){
 
-		if(hit.gameObject.CompareTag("enemyMelee")){
-			Debug.Log("im hit!");
+		playerHealth -= damage;
+
+		if (playerHealth < 0) {
+			playerHealth = 0;
 		}
 
 	}

@@ -13,7 +13,7 @@ public class Sense : MonoBehaviour {
 	protected virtual bool UpdateSense(){return false;}
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		elapsedTime = 0.0f;
 		Initialize ();
 	}
