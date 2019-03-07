@@ -10,7 +10,10 @@ public class GameController : MonoBehaviour {
 	public Text waveNumberText;
 	public Text enemyCountText;
 	public Text totalScoreText;
+	public Text modifierText;
 	public Canvas pauseCanvas;
+	public bool playerNoDamageStreak = true;
+	public int modifierCount;
 
 	private float gameTime;
 	private WaveController waveController;
@@ -20,6 +23,7 @@ public class GameController : MonoBehaviour {
 	// Use this for initialization
 	void Start(){
 		pauseCanvas.enabled = false;
+		modifierCount = 1;
 	}
 		
 	void Awake () {
@@ -34,6 +38,7 @@ public class GameController : MonoBehaviour {
 		waveNumberText.text = waveController.getWaveNumber ().ToString ();
 		enemyCountText.text = waveController.getEnemyCount ().ToString ();
 		totalScoreText.text = totalScore.ToString ();
+		modifierText.text = modifierCount.ToString () + "x";
 		togglePause ();
 
 		if (player.getPlayerHealth () == 0) {
@@ -43,7 +48,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	public void setScoreText(int enemyScore){
-		totalScore = totalScore + enemyScore;
+		totalScore = totalScore + (enemyScore * modifierCount);
 	}
 
 	//Function used for maintaining the game's timer.
@@ -77,5 +82,5 @@ public class GameController : MonoBehaviour {
 			return false;
 		}
 	}
-
+		
 }

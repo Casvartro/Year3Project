@@ -16,10 +16,11 @@ public class SetRandomPatrolNodes : Leaf {
 		}
 
 		if (enemyContext.startNode == null) {
-			enemyContext.startNode = enemyContext.enemyPhysics.getInitialNode (enemyContext.pathNodes);
+			enemyContext.startNode = PathFinder.getInitialNode (enemyContext.pathNodes, 
+				enemyContext.enemyPhysics.transform.position);
 			enemyContext.startInfo = enemyContext.startNode.GetComponent<NodeController> ();
 		}
-		enemyContext.endNode = enemyContext.enemyPhysics.getEndNode (enemyContext.pathNodes, enemyContext.startNode);
+		enemyContext.endNode = PathFinder.getEndNode (enemyContext.pathNodes, enemyContext.startNode);
 		return BehaviourStatus.SUCCESS;
 
 	}

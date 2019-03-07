@@ -91,5 +91,55 @@ public class PathFinder {
 		//return calculatePath (nodeInfo);
 
 	}
+		
+	//Returns the closest node to the enemy, the start of their path.
+	public static GameObject getInitialNode(GameObject[] pathNodes, Vector3 position){
+
+		GameObject closestNode = null;
+		float closestDistance = float.PositiveInfinity;
+
+		foreach (GameObject node in pathNodes) {
+			float currentDistance = Vector3.Distance (node.transform.position, position);
+			if (currentDistance < closestDistance) {
+				closestNode = node;
+				closestDistance = currentDistance;
+			}
+		}
+		return closestNode;
+	}
+
+	//Retrieves the end node of their path the destination.
+	public static GameObject getEndNode(GameObject[] pathNodes, GameObject startNode){
+
+		GameObject endNode = null;
+		bool nodeFound = false;
+
+		while (!nodeFound) {
+			endNode = pathNodes [Random.Range (0, pathNodes.Length)];
+			if (startNode != endNode) {
+				nodeFound = true;
+			}
+		}
+
+		return endNode;
+	}
+		
+	public static GameObject getPlayerNode(GameObject[] pathNodes, Vector3 position, GameObject startNode){
+
+		GameObject closestNode = null;
+		float closestDistance = float.PositiveInfinity;
+
+		foreach (GameObject node in pathNodes) {
+			if (node != startNode) {
+				float currentDistance = Vector3.Distance (node.transform.position, position);
+				if (currentDistance < closestDistance) {
+					closestNode = node;
+					closestDistance = currentDistance;
+				}
+			}
+		}
+		return closestNode;
+
+	}
 
 }

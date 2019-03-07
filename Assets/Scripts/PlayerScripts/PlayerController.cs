@@ -121,7 +121,6 @@ public class PlayerController : MonoBehaviour {
 			movementDir.z = Input.GetAxis ("Vertical");
 			//Normalizes the vector to prevent diagnonal input from moving too fast.
 			movementDir = movementDir.normalized * playerSpeed;
-
 			movementDir = transform.TransformDirection (movementDir);
 
 			if (Input.GetButton ("Jump")) {
@@ -241,6 +240,12 @@ public class PlayerController : MonoBehaviour {
 	public void takeDamage(int damage){
 
 		playerHealth -= damage;
+
+		gameStatus.playerNoDamageStreak = false;
+
+		if (gameStatus.modifierCount > 1) {
+			gameStatus.modifierCount -= 1;
+		}
 
 		if (playerHealth < 0) {
 			playerHealth = 0;

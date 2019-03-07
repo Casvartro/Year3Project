@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
 
+	public int enemyHealth = 100;
 	public int enemyScore = 100;
 	public float enemySpeed = 5;
 	public float enemyRotateSpeed = 5f;
 	public float enemyAnimationSpeed = 2.0f;
 	public int enemyMeleeDamage = 3;
-	public float enemyColor;
+	public string enemyColor;
+	public float gravity = 20.0f;
+	public float vertSpeed = 0.0f;
 
-	private int enemyHealth = 100;
+	private CollisionFlags collisionFlag;
+
+	private int startHealth;
+	private int startSpeed;
+	private int startAnimationSpeed;
+	private int startDamage;
+
 	private float slopeForce = 5;
 	private float slopeForceRayLength = 1.5f;
 
@@ -22,6 +31,7 @@ public class EnemyController : MonoBehaviour {
 	private NodeController startInfo;
 	private enum EnemyState{ ALIVE, DYING, DEAD }
 	private EnemyState state;
+
 
 	void Start(){
 		state = EnemyState.ALIVE;
@@ -34,6 +44,9 @@ public class EnemyController : MonoBehaviour {
 		this.enemy = this.GetComponent<CharacterController> ();
 		this.enemyAnimation = this.GetComponent<Animator> ();
 		this.enemyAnimation.speed = enemyAnimationSpeed;
+
+		modEnemyStats ();
+
  	}
 
 	void Update(){
@@ -41,6 +54,9 @@ public class EnemyController : MonoBehaviour {
 		switch(state){
 
 			case EnemyState.ALIVE:
+
+				applyGravity ();
+
 				if (enemyHealth <= 0) {
 					waveController.reduceEnemyCount ();
 					scoreController.setScoreText (enemyScore);
@@ -70,40 +86,6 @@ public class EnemyController : MonoBehaviour {
 		enemyHealth = enemyHealth - damage;
 	}
 
-	//Returns the closest node to the enemy, the start of their path.
-	public GameObject getInitialNode(GameObject[] pathNodes){
-
-		GameObject closestNode = null;
-		float closestDistance = float.PositiveInfinity;
-
-		foreach (GameObject node in pathNodes) {
-			float currentDistance = Vector3.Distance (node.transform.position, this.transform.position);
-			if (currentDistance < closestDistance) {
-				closestNode = node;
-				closestDistance = currentDistance;
-			}
-		}
-		return closestNode;
-
-	}
-
-	//Retrieves the end node of their path the destination.
-	public GameObject getEndNode(GameObject[] pathNodes, GameObject startNode){
-
-		GameObject endNode = null;
-		bool nodeFound = false;
-
-		while (!nodeFound) {
-			endNode = pathNodes [Random.Range (0, pathNodes.Length)];
-			if (startNode != endNode) {
-				nodeFound = true;
-			}
-		}
-
-		return endNode;
-
-	}
-
 	//Turns the enemy towards the direction of the next node or target
 	public void enemyRotation (Vector3 nodePos){
 
@@ -122,15 +104,27 @@ public class EnemyController : MonoBehaviour {
 		direction.y = 0;
 		if (direction.magnitude > .1f && Vector3.Angle(this.enemy.transform.forward, direction) < angle) {
 			Vector3 dirOffset = direction.normalized * enemySpeed;
+			dirOffset.y = vertSpeed;
 
-			this.enemy.Move (dirOffset * Time.deltaTime);
+			collisionFlag = this.enemy.Move (dirOffset * Time.deltaTime);
 
 			if ((dirOffset.x != 0 || dirOffset.z != -0) && OnSlope (false)) {
-				this.enemy.Move (Vector3.down * this.enemy.height / 2 * slopeForce * Time.fixedDeltaTime);
+				collisionFlag = this.enemy.Move (Vector3.down * this.enemy.height / 2 * slopeForce * Time.fixedDeltaTime);
 			}
 		}
 	}
 		
+	private void applyGravity(){
+		if (isGrounded ()) {
+			vertSpeed = 0.0f;
+		} else {
+			vertSpeed -= gravity * Time.deltaTime;
+		}
+	}
+
+	private bool isGrounded(){
+		return (enemy.collisionFlags & CollisionFlags.Below) != 0;
+	}
 
 	private bool OnSlope(bool isJump){
 		//Function for checking if the enemy is moving on a slope.
@@ -149,4 +143,15 @@ public class EnemyController : MonoBehaviour {
 		return false;
 
 	}
+
+	private void modEnemyStats(){
+
+		if (waveController.waveNumber > 1) {
+			this.enemyAnimation.speed = enemyAnimationSpeed * waveController.waveNumber/2;
+			this.enemySpeed *= waveController.waveNumber/2;
+			this.enemyMeleeDamage *= waveController.waveNumber/2;
+			this.enemyHealth *= waveController.waveNumber/2;
+		}
+	}
+		
 }

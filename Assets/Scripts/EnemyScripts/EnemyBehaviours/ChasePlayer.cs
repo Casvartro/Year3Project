@@ -5,8 +5,15 @@ using UnityEngine;
 public class ChasePlayer : Leaf {
 
 	//Node that chases the player until it is right next to it for a melee attack.
+	private Vector3 playerPosition;
+	private Vector3 targetPosition;
 
-	Vector3 playerPosition;
+	private RaycastHit playerHit;
+	private RaycastHit enemyHit;
+	private ArrayList playerPath = new ArrayList();
+	private int pathCounter = 0;
+	private GameObject startNode;
+	private GameObject endNode;
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 		
@@ -17,7 +24,8 @@ public class ChasePlayer : Leaf {
 			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
 
 		}
-		if(!enemyContext.enemyInSight() || enemyContext.enemyInRange(0.5f)){
+
+		if(!enemyContext.enemyInSight() && enemyContext.enemyInRange(0.5f)){
 			return BehaviourStatus.FAILURE;
 		}
 			
@@ -25,11 +33,22 @@ public class ChasePlayer : Leaf {
 			return BehaviourStatus.SUCCESS;
 		}
 
-		enemyContext.enemyPhysics.enemyRotation (playerPosition);
-		if (enemyContext.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("idle")) {
-			enemyContext.enemyAnimation.Play ("walk");
+		if (Physics.Raycast (playerPosition, Vector3.down, out playerHit, 10.0f) && Physics.Raycast (enemyContext.enemy.transform.position, Vector3.down, out enemyHit, 10.0f)) {
+
+			if (playerHit.collider.name == enemyHit.collider.name) {
+
+				Debug.Log ("Moving Towards player on same plane");
+				targetPosition = playerPosition;
+				rotateAndMove (enemyContext, targetPosition);
+
+			} else {
+
+				targetPosition = playerPosition;
+				rotateAndMove (enemyContext, targetPosition);
+				//pathToPlayer (enemyContext);
+
+			}
 		}
-		enemyContext.enemyPhysics.enemyMovement (playerPosition);
  		
 		return BehaviourStatus.RUNNING;
 	}
@@ -45,7 +64,64 @@ public class ChasePlayer : Leaf {
 
 	}
 
+	private bool atDestination(Transform currentPosition, Transform destPosition){
+
+		Vector3 direction = destPosition.position - currentPosition.position;
+		direction.y = 0;
+		if (direction.magnitude < .2f){
+			return true;
+		}
+
+		return false;
+
+	}
+
+	private void pathToPlayer(BehaviourContext context){
+
+		startNode = PathFinder.getInitialNode (context.pathNodes, context.enemy.transform.position);
+		endNode = PathFinder.getPlayerNode (context.pathNodes, playerPosition, startNode);
+
+		Debug.Log ("StartNode: " + startNode);
+		Debug.Log ("EndNode: " + endNode);
+
+		playerPath = PathFinder.getPath (startNode, endNode);
+
+		if(playerPath.Count > 0){
+			
+			NodeController currentNode = (NodeController)playerPath [pathCounter];
+			targetPosition = currentNode.transform.position;
+
+			Debug.Log ("CurrentNode: " + currentNode);
+
+			if (atDestination (context.enemy.transform, currentNode.transform)) {
+				context.enemyAnimation.Play ("idle");
+				pathCounter++;
+				currentNode = (NodeController)playerPath [pathCounter];
+				targetPosition = currentNode.transform.position;
+
+				Debug.Log ("CurrentNode: " + currentNode);
+			}
+
+			rotateAndMove (context, targetPosition);
+		}
+
+	}
+
+	private void rotateAndMove(BehaviourContext context, Vector3 position){
+		context.enemyPhysics.enemyRotation (position);
+		if (context.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("idle")) {
+			context.enemyAnimation.Play ("walk");
+		}
+		context.enemyPhysics.enemyMovement (position);
+	}
+		
 	public override void OnReset(){
 		playerPosition = new Vector3(0, 0, 0);
+		targetPosition = new Vector3 (0, 0, 0);
+
+		playerPath.Clear ();
+		pathCounter = 0;
+		startNode = null;
+		endNode = null;
 	}
 }
