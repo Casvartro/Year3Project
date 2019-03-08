@@ -49,6 +49,7 @@ public class Sight : Sense {
 	public bool getPlayerSeen(){
 		return playerSeen;
 	}
+		
 
 	public float distanceToPlayer(){
 		return Vector3.Distance(playerTransform.position, this.transform.position);

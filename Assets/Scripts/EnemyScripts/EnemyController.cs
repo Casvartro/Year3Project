@@ -65,6 +65,7 @@ public class EnemyController : MonoBehaviour {
 				break;
 
 			case EnemyState.DYING:
+				this.enemyAnimation.speed = 1.5f;
 				enemyAnimation.Play ("fallingback");
 				state = EnemyState.DEAD;
 				break;

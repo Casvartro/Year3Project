@@ -14,6 +14,7 @@ public class ChasePlayer : Leaf {
 	private int pathCounter = 0;
 	private GameObject startNode;
 	private GameObject endNode;
+	private GameObject currentEndNode;
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 		
@@ -22,6 +23,7 @@ public class ChasePlayer : Leaf {
 		if (enemyContext.enemySight.getPlayerSeen ()) {
 
 			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
+			currentEndNode = PathFinder.getPlayerNode (enemyContext.pathNodes, playerPosition, null);
 
 		}
 
@@ -43,9 +45,9 @@ public class ChasePlayer : Leaf {
 
 			} else {
 
-				targetPosition = playerPosition;
-				rotateAndMove (enemyContext, targetPosition);
-				//pathToPlayer (enemyContext);
+				//targetPosition = playerPosition;
+				//rotateAndMove (enemyContext, targetPosition);
+				pathToPlayer (enemyContext);
 
 			}
 		}
@@ -78,32 +80,45 @@ public class ChasePlayer : Leaf {
 
 	private void pathToPlayer(BehaviourContext context){
 
-		startNode = PathFinder.getInitialNode (context.pathNodes, context.enemy.transform.position);
-		endNode = PathFinder.getPlayerNode (context.pathNodes, playerPosition, startNode);
+		if (endNode != currentEndNode) {
+			
+			startNode = PathFinder.getInitialNode (context.pathNodes, context.enemy.transform.position);
+			endNode = PathFinder.getPlayerNode (context.pathNodes, playerPosition, startNode);
+			currentEndNode = endNode;
 
-		Debug.Log ("StartNode: " + startNode);
-		Debug.Log ("EndNode: " + endNode);
+			//Debug.Log ("StartNode: " + startNode);
+			//Debug.Log ("EndNode: " + endNode);
+				
+			playerPath = PathFinder.getPath (startNode, endNode);
+			pathCounter = 0;
 
-		playerPath = PathFinder.getPath (startNode, endNode);
+
+		}
 
 		if(playerPath.Count > 0){
 			
 			NodeController currentNode = (NodeController)playerPath [pathCounter];
 			targetPosition = currentNode.transform.position;
 
-			Debug.Log ("CurrentNode: " + currentNode);
+			//Debug.Log ("CurrentNode: " + currentNode);
 
-			if (atDestination (context.enemy.transform, currentNode.transform)) {
-				context.enemyAnimation.Play ("idle");
-				pathCounter++;
-				currentNode = (NodeController)playerPath [pathCounter];
-				targetPosition = currentNode.transform.position;
+			if(atDestination (context.enemy.transform, endNode.transform)){
+				playerPath.Clear ();
+				targetPosition = playerPosition;
+			} else {
 
-				Debug.Log ("CurrentNode: " + currentNode);
+				if (atDestination (context.enemy.transform, currentNode.transform)) {
+					context.enemyAnimation.Play ("idle");
+					pathCounter++;
+					currentNode = (NodeController)playerPath [pathCounter];
+					targetPosition = currentNode.transform.position;
+
+				}
+
 			}
-
-			rotateAndMove (context, targetPosition);
 		}
+
+		rotateAndMove (context, targetPosition);
 
 	}
 
@@ -123,5 +138,6 @@ public class ChasePlayer : Leaf {
 		pathCounter = 0;
 		startNode = null;
 		endNode = null;
+		currentEndNode = null;
 	}
 }
