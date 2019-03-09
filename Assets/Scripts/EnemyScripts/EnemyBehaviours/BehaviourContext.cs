@@ -15,6 +15,7 @@ public class BehaviourContext : BehaviourState {
 	public GameObject endNode = null;
 	public Sight enemySight;
 	public float enemyRange;
+	public IDictionary<string, List<GameObject>> planeNodes;
 
 	public BehaviourContext(CharacterController enemy, EnemyController enemyPhy, Animator enemyAn, Sight sight, float range){
 		this.enemy = enemy;
@@ -23,7 +24,7 @@ public class BehaviourContext : BehaviourState {
 		this.enemySight = sight;
 		this.enemyRange = range;
 		pathNodes = GameObject.FindGameObjectsWithTag("PathNode");
-
+		planeNodes = PathFinder.getPathNodePlanes (pathNodes);
 	}
 
 	public bool enemyInSight(){

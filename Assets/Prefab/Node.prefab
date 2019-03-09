@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4994670878956582}
   - component: {fileID: 114292501238177170}
+  - component: {fileID: 122491056819061922}
   m_Layer: 0
   m_Name: Node
   m_TagString: PathNode
@@ -56,3 +57,14 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   neighborDistances: []
+--- !u!122 &122491056819061922
+Halo:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1189869854394392}
+  m_Enabled: 1
+  m_Color:
+    serializedVersion: 2
+    rgba: 4286611584
+  m_Size: 1

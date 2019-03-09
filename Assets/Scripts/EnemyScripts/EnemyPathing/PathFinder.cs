@@ -124,21 +124,52 @@ public class PathFinder {
 		return endNode;
 	}
 		
-	public static GameObject getPlayerNode(GameObject[] pathNodes, Vector3 position, GameObject startNode){
+	public static GameObject getPlaneNode(IDictionary<string, List<GameObject>> planeNodes, Vector3 position, RaycastHit objectHit){
 
+		List<GameObject> planeList = planeNodes [objectHit.collider.name];
 		GameObject closestNode = null;
 		float closestDistance = float.PositiveInfinity;
 
-		foreach (GameObject node in pathNodes) {
-			if (node != startNode) {
-				float currentDistance = Vector3.Distance (node.transform.position, position);
-				if (currentDistance < closestDistance) {
-					closestNode = node;
-					closestDistance = currentDistance;
-				}
+		foreach (GameObject node in planeList) {
+			float currentDistance = Vector3.Distance (node.transform.position, position);
+			if (currentDistance < closestDistance) {
+				closestNode = node;
+				closestDistance = currentDistance;
 			}
 		}
+
 		return closestNode;
+
+	}
+
+	public static IDictionary<string, List<GameObject>> getPathNodePlanes(GameObject[] pathNodes){
+
+		IDictionary<string, List<GameObject>> planeNodes = new Dictionary<string, List<GameObject>>();
+		RaycastHit planeHit;
+
+		foreach (GameObject node in pathNodes) {
+			if (Physics.Raycast (node.transform.position, Vector3.down, out planeHit, 10.0f)) {
+				if (!planeNodes.ContainsKey (planeHit.collider.name)) {
+					planeNodes.Add (new KeyValuePair<string, List<GameObject>> (planeHit.collider.name, new List<GameObject>()));
+				}
+				planeNodes [planeHit.collider.name].Add (node);
+			}
+		}
+
+		/*
+		int nodeCount = 0;
+		foreach (KeyValuePair<string, List<GameObject>> item in planeNodes)
+		{
+			Debug.Log ("Key: " + item.Key);
+			foreach (GameObject node in item.Value) {
+				Debug.Log ("PathNode: " + node);
+				nodeCount++;
+			}
+		}
+		Debug.Log ("NodeCount: " + nodeCount); 
+
+		*/
+		return planeNodes;
 
 	}
 
