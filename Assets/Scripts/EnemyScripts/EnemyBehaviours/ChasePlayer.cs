@@ -14,8 +14,7 @@ public class ChasePlayer : Leaf {
 	private int pathCounter = 0;
 	private GameObject startNode;
 	private GameObject endNode;
-	private string currentPlaneName;
-	//private GameObject currentEndNode;
+	private string currentPlaneName = null;
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 		
@@ -24,14 +23,10 @@ public class ChasePlayer : Leaf {
 		if (enemyContext.enemySight.getPlayerSeen ()) {
 
 			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
-			if (Physics.Raycast (playerPosition, Vector3.down, out playerHit, 10.0f)) {
-				//currentEndNode = PathFinder.getPlaneNode (enemyContext.planeNodes, playerPosition, playerHit);
-				currentPlaneName = playerHit.collider.name;
-			}
-
+	
 		}
 
-		if(!enemyContext.enemyInSight() || enemyContext.enemyInRange(0.5f)){
+		if(!enemyContext.enemyInSight() && playerPath.Count == 0){
 			return BehaviourStatus.FAILURE;
 		}
 			
@@ -43,23 +38,16 @@ public class ChasePlayer : Leaf {
 
 			if (playerHit.collider.name == enemyHit.collider.name) {
 
-				Debug.Log ("Moving Towards player on same plane");
 				targetPosition = playerPosition;
 				rotateAndMove (enemyContext, targetPosition);
 
 			} else {
 
-				Debug.Log ("Player not on the same plane");
-
-				Debug.Log (playerHit.collider.name + " != " + currentPlaneName);
 				if (playerHit.collider.name != currentPlaneName) {
 
 					startNode = PathFinder.getPlaneNode (enemyContext.planeNodes, enemyContext.enemy.transform.position, enemyHit);
 					endNode = PathFinder.getPlaneNode (enemyContext.planeNodes, playerPosition, playerHit);
 					currentPlaneName = playerHit.collider.name;
-
-					Debug.Log ("StartNode: " + startNode);
-					Debug.Log ("EndNode: " + endNode);
 
 					if (startNode.transform == endNode.transform) {
 						if (playerPath.Count > 0) {
@@ -70,6 +58,11 @@ public class ChasePlayer : Leaf {
 
 						playerPath = PathFinder.getPath (startNode, endNode);
 						pathCounter = 0;
+
+						NodeController firstNode = (NodeController)playerPath [pathCounter];
+						if (isNodeBehind (firstNode.transform, enemyContext.enemy.transform)) {
+							pathCounter++;
+						}
 					}
 
 				}
@@ -79,12 +72,14 @@ public class ChasePlayer : Leaf {
 					NodeController currentNode = (NodeController)playerPath [pathCounter];
 					targetPosition = currentNode.transform.position;
 
-					Debug.Log ("CurrentNode: " + currentNode);
-
 					if (atDestination (enemyContext.enemy.transform, currentNode.transform)) {
 						if (atDestination (enemyContext.enemy.transform, endNode.transform)) {
 							playerPath.Clear ();
-							targetPosition = playerPosition;
+							if (enemyContext.enemyInSight ()) {
+								targetPosition = playerPosition;
+							} else {
+								return BehaviourStatus.FAILURE;
+							}
 						} else {
 							pathCounter++;
 							currentNode = (NodeController)playerPath [pathCounter];
@@ -112,6 +107,7 @@ public class ChasePlayer : Leaf {
 
 	}
 
+	//Checks if character has reached node destination
 	private bool atDestination(Transform currentPosition, Transform destPosition){
 
 		Vector3 direction = destPosition.position - currentPosition.position;
@@ -125,12 +121,25 @@ public class ChasePlayer : Leaf {
 	}
 		
 
+	//Method for calling the functions for rotating and moving the enemy
 	private void rotateAndMove(BehaviourContext context, Vector3 position){
 		context.enemyPhysics.enemyRotation (position);
 		if (context.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("idle")) {
 			context.enemyAnimation.Play ("walk");
 		}
 		context.enemyPhysics.enemyMovement (position);
+	}
+
+	//Checks if the node is behind the enemy so it doesnt double back.
+	private bool isNodeBehind(Transform targetPos, Transform sourcePos){
+
+		Vector3 toTarget = (targetPos.position - sourcePos.position).normalized;
+		if (Vector3.Dot(toTarget, sourcePos.forward) > 0) {
+			return false;
+		} else {
+			return true;
+		}
+
 	}
 		
 	public override void OnReset(){
@@ -142,6 +151,6 @@ public class ChasePlayer : Leaf {
 		startNode = null;
 		endNode = null;
 		currentPlaneName = null;
-		//currentEndNode = null;
+	
 	}
 }
