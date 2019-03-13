@@ -9,8 +9,9 @@ public class EnemyController : MonoBehaviour {
 	public float enemySpeed = 5;
 	public float enemyRotateSpeed = 5f;
 	public float enemyAnimationSpeed = 2.0f;
-	public int enemyMeleeDamage = 3;
+	public int enemyDamage = 3;
 	public string enemyColor;
+	public string enemyType;
 	public float gravity = 20.0f;
 	public float vertSpeed = 0.0f;
 
@@ -27,6 +28,7 @@ public class EnemyController : MonoBehaviour {
 	private WaveController waveController;
 	private GameController scoreController;
 	private CharacterController enemy;
+	private FireEnemyWeapon enemyWeapon;
 	private Animator enemyAnimation;
 	private NodeController startInfo;
 	private enum EnemyState{ ALIVE, DYING, DEAD }
@@ -44,6 +46,10 @@ public class EnemyController : MonoBehaviour {
 		this.enemy = this.GetComponent<CharacterController> ();
 		this.enemyAnimation = this.GetComponent<Animator> ();
 		this.enemyAnimation.speed = enemyAnimationSpeed;
+
+		if (enemyType == "Soldier") {
+			enemyWeapon = this.GetComponent<FireEnemyWeapon> ();
+		}
 
 		modEnemyStats ();
 
@@ -64,9 +70,15 @@ public class EnemyController : MonoBehaviour {
 				}
 				break;
 
-			case EnemyState.DYING:
-				this.enemyAnimation.speed = 1.5f;
+		case EnemyState.DYING:
+			this.enemyAnimation.speed = 1.5f;
+			if (enemyType == "Zombie") {
 				enemyAnimation.Play ("fallingback");
+			} else {
+				enemyAnimation.Play ("idle");
+				this.enemyWeapon.isFiring = false;
+				this.transform.rotation = Quaternion.Euler(this.transform.rotation.z, this.transform.rotation.y, -90);
+			}
 				state = EnemyState.DEAD;
 				break;
 
@@ -98,9 +110,8 @@ public class EnemyController : MonoBehaviour {
 	}
 
 	//Moves the enemy to the next target/node
-	public void enemyMovement(Vector3 nodePos){
+	public void enemyMovement(Vector3 nodePos, float angle){
 
-		float angle = 10;
 		Vector3 direction = nodePos - this.enemy.transform.position;
 		direction.y = 0;
 		if (direction.magnitude > .1f && Vector3.Angle(this.enemy.transform.forward, direction) < angle) {
@@ -124,7 +135,7 @@ public class EnemyController : MonoBehaviour {
 	}
 
 	private bool isGrounded(){
-		return (enemy.collisionFlags & CollisionFlags.Below) != 0;
+		return (this.collisionFlag & CollisionFlags.Below) != 0;
 	}
 
 	private bool OnSlope(bool isJump){
@@ -150,7 +161,7 @@ public class EnemyController : MonoBehaviour {
 		if (waveController.waveNumber > 1) {
 			this.enemyAnimation.speed = enemyAnimationSpeed * waveController.waveNumber/2;
 			this.enemySpeed *= waveController.waveNumber/2;
-			this.enemyMeleeDamage *= waveController.waveNumber/2;
+			this.enemyDamage *= waveController.waveNumber/2;
 			this.enemyHealth *= waveController.waveNumber/2;
 		}
 	}

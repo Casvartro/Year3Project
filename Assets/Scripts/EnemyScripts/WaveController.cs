@@ -10,6 +10,7 @@ public class WaveController : MonoBehaviour {
 	public Transform playerTransform;
 	public int waveNumber = 1;
 	public float powerEnemyChance = 0.15f;
+	public bool wavesOn = true;
 
 	private GameObject enemy;
 	private int enemyCount = 0;
@@ -22,25 +23,27 @@ public class WaveController : MonoBehaviour {
 		gameStatus = GameObject.Find ("UICanvas").GetComponent<GameController> ();
 
 		spawnCheck = new int[enemySpawns.Length];
-		//spawnWaves ();
+		if (wavesOn) {
+			spawnWaves ();
+		}
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-		/*if(enemyCount == 0){
+		if (wavesOn) {
+			if (enemyCount == 0) {
 
-			if (gameStatus.playerNoDamageStreak) {
-				gameStatus.modifierCount += 1;
+				if (gameStatus.playerNoDamageStreak) {
+					gameStatus.modifierCount += 1;
+				}
+
+				spawnCheck = new int[enemySpawns.Length];
+				waveNumber = waveNumber + 1;
+				powerEnemyChance += 0.05f;
+				spawnWaves ();
 			}
-
-			spawnCheck = new int[enemySpawns.Length];
-			waveNumber = waveNumber + 1;
-			powerEnemyChance += 0.05f;
-			spawnWaves ();
 		}
-		*/
 	}
 
 	//Returns the wave number.

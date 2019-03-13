@@ -155,21 +155,89 @@ public class PathFinder {
 				planeNodes [planeHit.collider.name].Add (node);
 			}
 		}
+			
+		return planeNodes;
+	
+	}
 
-		/*
-		int nodeCount = 0;
-		foreach (KeyValuePair<string, List<GameObject>> item in planeNodes)
-		{
-			Debug.Log ("Key: " + item.Key);
-			foreach (GameObject node in item.Value) {
-				Debug.Log ("PathNode: " + node);
-				nodeCount++;
+	//Returns the closest node to the enemy, to retreat from that is also the furthest away from the player.
+	public static GameObject getRetreatNode(GameObject[] pathNodes, Transform enemyPos, Vector3 playerPos){
+
+		GameObject closestNode = null;
+		float closestDistance = float.PositiveInfinity;
+		RaycastHit enemyHit;
+		RaycastHit nodeHit;
+		float currentDistance;
+		float playerDistance;
+		Vector3 position = enemyPos.position;
+
+		foreach (GameObject node in pathNodes) {
+			
+			if (Physics.Raycast (position, Vector3.down, out enemyHit, 10.0f) && 
+				Physics.Raycast (node.transform.position, Vector3.down, out nodeHit, 10.0f)) {
+
+				if ((enemyHit.collider.name == nodeHit.collider.name)) {
+					
+					currentDistance = Vector3.Distance (node.transform.position, position);
+					playerDistance = Vector3.Distance (node.transform.position, playerPos);
+
+					if ((currentDistance < closestDistance && currentDistance < playerDistance) && 
+						isNodeBehind(node.transform.position, enemyPos)) {
+						closestNode = node; 
+						closestDistance = currentDistance;
+					}
+				}
 			}
 		}
-		Debug.Log ("NodeCount: " + nodeCount); 
 
-		*/
-		return planeNodes;
+		if (closestNode == null) {
+			foreach (GameObject node in pathNodes) {
+				currentDistance = Vector3.Distance (node.transform.position, position);
+				playerDistance = Vector3.Distance (node.transform.position, playerPos);
+
+				if ((currentDistance < closestDistance && currentDistance < playerDistance) && 
+					isNodeBehind(node.transform.position, enemyPos)) {
+					closestNode = node; 
+					closestDistance = currentDistance;
+				}
+			}
+		}
+
+		return closestNode;
+	}
+
+	//Returns closest neighbor of the current node to retreat too.
+	public static GameObject getRetreatNeighbor(GameObject currentNode, Transform enemyPos, Vector3 playerPos){
+
+		NodeController currentNodeInfo = currentNode.GetComponent<NodeController> ();
+		GameObject[] currentNeighbors = currentNodeInfo.neighborNodes;
+		GameObject closestNode = null;
+		float closestDistance = float.PositiveInfinity;
+		Vector3 position = enemyPos.position;
+
+
+		foreach (GameObject node in currentNeighbors) {
+			float currentDistance = Vector3.Distance (node.transform.position, position);
+			float playerDistance = Vector3.Distance (node.transform.position, playerPos);
+			if (currentDistance < closestDistance && currentDistance < playerDistance) {
+				closestNode = node; 
+				closestDistance = currentDistance;
+			}
+		}
+
+		return closestNode;
+	}
+
+
+	//Checks if the node is behind the enemy so it doesnt double back.
+	public static bool isNodeBehind(Vector3 targetPos, Transform sourcePos){
+
+		Vector3 toTarget = (targetPos - sourcePos.position).normalized;
+		if (Vector3.Dot(toTarget, sourcePos.forward) > 0) {
+			return false;
+		} else {
+			return true;
+		}
 
 	}
 

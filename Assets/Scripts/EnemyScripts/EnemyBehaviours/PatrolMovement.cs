@@ -8,6 +8,11 @@ public class PatrolMovement : Leaf {
 
 	private ArrayList patrolPath =  new ArrayList();
 	private int pathCounter = 0;
+	private float angle = 10;
+	private NodeController currentNode = null;
+	private float offsetValue = 0.5f;
+	private bool offsetMod = false;
+	private Vector3 currPos;
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 
@@ -20,19 +25,19 @@ public class PatrolMovement : Leaf {
 
 		if (patrolPath.Count == 0) {
 			patrolPath = PathFinder.getPath (enemyContext.startNode, enemyContext.endNode);
-			//Debug.Log ("Start Node: " + enemyContext.startNode);
-			//Debug.Log ("End Node: " + enemyContext.endNode);
-			//Debug.Log ("Next Node: " + patrolPath [1]);
 		}
 
 		if (patrolPath.Count > 0) {
-				
-			NodeController currentNode = (NodeController)patrolPath [pathCounter];
 
-			if (atDestination (enemyContext.enemy.transform, currentNode.transform)) {
+			currentNode = (NodeController)patrolPath [pathCounter];
+			modPositionOffset ();
+
+			if (atDestination (enemyContext.enemy.transform, currPos)) {
 				enemyContext.enemyAnimation.Play ("idle");
 				pathCounter++;
 				currentNode = (NodeController)patrolPath [pathCounter];
+				offsetMod = false;
+				modPositionOffset ();
 				if (currentNode.transform.position == enemyContext.endNode.transform.position) {
 					enemyContext.startNode = enemyContext.endNode;
 					enemyContext.startInfo = currentNode;
@@ -40,11 +45,11 @@ public class PatrolMovement : Leaf {
 				}
 			}
 
-			enemyContext.enemyPhysics.enemyRotation (currentNode.transform.position);
+			enemyContext.enemyPhysics.enemyRotation (currPos);
 			if (enemyContext.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("idle")) {
 				enemyContext.enemyAnimation.Play ("walk");
 			}
-			enemyContext.enemyPhysics.enemyMovement (currentNode.transform.position);
+			enemyContext.enemyPhysics.enemyMovement (currPos, angle);
 
 		}
 
@@ -52,9 +57,9 @@ public class PatrolMovement : Leaf {
 	}
 
 	//Checks if the character has reached its destination.
-	private bool atDestination(Transform currentPosition, Transform destPosition){
+	private bool atDestination(Transform currentPosition, Vector3 destPosition){
 
-		Vector3 direction = destPosition.position - currentPosition.position;
+		Vector3 direction = destPosition - currentPosition.position;
 		direction.y = 0;
 		if (direction.magnitude < .2f){
 			return true;
@@ -64,10 +69,22 @@ public class PatrolMovement : Leaf {
 
 	}
 
+	private void modPositionOffset(){
+		if (!offsetMod) {
+			currPos = currentNode.transform.position;
+			currPos = new Vector3 (Random.Range (currPos.x - offsetValue, currPos.x + offsetValue), 
+				currPos.y, Random.Range (currPos.z - offsetValue, currPos.z + offsetValue));
+			offsetMod = true;
+		}
+	}
+
 	//Resets Leaf nodes information.
 	public override void OnReset(){
 		patrolPath = new ArrayList ();
 		pathCounter = 0;
+		offsetMod = false;
+		currentNode = null;
+		currPos = new Vector3 (0, 0, 0);
 	}
 
 }

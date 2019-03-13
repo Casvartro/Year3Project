@@ -16,13 +16,18 @@ public class BehaviourContext : BehaviourState {
 	public Sight enemySight;
 	public float enemyRange;
 	public IDictionary<string, List<GameObject>> planeNodes;
+	public FireEnemyWeapon enemyWeaponController;
+	public float closeRange;
 
-	public BehaviourContext(CharacterController enemy, EnemyController enemyPhy, Animator enemyAn, Sight sight, float range){
+	public BehaviourContext(CharacterController enemy, EnemyController enemyPhy, Animator enemyAn, Sight sight, 
+		float range, FireEnemyWeapon eWC, float eCloseRange){
 		this.enemy = enemy;
 		this.enemyPhysics = enemyPhy;
 		this.enemyAnimation = enemyAn;
 		this.enemySight = sight;
 		this.enemyRange = range;
+		this.enemyWeaponController = eWC;
+		this.closeRange = eCloseRange;
 		pathNodes = GameObject.FindGameObjectsWithTag("PathNode");
 		planeNodes = PathFinder.getPathNodePlanes (pathNodes);
 	}
@@ -33,6 +38,10 @@ public class BehaviourContext : BehaviourState {
 
 	public bool enemyInRange(float modifier){
 		return enemySight.distanceToPlayer () < enemyRange + modifier;
+	}
+
+	public bool enemyTooClose(){
+		return enemySight.distanceToPlayer () < closeRange;
 	}
 		
 }

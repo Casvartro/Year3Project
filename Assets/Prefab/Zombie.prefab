@@ -1293,7 +1293,7 @@ MonoBehaviour:
   enableDebug: 1
   detectionRate: 1
   fieldOfView: 90
-  viewDistance: 50
+  viewDistance: 100
 --- !u!114 &114590561135540874
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1328,12 +1328,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f282f8ea74d249b47ab74fd061f1a24b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyHealth: 100
   enemyScore: 100
   enemySpeed: 0.75
   enemyRotateSpeed: 5
   enemyAnimationSpeed: 1.5
-  enemyMeleeDamage: 3
+  enemyDamage: 3
   enemyColor: 0
+  enemyType: Zombie
+  gravity: 20
+  vertSpeed: 0
 --- !u!137 &137029918616758452
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

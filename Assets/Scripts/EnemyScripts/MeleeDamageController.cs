@@ -15,7 +15,7 @@ public class MeleeDamageController : MonoBehaviour {
 	void Start () {
 		enemy = this.transform.root.gameObject.GetComponent<EnemyController> ();	
 		player = GameObject.Find ("Player").GetComponent<PlayerController> ();
-		meleeDamage = enemy.enemyMeleeDamage;
+		meleeDamage = enemy.enemyDamage;
 	}
 	
 	void OnTriggerEnter(Collider col){

@@ -23,7 +23,7 @@ public class ZombieBehaviourTree : MonoBehaviour {
 		this.enemySight = this.GetComponent<Sight>();
 		this.behaviourTree = createBehaviourTree ();
 		this.behaviourState = new BehaviourContext (enemy, enemyPhysics, enemyAnimation, 
-			enemySight, enemyRange); 
+			enemySight, enemyRange, null, 0.0f); 
 	}
 
 	void FixedUpdate(){

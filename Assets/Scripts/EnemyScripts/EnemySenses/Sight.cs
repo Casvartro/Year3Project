@@ -34,7 +34,6 @@ public class Sight : Sense {
 		
 		RaycastHit hit;
 		rayDirection = playerTransform.position - transform.position;
-
 		if((Vector3.Angle(rayDirection, transform.forward)) < fieldOfView){
 			//Detect if the player is within the field of view.
 			if (Physics.Raycast (transform.position, rayDirection, out hit, viewDistance)) {

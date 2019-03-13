@@ -7,7 +7,8 @@ public class MeleePlayer : Leaf {
 	//Node responsible for handling and triggering the melee attack as well as setting the animation 
 	//state to attack or walk.
 
-	Vector3 playerPosition;
+	private Vector3 playerPosition;
+	private float angle = 10;
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 
@@ -27,10 +28,10 @@ public class MeleePlayer : Leaf {
 		}
 
 		enemyContext.enemyPhysics.enemyRotation (playerPosition);
-		if (enemyContext.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("walk")) {
+		if (enemyContext.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("idle")) {
 			enemyContext.enemyAnimation.Play ("attack");
 		}
-		enemyContext.enemyPhysics.enemyMovement (playerPosition);
+		enemyContext.enemyPhysics.enemyMovement (playerPosition, angle);
 
 		return BehaviourStatus.RUNNING;
 	

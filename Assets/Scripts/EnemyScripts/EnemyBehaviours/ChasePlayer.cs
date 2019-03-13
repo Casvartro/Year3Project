@@ -16,27 +16,35 @@ public class ChasePlayer : Leaf {
 	private GameObject endNode;
 	private string currentPlaneName = null;
 
+	private NodeController currentNode = null;
+	private float offsetValue = 2f;
+	private bool offsetMod = false;
+	private Vector3 currPos;
+
+	private float angle = 10;
+
 	public override BehaviourStatus OnBehave(BehaviourState state){
-		
+
 		BehaviourContext enemyContext = (BehaviourContext)state;
 
-		if (enemyContext.enemySight.getPlayerSeen ()) {
+		if (enemyContext.enemyInSight()) {
 
 			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
-	
+
 		}
 
 		if(!enemyContext.enemyInSight() && playerPath.Count == 0){
 			return BehaviourStatus.FAILURE;
 		}
-			
-		if (atPlayer (enemyContext.enemy.transform, playerPosition, enemyContext.enemyRange)) {
+
+		if (atPlayer (enemyContext.enemy.transform, playerPosition, enemyContext.enemyRange) && enemyContext.enemyInSight()) {
+			enemyContext.enemyAnimation.Play ("idle");
 			return BehaviourStatus.SUCCESS;
 		}
 
 		if (Physics.Raycast (playerPosition, Vector3.down, out playerHit, 10.0f) && Physics.Raycast (enemyContext.enemy.transform.position, Vector3.down, out enemyHit, 10.0f)) {
 
-			if (playerHit.collider.name == enemyHit.collider.name) {
+			if (playerHit.collider.name == enemyHit.collider.name && enemyContext.enemyInSight()) {
 
 				targetPosition = playerPosition;
 				rotateAndMove (enemyContext, targetPosition);
@@ -60,20 +68,24 @@ public class ChasePlayer : Leaf {
 						pathCounter = 0;
 
 						NodeController firstNode = (NodeController)playerPath [pathCounter];
-						if (isNodeBehind (firstNode.transform, enemyContext.enemy.transform)) {
+						if (PathFinder.isNodeBehind (firstNode.transform.position, enemyContext.enemy.transform)) {
 							pathCounter++;
 						}
+						Debug.Log ("Hi");
 					}
 
 				}
 
 				if (playerPath.Count > 0) {
 
-					NodeController currentNode = (NodeController)playerPath [pathCounter];
-					targetPosition = currentNode.transform.position;
+					currentNode = (NodeController)playerPath [pathCounter];
+					modPositionOffset ();
+					targetPosition = currPos;
+				
 
-					if (atDestination (enemyContext.enemy.transform, currentNode.transform)) {
-						if (atDestination (enemyContext.enemy.transform, endNode.transform)) {
+					if (atDestination (enemyContext.enemy.transform, targetPosition)) {
+
+						if (pathCounter == playerPath.Count - 1) {
 							playerPath.Clear ();
 							if (enemyContext.enemyInSight ()) {
 								targetPosition = playerPosition;
@@ -83,7 +95,9 @@ public class ChasePlayer : Leaf {
 						} else {
 							pathCounter++;
 							currentNode = (NodeController)playerPath [pathCounter];
-							targetPosition = currentNode.transform.position;
+							offsetMod = false;
+							modPositionOffset ();
+							targetPosition = currPos;
 						}
 
 					}
@@ -92,7 +106,7 @@ public class ChasePlayer : Leaf {
 				rotateAndMove (enemyContext, targetPosition);
 			}
 		}
- 		
+
 		return BehaviourStatus.RUNNING;
 	}
 
@@ -107,10 +121,10 @@ public class ChasePlayer : Leaf {
 
 	}
 
-	//Checks if character has reached node destination
-	private bool atDestination(Transform currentPosition, Transform destPosition){
+	//Checks if the character has reached its destination.
+	private bool atDestination(Transform currentPosition, Vector3 destPosition){
 
-		Vector3 direction = destPosition.position - currentPosition.position;
+		Vector3 direction = destPosition - currentPosition.position;
 		direction.y = 0;
 		if (direction.magnitude < .2f){
 			return true;
@@ -119,7 +133,6 @@ public class ChasePlayer : Leaf {
 		return false;
 
 	}
-		
 
 	//Method for calling the functions for rotating and moving the enemy
 	private void rotateAndMove(BehaviourContext context, Vector3 position){
@@ -127,21 +140,18 @@ public class ChasePlayer : Leaf {
 		if (context.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("idle")) {
 			context.enemyAnimation.Play ("walk");
 		}
-		context.enemyPhysics.enemyMovement (position);
+		context.enemyPhysics.enemyMovement (position, angle);
 	}
 
-	//Checks if the node is behind the enemy so it doesnt double back.
-	private bool isNodeBehind(Transform targetPos, Transform sourcePos){
-
-		Vector3 toTarget = (targetPos.position - sourcePos.position).normalized;
-		if (Vector3.Dot(toTarget, sourcePos.forward) > 0) {
-			return false;
-		} else {
-			return true;
+	private void modPositionOffset(){
+		if (!offsetMod) {
+			currPos = currentNode.transform.position;
+			currPos = new Vector3 (Random.Range (currPos.x - offsetValue, currPos.x + offsetValue), 
+				currPos.y, Random.Range (currPos.z - offsetValue, currPos.z + offsetValue));
+			offsetMod = true;
 		}
-
 	}
-		
+
 	public override void OnReset(){
 		playerPosition = new Vector3(0, 0, 0);
 		targetPosition = new Vector3 (0, 0, 0);
@@ -151,6 +161,9 @@ public class ChasePlayer : Leaf {
 		startNode = null;
 		endNode = null;
 		currentPlaneName = null;
-	
+
+		offsetMod = false;
+		currentNode = null;
+		currPos = new Vector3 (0, 0, 0);
 	}
 }

@@ -1305,7 +1305,7 @@ MonoBehaviour:
   enableDebug: 1
   detectionRate: 1
   fieldOfView: 90
-  viewDistance: 50
+  viewDistance: 100
 --- !u!114 &114756981980311482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1322,8 +1322,11 @@ MonoBehaviour:
   enemySpeed: 0.75
   enemyRotateSpeed: 5
   enemyAnimationSpeed: 1.5
-  enemyMeleeDamage: 9
+  enemyDamage: 3
   enemyColor: red
+  enemyType: Zombie
+  gravity: 20
+  vertSpeed: 0
 --- !u!114 &114908327136925436
 MonoBehaviour:
   m_ObjectHideFlags: 1
