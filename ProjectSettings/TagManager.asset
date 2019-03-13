@@ -3,7 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Item
+  - healthItem
+  - ammoItem
+  - weapon
+  - floor
+  - bullet
+  - enemy
+  - Wall
+  - PathNode
+  - powerItem
+  - enemyMelee
   layers:
   - Default
   - TransparentFX

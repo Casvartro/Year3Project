@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a7887ff9ebdfe99419ab66c915b95c98
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - healthCratePrefab: {fileID: 1619561060799834, guid: 1f9c4cc7b99e1374899dee5f81a95836,
+      type: 2}
+  - ammoCratePrefab: {fileID: 1601409962109032, guid: 4b937a9ca2eb46c4f9509c1b5bd765c6,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
