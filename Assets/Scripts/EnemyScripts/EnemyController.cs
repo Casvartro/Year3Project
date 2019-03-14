@@ -70,15 +70,16 @@ public class EnemyController : MonoBehaviour {
 				}
 				break;
 
-		case EnemyState.DYING:
-			this.enemyAnimation.speed = 1.5f;
-			if (enemyType == "Zombie") {
-				enemyAnimation.Play ("fallingback");
-			} else {
-				enemyAnimation.Play ("idle");
-				this.enemyWeapon.isFiring = false;
-				this.transform.rotation = Quaternion.Euler(this.transform.rotation.z, this.transform.rotation.y, -90);
-			}
+			case EnemyState.DYING:
+			
+				this.enemyAnimation.speed = 1.5f;
+				if (enemyType == "Zombie") {
+					enemyAnimation.Play ("fallingback");
+				} else {
+					enemyAnimation.Play ("idle");
+					this.enemyWeapon.isFiring = false;
+					this.transform.rotation = Quaternion.Euler(this.transform.rotation.z, this.transform.rotation.y, -90);
+				}
 				state = EnemyState.DEAD;
 				break;
 
@@ -158,7 +159,7 @@ public class EnemyController : MonoBehaviour {
 
 	private void modEnemyStats(){
 
-		if (waveController.waveNumber > 1) {
+		if (waveController.waveNumber > 2) {
 			this.enemyAnimation.speed = enemyAnimationSpeed * waveController.waveNumber/2;
 			this.enemySpeed *= waveController.waveNumber/2;
 			this.enemyDamage *= waveController.waveNumber/2;

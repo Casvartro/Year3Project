@@ -31,7 +31,7 @@ public class EnemyFallback : Leaf {
 			closestNode = PathFinder.getRetreatNode (enemyContext.pathNodes, enemyContext.enemyPhysics.transform, playerPosition);
 		}
 
-		if (atDestination (enemyContext.enemy.transform, closestNode.transform)) {
+		if (PathFinder.atDestination (enemyContext.enemy.transform, closestNode.transform.position)) {
 			closestNode = PathFinder.getRetreatNeighbor (closestNode, enemyContext.enemy.transform, playerPosition);
 		} 
 
@@ -48,20 +48,6 @@ public class EnemyFallback : Leaf {
 		////////////////////////////////////////////////////////////////
 
 		return BehaviourStatus.RUNNING;
-	}
-
-
-	//Checks if the enemy has reached its destination.
-	private bool atDestination(Transform currentPosition, Transform destPosition){
-
-		Vector3 direction = destPosition.position - currentPosition.position;
-		direction.y = 0;
-		if (direction.magnitude < .2f){
-			return true;
-		}
-
-		return false;
-
 	}
 
 	public override void OnReset(){

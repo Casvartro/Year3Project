@@ -83,7 +83,7 @@ public class ChasePlayer : Leaf {
 					targetPosition = currPos;
 				
 
-					if (atDestination (enemyContext.enemy.transform, targetPosition)) {
+					if (PathFinder.atDestination (enemyContext.enemy.transform, targetPosition)) {
 
 						if (pathCounter == playerPath.Count - 1) {
 							playerPath.Clear ();
@@ -117,19 +117,6 @@ public class ChasePlayer : Leaf {
 		if (distance < range ){
 			return true;
 		}
-		return false;
-
-	}
-
-	//Checks if the character has reached its destination.
-	private bool atDestination(Transform currentPosition, Vector3 destPosition){
-
-		Vector3 direction = destPosition - currentPosition.position;
-		direction.y = 0;
-		if (direction.magnitude < .2f){
-			return true;
-		}
-
 		return false;
 
 	}

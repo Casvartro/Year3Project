@@ -6,6 +6,10 @@ public class WaveController : MonoBehaviour {
 
 	public GameObject baseZombie;
 	public GameObject[] powerZombies;
+
+	public GameObject baseSoldier;
+	public GameObject[] powerSoldiers;
+
 	public Transform[] enemySpawns;
 	public Transform playerTransform;
 	public int waveNumber = 1;
@@ -65,12 +69,15 @@ public class WaveController : MonoBehaviour {
 	private void spawnWaves(){
 
 		int multiplier = 0;
-		if (waveNumber <= 4) {
-			multiplier = waveNumber;
+		if (waveNumber == 1 || waveNumber == 2) {
+			multiplier = 1;
+		} else if (waveNumber <= 5) {
+			multiplier = waveNumber - 1;
 		}
-		enemyCount = 5 * multiplier;
-		int i = 0;
 
+		enemyCount = 5 * multiplier;
+
+		int i = 0;
 		while (i < enemyCount){
 			int rSpawn = Random.Range (0, 25);
 			if (spawnCheck [rSpawn] == 0 && distanceToPlayer(enemySpawns[rSpawn].transform) > 75.0f) {
@@ -92,11 +99,21 @@ public class WaveController : MonoBehaviour {
 
 		if (waveNumber == 1) {
 			enemy = baseZombie;
+		} else if (waveNumber == 2){
+			enemy = baseSoldier;
 		} else {
 			if (Random.value < powerEnemyChance) {
-				enemy = powerZombies [Random.Range (0, powerZombies.Length)];
+				if (Random.value < 0.5f) {
+					enemy = powerZombies [Random.Range (0, powerZombies.Length)];
+				} else {
+					enemy = powerSoldiers[Random.Range (0, powerSoldiers.Length)];
+				}
 			} else {
-				enemy = baseZombie;
+				if (Random.value < 0.5f) {
+					enemy = baseZombie;
+				} else {
+					enemy = baseSoldier;
+				}
 			}
 		}
 

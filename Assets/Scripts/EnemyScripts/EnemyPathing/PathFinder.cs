@@ -238,6 +238,18 @@ public class PathFinder {
 		} else {
 			return true;
 		}
+	}
+
+	//Checks if the enemy has reached its node destination.
+	public static bool atDestination(Transform currentPosition, Vector3 destPosition){
+
+		Vector3 direction = destPosition - currentPosition.position;
+		direction.y = 0;
+		if (direction.magnitude < .2f){
+			return true;
+		}
+
+		return false;
 
 	}
 

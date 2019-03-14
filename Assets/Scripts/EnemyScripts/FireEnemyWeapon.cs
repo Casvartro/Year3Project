@@ -13,11 +13,15 @@ public class FireEnemyWeapon : MonoBehaviour {
 	private float timer = 0.0f;
 	private int waitTime = 1;
 	private Vector3 playerPos;
+	private EnemyController enemy;
+	private int bulletDamage;
 
 	// Use this for initialization
 	void Start () {
 		isFiring = false;
 		firstFire = true;
+		enemy = this.GetComponent<EnemyController> ();
+		bulletDamage = enemy.enemyDamage;
 	}
 	
 	// Update is called once per frame
@@ -41,7 +45,9 @@ public class FireEnemyWeapon : MonoBehaviour {
 	private void fire(){
 		//Function for creating and firing bullets based on its rigidbody's velocity.
 
-		var bullet = Instantiate (bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+		GameObject bullet = Instantiate (bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+		EnemyBulletController bControl = bullet.GetComponent<EnemyBulletController> ();
+		bControl.enemyDamage = bulletDamage;
 		bullet.GetComponent<Rigidbody> ().velocity = (playerPos - bullet.transform.position).normalized * bulletSpeed;
 		Destroy (bullet, 5.0f);
 	}

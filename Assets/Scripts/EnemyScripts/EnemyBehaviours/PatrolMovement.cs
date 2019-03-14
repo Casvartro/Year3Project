@@ -32,7 +32,7 @@ public class PatrolMovement : Leaf {
 			currentNode = (NodeController)patrolPath [pathCounter];
 			modPositionOffset ();
 
-			if (atDestination (enemyContext.enemy.transform, currPos)) {
+			if (PathFinder.atDestination (enemyContext.enemy.transform, currPos)) {
 				enemyContext.enemyAnimation.Play ("idle");
 				pathCounter++;
 				currentNode = (NodeController)patrolPath [pathCounter];
@@ -54,19 +54,6 @@ public class PatrolMovement : Leaf {
 		}
 
 		return BehaviourStatus.RUNNING;
-	}
-
-	//Checks if the character has reached its destination.
-	private bool atDestination(Transform currentPosition, Vector3 destPosition){
-
-		Vector3 direction = destPosition - currentPosition.position;
-		direction.y = 0;
-		if (direction.magnitude < .2f){
-			return true;
-		}
-
-		return false;
-
 	}
 
 	private void modPositionOffset(){
