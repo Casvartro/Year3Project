@@ -26,6 +26,7 @@ public class BulletController : MonoBehaviour {
 		}
 
 		if (col.gameObject.tag == "enemy") {
+			player.addShotHitTarget ();
 			EnemyController enemy = col.gameObject.GetComponent<EnemyController> ();
 			enemy.damageTaken (bulletDamage);
 			Debug.Log ("Bullet Damage: " + bulletDamage);

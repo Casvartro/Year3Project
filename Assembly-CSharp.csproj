@@ -89,7 +89,9 @@
      <Compile Include="Assets\Scripts\PlayerScripts\BulletController.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\GameController.cs" />
+     <Compile Include="Assets\Scripts\PlayerScripts\GameOverController.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\PlayerScripts\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\WeaponController.cs" />
      <Compile Include="Assets\Unity Assets\CursorsAndCrosshairs\CursorChanger.cs" />
      <None Include="Assets\Unity Assets\Rainer_AK\RELEASE NOTE.txt" />

@@ -71,7 +71,6 @@ public class ChasePlayer : Leaf {
 						if (PathFinder.isNodeBehind (firstNode.transform.position, enemyContext.enemy.transform)) {
 							pathCounter++;
 						}
-						Debug.Log ("Hi");
 					}
 
 				}

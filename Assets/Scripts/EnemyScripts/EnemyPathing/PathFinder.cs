@@ -149,12 +149,22 @@ public class PathFinder {
 
 		foreach (GameObject node in pathNodes) {
 			if (Physics.Raycast (node.transform.position, Vector3.down, out planeHit, 10.0f)) {
-				if (!planeNodes.ContainsKey (planeHit.collider.name)) {
-					planeNodes.Add (new KeyValuePair<string, List<GameObject>> (planeHit.collider.name, new List<GameObject>()));
+				if (planeHit.collider.tag == "floor") {
+					if (!planeNodes.ContainsKey (planeHit.collider.name)) {
+						planeNodes.Add (new KeyValuePair<string, List<GameObject>> 
+							(planeHit.collider.name, new List<GameObject> ()));
+					}
+					planeNodes [planeHit.collider.name].Add (node);
 				}
-				planeNodes [planeHit.collider.name].Add (node);
 			}
 		}
+
+		//foreach (KeyValuePair<string, List<GameObject>> item in planeNodes) {
+		//	Debug.Log ("Key : " + item.Key);
+		//	foreach (GameObject node in item.Value) {
+				//Debug.Log ("Node: " + node);
+		//	}
+		//}
 			
 		return planeNodes;
 	

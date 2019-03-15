@@ -42,6 +42,10 @@ public class GameController : MonoBehaviour {
 		togglePause ();
 
 		if (player.getPlayerHealth () == 0) {
+			PlayerStats.setTimerText (timerLabelText.text);
+			PlayerStats.setScoreText (totalScore.ToString ());
+			PlayerStats.setShotsFired (player.shotsFired);
+			PlayerStats.setShotsHitTarget (player.shotsHitTarget);
 			SceneManager.LoadScene ("GameOverScene");
 		}
 

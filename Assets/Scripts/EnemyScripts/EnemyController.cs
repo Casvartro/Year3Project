@@ -14,6 +14,7 @@ public class EnemyController : MonoBehaviour {
 	public string enemyType;
 	public float gravity = 20.0f;
 	public float vertSpeed = 0.0f;
+	public float flashTime;
 
 	private CollisionFlags collisionFlag;
 
@@ -25,6 +26,9 @@ public class EnemyController : MonoBehaviour {
 	private float slopeForce = 5;
 	private float slopeForceRayLength = 1.5f;
 
+	private SkinnedMeshRenderer[] renderers;
+	private ArrayList originalColor = new ArrayList();
+
 	private WaveController waveController;
 	private GameController scoreController;
 	private CharacterController enemy;
@@ -34,13 +38,14 @@ public class EnemyController : MonoBehaviour {
 	private enum EnemyState{ ALIVE, DYING, DEAD }
 	private EnemyState state;
 
-
 	void Start(){
 		state = EnemyState.ALIVE;
 	}
 
 	void Awake () {
-		
+
+		getOriginalColors ();
+
 		waveController = GameObject.FindObjectOfType<WaveController> ();
 		scoreController = GameObject.FindObjectOfType<GameController> ();
 		this.enemy = this.GetComponent<CharacterController> ();
@@ -89,6 +94,7 @@ public class EnemyController : MonoBehaviour {
 		}
 
 	}
+		
 
 	//Returns the enemy health.
 	public int getEnemyHealth(){
@@ -98,8 +104,42 @@ public class EnemyController : MonoBehaviour {
 	//Subtracts damage to the enemy based on the projectile they recieved.
 	public void damageTaken(int damage){
 		enemyHealth = enemyHealth - damage;
+		flashRed ();
 	}
 
+	private void getOriginalColors(){
+
+		renderers = this.GetComponentsInChildren<SkinnedMeshRenderer> ();
+		foreach(SkinnedMeshRenderer rend in renderers){
+				originalColor.Add(rend.material.color);
+		}
+		originalColor.Reverse ();
+
+	}
+
+	private void flashRed(){
+
+		Color flashColor;
+
+		if (enemyColor == "red") {
+			flashColor = Color.blue;
+		} else {
+			flashColor = Color.red;
+		}
+
+		foreach(SkinnedMeshRenderer rend in renderers){
+			rend.material.color = flashColor;
+		}
+		Invoke ("ResetColor", flashTime);
+	}
+
+	private void ResetColor(){
+		foreach(SkinnedMeshRenderer rend in renderers){
+			rend.material.color = (Color) originalColor [0];
+			originalColor.RemoveAt (0);
+		}
+	}
+		
 	//Turns the enemy towards the direction of the next node or target
 	public void enemyRotation (Vector3 nodePos){
 

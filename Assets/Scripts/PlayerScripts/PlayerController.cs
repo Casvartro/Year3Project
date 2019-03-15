@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour {
 	public int powerMultiplier = 2;
 	public enum powerUpState{ NONE, BLUE, RED, GREEN};
 
+	public float shotsFired;
+	public float shotsHitTarget;
+
 	private float rotY = 0.0f;
 	private float rotX = 0.0f;
 	private int playerHealth = 50;
@@ -34,6 +37,8 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		shotsFired = 0;
+		shotsHitTarget = 0;
 		currentPower = powerUpState.NONE;
 		gameStatus = GameObject.Find ("UICanvas").GetComponent<GameController> ();
 		player = this.GetComponent<CharacterController> ();
@@ -251,6 +256,14 @@ public class PlayerController : MonoBehaviour {
 			playerHealth = 0;
 		}
 
+	}
+
+	public void addShotFired(){
+		shotsFired += 1;
+	}
+
+	public void addShotHitTarget(){
+		shotsHitTarget += 1;
 	}
 
 }

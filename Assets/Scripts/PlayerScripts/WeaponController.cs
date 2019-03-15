@@ -15,6 +15,7 @@ public class WeaponController : MonoBehaviour {
 	private int currentAmmo;
 	private string weaponName = "Test Weapon";
 	private GameController gameStatus;
+	private PlayerController player;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +23,7 @@ public class WeaponController : MonoBehaviour {
 		weaponNameText.text = weaponName;
 		ammoCountText.text = currentAmmo + " / " + maxAmmo;
 		gameStatus = GameObject.Find ("UICanvas").GetComponent<GameController> ();
+		player = GameObject.Find ("Player").GetComponent<PlayerController> ();
 	}
 
 	void LateUpdate () {
@@ -38,6 +40,7 @@ public class WeaponController : MonoBehaviour {
 		//Function for creating and firing bullets based on its rigidbody's velocity.
 
 		var bullet = Instantiate (bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
+		player.addShotFired ();
 		bullet.GetComponent<Rigidbody> ().velocity = bullet.transform.forward * bulletSpeed;
 		Destroy (bullet, 5.0f);
 	}

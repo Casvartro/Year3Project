@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 4713771}
   m_Layer: 0
   m_Name: RightLedge1Ramp
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1170,7 +1170,7 @@ GameObject:
   - component: {fileID: 116255305}
   m_Layer: 0
   m_Name: RightUpperLedge3
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4006,7 +4006,7 @@ GameObject:
   - component: {fileID: 297086982}
   m_Layer: 0
   m_Name: TopMiddleArea
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4235,7 +4235,7 @@ GameObject:
   - component: {fileID: 309195753}
   m_Layer: 0
   m_Name: BotRightSide
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4322,7 +4322,7 @@ GameObject:
   - component: {fileID: 314610560}
   m_Layer: 0
   m_Name: MainLobby
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4872,7 +4872,7 @@ GameObject:
   - component: {fileID: 346215702}
   m_Layer: 0
   m_Name: RightLedge2
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5216,7 +5216,7 @@ GameObject:
   - component: {fileID: 349890658}
   m_Layer: 0
   m_Name: RightSideRamp
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5872,7 +5872,7 @@ GameObject:
   - component: {fileID: 386242550}
   m_Layer: 0
   m_Name: RightUpperLedge2
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7130,7 +7130,7 @@ GameObject:
   - component: {fileID: 467687334}
   m_Layer: 0
   m_Name: TopRightToMid2
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7219,7 +7219,7 @@ GameObject:
   - component: {fileID: 469980705}
   m_Layer: 0
   m_Name: RightArea
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7392,7 +7392,7 @@ GameObject:
   - component: {fileID: 473455385}
   m_Layer: 0
   m_Name: BotRightToMid
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8851,6 +8851,11 @@ Prefab:
       propertyPath: enemyDamage
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 114705654276138224, guid: 625f73b99be673b498cc44034f391314,
+        type: 2}
+      propertyPath: flashTime
+      value: 0.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 625f73b99be673b498cc44034f391314, type: 2}
   m_IsPrefabAsset: 0
@@ -9223,7 +9228,7 @@ GameObject:
   - component: {fileID: 604865581}
   m_Layer: 0
   m_Name: TopMainLobby
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10020,7 +10025,7 @@ GameObject:
   - component: {fileID: 634681944}
   m_Layer: 0
   m_Name: BotMid3
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10032,7 +10037,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 634681942}
   m_LocalRotation: {x: 0.2965416, y: 0, z: 0, w: 0.95501995}
-  m_LocalPosition: {x: -3.15, y: -2.82, z: 15.15}
+  m_LocalPosition: {x: -3.15, y: -2.4, z: 15.15}
   m_LocalScale: {x: 0.16, y: 1.1874121, z: 1}
   m_Children:
   - {fileID: 753351829}
@@ -10912,7 +10917,7 @@ GameObject:
   - component: {fileID: 717278772}
   m_Layer: 0
   m_Name: OutToMain2
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11141,7 +11146,7 @@ GameObject:
   - component: {fileID: 727070736}
   m_Layer: 0
   m_Name: BotRight2
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11487,7 +11492,7 @@ GameObject:
   - component: {fileID: 760272428}
   m_Layer: 5
   m_Name: UICanvas
-  m_TagString: Untagged
+  m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11857,7 +11862,7 @@ GameObject:
   - component: {fileID: 794852234}
   m_Layer: 0
   m_Name: OutsideArea
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12038,7 +12043,7 @@ GameObject:
   - component: {fileID: 799234629}
   m_Layer: 0
   m_Name: RightUpperLedge1
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12123,7 +12128,7 @@ GameObject:
   - component: {fileID: 805094250}
   m_Layer: 0
   m_Name: OutsideFrontLedge
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12294,7 +12299,7 @@ GameObject:
   - component: {fileID: 808301998}
   m_Layer: 0
   m_Name: RightLedge1
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13211,6 +13216,11 @@ Prefab:
         type: 2}
       propertyPath: enemyType
       value: Zombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 114939498551157530, guid: 2d7123a84b7d00e47b137f293a8faf9d,
+        type: 2}
+      propertyPath: flashTime
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d7123a84b7d00e47b137f293a8faf9d, type: 2}
@@ -14215,7 +14225,7 @@ GameObject:
   - component: {fileID: 944862909}
   m_Layer: 0
   m_Name: TopRightToMid4
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14772,7 +14782,7 @@ GameObject:
   - component: {fileID: 971027154}
   m_Layer: 0
   m_Name: MiddleArea
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15613,7 +15623,7 @@ GameObject:
   - component: {fileID: 1018663874}
   m_Layer: 0
   m_Name: TopMainToMid
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16910,7 +16920,7 @@ GameObject:
   - component: {fileID: 1120817855}
   m_Layer: 0
   m_Name: OutsideFrontRamp
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17500,7 +17510,7 @@ GameObject:
   - component: {fileID: 1148408200}
   m_Layer: 0
   m_Name: BotRightToMid2
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18612,7 +18622,7 @@ GameObject:
   - component: {fileID: 1233264995}
   m_Layer: 0
   m_Name: TopRightArea
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19455,7 +19465,7 @@ GameObject:
   - component: {fileID: 1302740755}
   m_Layer: 0
   m_Name: RightSideArea
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20391,7 +20401,7 @@ GameObject:
   - component: {fileID: 1364900587}
   m_Layer: 0
   m_Name: RightUpperLedge1Ramp
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20733,7 +20743,7 @@ GameObject:
   - component: {fileID: 1386215665}
   m_Layer: 0
   m_Name: OutToMain1
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21165,7 +21175,7 @@ GameObject:
   - component: {fileID: 1424101216}
   m_Layer: 0
   m_Name: RightSideHall
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21323,7 +21333,7 @@ GameObject:
   - component: {fileID: 1427285065}
   m_Layer: 0
   m_Name: RightSideLedge
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22463,7 +22473,7 @@ GameObject:
   - component: {fileID: 1505827561}
   m_Layer: 0
   m_Name: TopMid
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24145,7 +24155,7 @@ GameObject:
   - component: {fileID: 1601820963}
   m_Layer: 0
   m_Name: BotMainToMid
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25517,7 +25527,7 @@ GameObject:
   - component: {fileID: 1681200769}
   m_Layer: 0
   m_Name: RightLedge2Ramp
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25675,7 +25685,7 @@ GameObject:
   - component: {fileID: 1696623966}
   m_Layer: 0
   m_Name: RightUpperLedge2Ramp
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26222,7 +26232,7 @@ GameObject:
   - component: {fileID: 1718575687}
   m_Layer: 0
   m_Name: TopRightToMid3
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26309,7 +26319,7 @@ GameObject:
   - component: {fileID: 1718674580}
   m_Layer: 0
   m_Name: BotRight1
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26552,7 +26562,7 @@ GameObject:
   - component: {fileID: 1729280228}
   m_Layer: 0
   m_Name: BotMidArea
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27023,7 +27033,7 @@ GameObject:
   - component: {fileID: 1768023008}
   m_Layer: 0
   m_Name: BotMid1
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27701,6 +27711,36 @@ Prefab:
     - target: {fileID: 1658075037829246, guid: daaaa2246d7bacb4e9fa4e3560b9d857, type: 2}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114013309301413052, guid: daaaa2246d7bacb4e9fa4e3560b9d857,
+        type: 2}
+      propertyPath: flashColors.Array.data[0].r
+      value: 0.011764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 114013309301413052, guid: daaaa2246d7bacb4e9fa4e3560b9d857,
+        type: 2}
+      propertyPath: flashColors.Array.data[0].g
+      value: 0.32941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 114013309301413052, guid: daaaa2246d7bacb4e9fa4e3560b9d857,
+        type: 2}
+      propertyPath: flashColors.Array.data[0].b
+      value: 0.85882354
+      objectReference: {fileID: 0}
+    - target: {fileID: 114013309301413052, guid: daaaa2246d7bacb4e9fa4e3560b9d857,
+        type: 2}
+      propertyPath: damageColor
+      value: 
+      objectReference: {fileID: 2100000, guid: bb59a86ba16a9c243b9ea10a474ec1ff, type: 2}
+    - target: {fileID: 114013309301413052, guid: daaaa2246d7bacb4e9fa4e3560b9d857,
+        type: 2}
+      propertyPath: lengthOfTimeToFlash
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114013309301413052, guid: daaaa2246d7bacb4e9fa4e3560b9d857,
+        type: 2}
+      propertyPath: flashTime
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: daaaa2246d7bacb4e9fa4e3560b9d857, type: 2}
@@ -29656,7 +29696,7 @@ MonoBehaviour:
   playerTransform: {fileID: 1258533506}
   waveNumber: 1
   powerEnemyChance: 0.15
-  wavesOn: 1
+  wavesOn: 0
 --- !u!1 &1992955066
 GameObject:
   m_ObjectHideFlags: 0
@@ -29841,7 +29881,7 @@ GameObject:
   - component: {fileID: 1997144716}
   m_Layer: 0
   m_Name: BotMid2
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30212,7 +30252,7 @@ GameObject:
   - component: {fileID: 2036322898}
   m_Layer: 0
   m_Name: BotMidSide1
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30556,7 +30596,7 @@ GameObject:
   - component: {fileID: 2052420672}
   m_Layer: 0
   m_Name: TopRightToMid1
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30789,7 +30829,7 @@ GameObject:
   - component: {fileID: 2061218444}
   m_Layer: 0
   m_Name: BotMidSide2
-  m_TagString: Untagged
+  m_TagString: floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
