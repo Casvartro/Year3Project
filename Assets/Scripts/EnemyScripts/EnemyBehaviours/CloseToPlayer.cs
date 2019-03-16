@@ -10,7 +10,7 @@ public class CloseToPlayer : Leaf {
 
 		BehaviourContext enemyContext = (BehaviourContext)state;
 
-		if (enemyContext.enemyInRange(0.0f)) {
+		if (enemyContext.enemyInRange(0.2f)) {
 
 			if (enemyContext.enemySight.enableDebug) {
 				Debug.Log ("Player Near");

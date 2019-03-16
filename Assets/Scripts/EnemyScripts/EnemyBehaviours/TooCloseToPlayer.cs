@@ -10,7 +10,7 @@ public class TooCloseToPlayer : Leaf {
 
 		BehaviourContext enemyContext = (BehaviourContext)state;
 
-		if (enemyContext.enemyInSight() && enemyContext.enemyTooClose()) {
+		if (enemyContext.enemyTooClose()) {
 
 			if (enemyContext.enemySight.enableDebug) {
 				Debug.Log ("Player Too Close, Backing UP");

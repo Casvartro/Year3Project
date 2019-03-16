@@ -31,7 +31,12 @@ public class GameOverController : MonoBehaviour {
 	private void calculateAccuracy(){
 		float shotsFired = PlayerStats.getShotsFired ();
 		float shotsHitTarget = PlayerStats.getShotsHitTarget ();
-		accuracy = Mathf.Round((shotsHitTarget / shotsFired ) * 100);
+
+		if (shotsFired == 0) {
+			accuracy = 0.0f;
+		} else {
+			accuracy = Mathf.Round ((shotsHitTarget / shotsFired) * 100);
+		}
 	}
 
 	private string calculateRank(){

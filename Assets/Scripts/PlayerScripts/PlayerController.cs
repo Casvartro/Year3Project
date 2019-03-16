@@ -16,9 +16,10 @@ public class PlayerController : MonoBehaviour {
 	public Text powerUpText;
 	public int powerMultiplier = 2;
 	public enum powerUpState{ NONE, BLUE, RED, GREEN};
-
 	public float shotsFired;
 	public float shotsHitTarget;
+	public GameObject bloodFilter;
+	public float bloodTime;
 
 	private float rotY = 0.0f;
 	private float rotX = 0.0f;
@@ -33,10 +34,12 @@ public class PlayerController : MonoBehaviour {
 	private Vector3 movementDir;
 	private CharacterController player;
 	private GameController gameStatus;
+	private Image bloodImage;
 
 	// Use this for initialization
 	void Start () {
 
+		bloodImage = bloodFilter.GetComponent<Image> ();
 		shotsFired = 0;
 		shotsHitTarget = 0;
 		currentPower = powerUpState.NONE;
@@ -245,6 +248,7 @@ public class PlayerController : MonoBehaviour {
 	public void takeDamage(int damage){
 
 		playerHealth -= damage;
+		flashBloodFilter ();
 
 		gameStatus.playerNoDamageStreak = false;
 
@@ -256,6 +260,19 @@ public class PlayerController : MonoBehaviour {
 			playerHealth = 0;
 		}
 
+	}
+
+	private void flashBloodFilter(){
+
+		Image bloodImage = bloodFilter.GetComponent<Image> ();
+		bloodImage.color = new Color (255f, 0f, 0f, 0.5f);
+
+		Invoke ("ResetBloodFilter", bloodTime);
+	
+	}
+
+	private void ResetBloodFilter(){
+		bloodImage.color = new Color (255f, 0f, 0f, 0f);
 	}
 
 	public void addShotFired(){

@@ -11569,6 +11569,7 @@ RectTransform:
   - {fileID: 1879912197}
   - {fileID: 921555519}
   - {fileID: 1489122716}
+  - {fileID: 1606235070}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13221,6 +13222,11 @@ Prefab:
         type: 2}
       propertyPath: flashTime
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114452058039496200, guid: 2d7123a84b7d00e47b137f293a8faf9d,
+        type: 2}
+      propertyPath: enableDebug
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d7123a84b7d00e47b137f293a8faf9d, type: 2}
@@ -16442,6 +16448,16 @@ Prefab:
     - target: {fileID: 1552242521597510, guid: 54907656bb82a594eb8b072beeeff4e2, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114796496991414624, guid: 54907656bb82a594eb8b072beeeff4e2,
+        type: 2}
+      propertyPath: bloodFilter
+      value: 
+      objectReference: {fileID: 1606235069}
+    - target: {fileID: 114796496991414624, guid: 54907656bb82a594eb8b072beeeff4e2,
+        type: 2}
+      propertyPath: bloodTime
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 136001350762460752, guid: 54907656bb82a594eb8b072beeeff4e2, type: 2}
@@ -24314,6 +24330,75 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1603008180}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1606235069
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1606235070}
+  - component: {fileID: 1606235072}
+  - component: {fileID: 1606235071}
+  m_Layer: 5
+  m_Name: BloodPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1606235070
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1606235069}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 760272426}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1606235071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1606235069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 0}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1606235072
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1606235069}
+  m_CullTransparentMesh: 0
 --- !u!1001 &1608998241
 Prefab:
   m_ObjectHideFlags: 0
@@ -27710,7 +27795,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1658075037829246, guid: daaaa2246d7bacb4e9fa4e3560b9d857, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114013309301413052, guid: daaaa2246d7bacb4e9fa4e3560b9d857,
         type: 2}

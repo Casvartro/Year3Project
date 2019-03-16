@@ -16,7 +16,7 @@ public class EnemyFallback : Leaf {
 			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
 		}
 
-		if ((!enemyContext.enemyInRange(0.5f) && !enemyContext.enemyTooClose()) || !enemyContext.enemyInSight()) {
+		if ((!enemyContext.enemyInRange(0.5f) && !enemyContext.enemyTooClose())) {
 			enemyContext.enemyWeaponController.isFiring = false;
 			return BehaviourStatus.FAILURE;
 		}
