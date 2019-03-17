@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
 		healthText.text = playerHealth.ToString();
 		setHealthTextColor ();
 
-		cameraPos.position = new Vector3 (this.transform.position.x, this.transform.position.y - 0.5f,
+		cameraPos.position = new Vector3 (this.transform.position.x, this.transform.position.y + 0.5f,
 			this.transform.position.z);
 		
 	}

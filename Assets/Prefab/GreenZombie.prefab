@@ -1315,6 +1315,7 @@ MonoBehaviour:
   enemyType: Zombie
   gravity: 20
   vertSpeed: 0
+  flashTime: 0.5
 --- !u!114 &114498143233075050
 MonoBehaviour:
   m_ObjectHideFlags: 1

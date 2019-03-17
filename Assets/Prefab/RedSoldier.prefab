@@ -1014,6 +1014,7 @@ MonoBehaviour:
   enemyType: Soldier
   gravity: 20
   vertSpeed: 0
+  flashTime: 0.5
 --- !u!114 &114849327627817654
 MonoBehaviour:
   m_ObjectHideFlags: 1

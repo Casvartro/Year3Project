@@ -51,7 +51,6 @@ public class Sight : Sense {
 		
 
 	public float distanceToPlayer(){
-		Debug.Log( Vector3.Distance(playerTransform.position, this.transform.position));
 		return Vector3.Distance(playerTransform.position, this.transform.position);
 	}
 

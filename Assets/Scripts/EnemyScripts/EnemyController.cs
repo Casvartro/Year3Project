@@ -80,6 +80,10 @@ public class EnemyController : MonoBehaviour {
 				this.enemyAnimation.speed = 1.5f;
 				if (enemyType == "Zombie") {
 					enemyAnimation.Play ("fallingback");
+					Collider[] colChildren = this.GetComponentsInChildren<Collider>();
+					foreach (Collider col in colChildren) {
+						col.enabled = false;
+					}
 				} else {
 					enemyAnimation.Play ("idle");
 					this.enemyWeapon.isFiring = false;

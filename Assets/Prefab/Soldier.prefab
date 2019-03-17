@@ -1058,6 +1058,7 @@ MonoBehaviour:
   enemyType: Soldier
   gravity: 20
   vertSpeed: 0
+  flashTime: 0.5
 --- !u!137 &137037550231214134
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
