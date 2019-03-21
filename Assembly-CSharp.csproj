@@ -95,6 +95,7 @@
      <Compile Include="Assets\Scripts\PlayerScripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\PlayerScripts\WeaponController.cs" />
+     <Compile Include="Assets\Scripts\PlayerScripts\WeaponMeleeController.cs" />
      <Compile Include="Assets\Unity Assets\CursorsAndCrosshairs\CursorChanger.cs" />
      <None Include="Assets\Unity Assets\Rainer_AK\RELEASE NOTE.txt" />
  <Reference Include="UnityEditor.StandardEvents">

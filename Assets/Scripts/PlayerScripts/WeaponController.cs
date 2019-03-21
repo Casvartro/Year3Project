@@ -18,21 +18,33 @@ public class WeaponController : MonoBehaviour {
 	private string weaponName = "Test Weapon";
 	private GameController gameStatus;
 	private PlayerController player;
+
 	private AudioSource shotAudio;
 	private float startVolume;
+
+	private bool melee;
+	private Collider meleeCollider;
+
 
 	private SettingsMenu soundSettings;
 
 	// Use this for initialization
 	void Start () {
+
 		currentAmmo = maxAmmo;
 		weaponNameText.text = weaponName;
 		ammoCountText.text = currentAmmo + " / " + maxAmmo;
+
 		gameStatus = GameObject.Find ("UICanvas").GetComponent<GameController> ();
 		player = GameObject.Find ("Player").GetComponent<PlayerController> ();
+
 		shotAudio = this.GetComponent<AudioSource> ();
 		startVolume = shotAudio.volume;
 		soundSettings = GameObject.Find ("UICanvas").GetComponent<SettingsMenu> ();
+
+		melee = false;
+		meleeCollider = this.GetComponent<BoxCollider> ();
+
 	}
 
 	void Update(){
@@ -43,12 +55,30 @@ public class WeaponController : MonoBehaviour {
 
 	void LateUpdate () {
 		if (!gameStatus.checkPause ()) {
-			if (currentAmmo != 0 && Input.GetMouseButtonDown (0)) {
+			if (currentAmmo != 0 && Input.GetMouseButtonDown (0) && !melee) {
 				fire ();
 				currentAmmo = currentAmmo - 1;
 				ammoCountText.text = currentAmmo + " / " + maxAmmo;
 			}
+
+			if (Input.GetMouseButton (1) && !melee) {
+				StartCoroutine(meleeAttack ());
+			}
 		}
+	}
+
+	private IEnumerator meleeAttack(){
+		melee = true;
+		this.transform.localEulerAngles = new Vector3 (Mathf.Round(-2.0f), Mathf.Round(-45.0f), Mathf.Round(1.0f));
+		this.transform.localPosition = new Vector3 (0.2f, -0.3f, 1.0f);
+		this.transform.localScale = new Vector3 (0.15f, 0.2f, 1.4f);
+		meleeCollider.enabled = true;
+		yield return new WaitForSeconds (1);
+		this.transform.localEulerAngles = new Vector3 (Mathf.Round(-2.0f), Mathf.Round(-3.0f), Mathf.Round(1.0f));
+		this.transform.localPosition = new Vector3 (0.2f, -0.3f, 0.6f);
+		this.transform.localScale = new Vector3 (0.15f, 0.2f, 0.5f);
+		melee = false;
+		meleeCollider.enabled = false;
 	}
 
 	private void fire(){
@@ -107,4 +137,5 @@ public class WeaponController : MonoBehaviour {
 		}
 		ammoCountText.text = currentAmmo + " / " + maxAmmo;
 	}
+		
 }

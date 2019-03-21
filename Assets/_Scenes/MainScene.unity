@@ -14207,7 +14207,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1231968311710204, guid: 2d7123a84b7d00e47b137f293a8faf9d, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114939498551157530, guid: 2d7123a84b7d00e47b137f293a8faf9d,
         type: 2}
@@ -19532,7 +19532,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4529512175037732, guid: aceec8e93ee43814eb55bb7efa709a0e, type: 2}
       propertyPath: m_LocalScale.x
-      value: 0.14999986
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: 114313768326884276, guid: aceec8e93ee43814eb55bb7efa709a0e,
         type: 2}
@@ -19585,6 +19585,16 @@ Prefab:
       propertyPath: crosshair
       value: 
       objectReference: {fileID: 1879912196}
+    - target: {fileID: 114313768326884276, guid: aceec8e93ee43814eb55bb7efa709a0e,
+        type: 2}
+      propertyPath: defaultMeleeDamage
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 65953935618161264, guid: aceec8e93ee43814eb55bb7efa709a0e,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aceec8e93ee43814eb55bb7efa709a0e, type: 2}
   m_IsPrefabAsset: 0
@@ -29082,6 +29092,33 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1741386620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1741386614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c464feb7c2ca0a479a14a7c03795e3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMeleeDamage: 100
+--- !u!54 &1741386621
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1741386614}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 1
 --- !u!1 &1745221648
 GameObject:
   m_ObjectHideFlags: 0
@@ -32046,7 +32083,7 @@ MonoBehaviour:
   playerTransform: {fileID: 1258533506}
   waveNumber: 1
   powerEnemyChance: 0.15
-  wavesOn: 1
+  wavesOn: 0
 --- !u!1 &1992955066
 GameObject:
   m_ObjectHideFlags: 0
