@@ -9349,7 +9349,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1479243069991760, guid: 625f73b99be673b498cc44034f391314, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114486165635034512, guid: 625f73b99be673b498cc44034f391314,
         type: 2}
@@ -9365,6 +9365,11 @@ Prefab:
         type: 2}
       propertyPath: flashTime
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114608226772517762, guid: 625f73b99be673b498cc44034f391314,
+        type: 2}
+      propertyPath: enableDebug
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 625f73b99be673b498cc44034f391314, type: 2}
@@ -32384,7 +32389,7 @@ MonoBehaviour:
   playerTransform: {fileID: 1258533506}
   waveNumber: 1
   powerEnemyChance: 0.15
-  wavesOn: 0
+  wavesOn: 1
 --- !u!1 &1992955066
 GameObject:
   m_ObjectHideFlags: 0

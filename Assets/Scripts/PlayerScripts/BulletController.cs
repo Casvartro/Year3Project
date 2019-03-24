@@ -10,14 +10,17 @@ public class BulletController : MonoBehaviour {
 
 	private int bulletDamage;
 	private PlayerController player;
+	private Vector3 previousPosition;
+	private Rigidbody bulletRB;
 
 	void Start(){
 		bulletDamage = defaultDamage;
+		previousPosition = transform.position;
 		player = GameObject.Find ("Player").GetComponent<PlayerController> ();
+		bulletRB = this.GetComponent<Rigidbody> ();
 	}
-		
 
-	void OnCollisionEnter(Collision col){
+	void Update(){
 
 		if (player.getCurrentPower () == PlayerController.powerUpState.RED) {
 			bulletDamage *= player.powerMultiplier; 
@@ -25,11 +28,17 @@ public class BulletController : MonoBehaviour {
 			bulletDamage = defaultDamage;
 		}
 
+		previousPosition = BulletCollision.bulletCollisionCast (gameObject, transform, previousPosition, bulletRB, bulletDamage, "player");
+
+	}
+		
+
+	void OnCollisionEnter(Collision col){
+		
 		if (col.gameObject.tag == "enemy") {
 			player.addShotHitTarget ();
 			EnemyController enemy = col.gameObject.GetComponent<EnemyController> ();
 			enemy.damageTaken (bulletDamage);
-			Debug.Log ("Bullet Damage: " + bulletDamage);
 		}
 		Destroy (gameObject);
 	}
