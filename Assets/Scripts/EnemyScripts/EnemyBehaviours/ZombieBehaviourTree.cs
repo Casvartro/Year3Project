@@ -8,8 +8,8 @@ public class ZombieBehaviourTree : MonoBehaviour {
 	//Utilizies composite and leaf nodes for the zombies to operate.
 
 	public float enemyRange;
+	public BehaviourContext behaviourState;
 	private BehaviourNode behaviourTree;
-	private BehaviourContext behaviourState;
 	private CharacterController enemy;
 	private EnemyController enemyPhysics;
 	private Animator enemyAnimation;

@@ -17,6 +17,8 @@ public class GameOverController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		Cursor.visible = true;
+		Cursor.lockState = CursorLockMode.None;
 		time = PlayerStats.getTimerText ();
 		score = int.Parse(PlayerStats.getScoreText ());
 		calculateAccuracy ();

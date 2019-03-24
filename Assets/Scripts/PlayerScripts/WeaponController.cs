@@ -73,7 +73,7 @@ public class WeaponController : MonoBehaviour {
 		this.transform.localPosition = new Vector3 (0.2f, -0.3f, 1.0f);
 		this.transform.localScale = new Vector3 (0.15f, 0.2f, 1.4f);
 		meleeCollider.enabled = true;
-		yield return new WaitForSeconds (1);
+		yield return new WaitForSeconds (0.4f);
 		this.transform.localEulerAngles = new Vector3 (Mathf.Round(-2.0f), Mathf.Round(-3.0f), Mathf.Round(1.0f));
 		this.transform.localPosition = new Vector3 (0.2f, -0.3f, 0.6f);
 		this.transform.localScale = new Vector3 (0.15f, 0.2f, 0.5f);
@@ -93,6 +93,7 @@ public class WeaponController : MonoBehaviour {
 
 		player.addShotFired ();
 		playGunAudio ();
+		informEnemyOfAudio (player.transform.position, 50);
 
 		Vector3 direction = (ray.GetPoint(100000.0f) - bullet.transform.position).normalized;
 		bulletRigidBody.AddForce(direction * bulletSpeed, ForceMode.Impulse);
@@ -120,6 +121,28 @@ public class WeaponController : MonoBehaviour {
 			yield return null;
 		}
 		if (_EndVolume == 0) { _AudioSource.UnPause(); }
+	}
+
+	private void informEnemyOfAudio(Vector3 center, float radius){
+		
+		Collider[] hitColliders = Physics.OverlapSphere(center, radius);
+		int i = 0;
+		while (i < hitColliders.Length){
+			if (hitColliders [i].tag == "enemy") {
+				EnemyController enemy = hitColliders [i].gameObject.GetComponent<EnemyController> ();
+				if (enemy.enemyType == "Zombie") {
+					ZombieBehaviourTree enemyBehaviour = hitColliders [i].gameObject.GetComponent<ZombieBehaviourTree> ();
+					enemyBehaviour.behaviourState.playerHeard = true;
+					enemyBehaviour.behaviourState.playerRecentShot = true;
+				} else if (enemy.enemyType == "Soldier") {
+					SoldierBehaviourTree enemyBehaviour = hitColliders [i].gameObject.GetComponent<SoldierBehaviourTree> ();
+					enemyBehaviour.behaviourState.playerHeard = true;
+					enemyBehaviour.behaviourState.playerRecentShot = true;
+				}
+			}
+			i++;
+		}
+	
 	}
 
 	public int getCurrentAmmo(){

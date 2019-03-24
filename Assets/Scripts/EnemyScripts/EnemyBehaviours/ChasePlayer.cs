@@ -27,18 +27,21 @@ public class ChasePlayer : Leaf {
 
 		BehaviourContext enemyContext = (BehaviourContext)state;
 
-		if (enemyContext.enemyInSight()) {
-
+		if (enemyContext.enemyInSight() || (enemyContext.playerHeard && enemyContext.playerRecentShot)) {
+		//if (enemyContext.enemyInSight()) {
 			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
-
+			if (enemyContext.playerRecentShot) {
+				enemyContext.playerRecentShot = false;
+			}
 		}
 
-		if(!enemyContext.enemyInSight() && playerPath.Count == 0){
+		if(!enemyContext.enemyInSight() && !enemyContext.playerHeard && playerPath.Count == 0){
 			return BehaviourStatus.FAILURE;
 		}
 
 		if (atPlayer (enemyContext.enemy.transform, playerPosition, enemyContext.enemyRange) && enemyContext.enemyInSight()) {
 			enemyContext.enemyAnimation.Play ("idle");
+			enemyContext.playerHeard = false;
 			return BehaviourStatus.SUCCESS;
 		}
 
@@ -89,6 +92,8 @@ public class ChasePlayer : Leaf {
 							if (enemyContext.enemyInSight ()) {
 								targetPosition = playerPosition;
 							} else {
+								Debug.Log ("hi");
+								enemyContext.playerHeard = false;
 								return BehaviourStatus.FAILURE;
 							}
 						} else {

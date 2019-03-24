@@ -18,7 +18,8 @@ public class PatrolMovement : Leaf {
 
 		BehaviourContext enemyContext = (BehaviourContext)state;
 
-		if (enemyContext.enemySight.getPlayerSeen() || enemyContext.enemyInRange (0.5f)) {
+		if (enemyContext.enemySight.getPlayerSeen() || enemyContext.enemyInRange (0.5f) || enemyContext.playerHeard) {
+		//if (enemyContext.enemySight.getPlayerSeen() || enemyContext.enemyInRange (0.5f)) {
 			return BehaviourStatus.FAILURE;
 		}
 			

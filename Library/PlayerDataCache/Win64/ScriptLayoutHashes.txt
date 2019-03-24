@@ -180,6 +180,7 @@ e1ea12ca952c81d81a9a21fdf34446ed UnityEngine.HoloLens.dll:UnityEngine.EventSyste
 98d69a140ec0084cde3b6a5e09aea295 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingCollider
 dfd33ff9ae3ce8d7ca1f22b475ec2387 UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 aac9c55ae7ba4b95b852a7d9c191acd1 Unity.TextMeshPro.dll:TMPro.TextMeshProUGUI
+d9c073a7f7827d8735be2b3b0b888504 Assembly-CSharp.dll:.WeaponMeleeController
 073a44366d1338e1974733dcce25c27c Assembly-CSharp.dll:.WeaponController
 0a006f3734181ba8b26758f0866152c0 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
 5218f3504002834a3b369a7a3839300b Assembly-CSharp.dll:.SoldierBehaviourTree

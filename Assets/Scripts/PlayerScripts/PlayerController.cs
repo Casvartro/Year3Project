@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 	public float shotsHitTarget;
 	public GameObject bloodFilter;
 	public float bloodTime;
+	public Toggle godToggle;
 
 	private float rotY = 0.0f;
 	private float rotX = 0.0f;
@@ -247,17 +248,19 @@ public class PlayerController : MonoBehaviour {
 	//Responsible for showing damage when taken from enemy attacks.
 	public void takeDamage(int damage){
 
-		playerHealth -= damage;
-		flashBloodFilter ();
+		if (!godToggle.isOn) {
+			playerHealth -= damage;
+			flashBloodFilter ();
 
-		gameStatus.playerNoDamageStreak = false;
+			gameStatus.playerNoDamageStreak = false;
 
-		if (gameStatus.modifierCount > 1) {
-			gameStatus.modifierCount -= 1;
-		}
+			if (gameStatus.modifierCount > 1) {
+				gameStatus.modifierCount -= 1;
+			}
 
-		if (playerHealth < 0) {
-			playerHealth = 0;
+			if (playerHealth < 0) {
+				playerHealth = 0;
+			}
 		}
 
 	}

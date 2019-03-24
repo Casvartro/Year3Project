@@ -81,8 +81,12 @@ public class GameController : MonoBehaviour {
 	//Returns a boolean for other objects to check if the game is paused.
 	public bool checkPause(){
 		if (pauseCanvas.enabled) {
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
 			return true;
 		} else {
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Confined;
 			return false;
 		}
 	}

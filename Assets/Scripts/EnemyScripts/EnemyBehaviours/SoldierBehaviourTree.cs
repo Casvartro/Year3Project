@@ -6,8 +6,8 @@ public class SoldierBehaviourTree : MonoBehaviour {
 
 	public float enemyRange;
 	public float enemyCloseRange;
+	public BehaviourContext behaviourState;
 	private BehaviourNode behaviourTree;
-	private BehaviourContext behaviourState;
 	private CharacterController enemy;
 	private EnemyController enemyPhysics;
 	private Animator enemyAnimation;

@@ -19,6 +19,9 @@ public class BehaviourContext : BehaviourState {
 	public FireEnemyWeapon enemyWeaponController;
 	public float closeRange;
 
+	public bool playerHeard = false;
+	public bool playerRecentShot = false;
+
 	public BehaviourContext(CharacterController enemy, EnemyController enemyPhy, Animator enemyAn, Sight sight, 
 		float range, FireEnemyWeapon eWC, float eCloseRange){
 		this.enemy = enemy;
