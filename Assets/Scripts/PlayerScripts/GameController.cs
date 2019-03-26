@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour {
 	public Text enemyCountText;
 	public Text totalScoreText;
 	public Text modifierText;
-	public Canvas pauseCanvas;
+	public GameObject pauseCanvas;
 	public bool playerNoDamageStreak = true;
 	public int modifierCount;
 
@@ -22,8 +22,8 @@ public class GameController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start(){
-		pauseCanvas.enabled = false;
 		modifierCount = 1;
+		pauseCanvas.SetActive(false);
 	}
 		
 	void Awake () {
@@ -68,11 +68,11 @@ public class GameController : MonoBehaviour {
 	public void togglePause(){
 	
 		if (Input.GetKeyDown ("escape")) {
-			if (pauseCanvas.enabled) {
-				pauseCanvas.enabled = false;
+			if (pauseCanvas.activeSelf) {
+				pauseCanvas.SetActive(false);
 				Time.timeScale = 1.0f;
 			} else {
-				pauseCanvas.enabled = true;
+				pauseCanvas.SetActive(true);
 				Time.timeScale = 0f;
 			}	
 		}
@@ -80,7 +80,7 @@ public class GameController : MonoBehaviour {
 
 	//Returns a boolean for other objects to check if the game is paused.
 	public bool checkPause(){
-		if (pauseCanvas.enabled) {
+		if (pauseCanvas.activeSelf) {
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
 			return true;

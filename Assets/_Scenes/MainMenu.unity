@@ -258,7 +258,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 248027617}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.375
+  m_Size: 0.33333334
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1038,7 +1038,7 @@ RectTransform:
   m_Father: {fileID: 1141271195}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.625}
+  m_AnchorMin: {x: 0, y: 0.6666666}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -1707,7 +1707,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 6a87b61809db1384badaa01329314962, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ede69ff325a4c4d008a0600b3b828892, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.042
   m_Pitch: 1
@@ -2616,7 +2616,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 800}
+  m_SizeDelta: {x: 0, y: 900}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &993476254
 MonoBehaviour:
@@ -2653,12 +2653,13 @@ MonoBehaviour:
   m_Text: "\nGame Created By:\nCieran Brazier\n\nAI Design Help:\nUnity 2017 Game
     AI Programming Third Edition\nhttps://github.com/GrymmyD/UnityBehaviourTree\n\nAssets:\nLow
     Poly Soldiers Demo - Polygon Blacksmith\nZombie - PXLTiger\nWeapons Of Choice
-    - Komposite Sound\nCursors and Crosshairs Ultimate Pack - Codiscite\n\nAdditional
-    Help/Resources:\n\nUnity User Manual - https://docs.unity3d.com/Manual/index.html\n\nMain
-    Menu Help - https://unity3d.com/learn/tutorials/topics/user-interface-ui/creating-main-menu\n\nGround
+    - Komposite Sound\nCursors and Crosshairs Ultimate Pack - Codiscite\nDynamic Music
+    Pack - John Leaonard French\n\nAdditional Help/Resources:\n\nUnity User Manual
+    - https://docs.unity3d.com/Manual/index.html\n\nMain Menu Help - https://unity3d.com/learn/tutorials/topics/user-interface-ui/creating-main-menu\n\nGround
     AI With Gravity - https://forum.unity.com/threads/groundnpc.181705/#post-1241872\n\nAudio
     Help - \nhttps://community.gamedev.tv/t/audio-popping-on-call-to-stop/48825\nhttps://forum.unity.com/threads/manage-the-volume-through-different-scenes.526874/\n\nProjectile
-    Collision - https://answers.unity.com/questions/780275/simulating-proper-projectile-travel-time-using-ray.html\n\n\n\n\n\n\n\n\n"
+    Collision - https://answers.unity.com/questions/780275/simulating-proper-projectile-travel-time-using-ray.html\n\nMiniMap
+    Help:\nhttps://www.gamasutra.com/blogs/PiotrSobolewski/20160512/272600/Implementing_a_minimap_in_Unity_tutorial.php\n\n\n\n\n\n\n\n\n"
 --- !u!222 &993476255
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3182,7 +3183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1141271195
 RectTransform:
   m_ObjectHideFlags: 0
