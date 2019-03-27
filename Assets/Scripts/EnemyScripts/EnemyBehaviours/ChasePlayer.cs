@@ -20,7 +20,6 @@ public class ChasePlayer : Leaf {
 	private float offsetValue = 2f;
 	private bool offsetMod = false;
 	private Vector3 currPos;
-
 	private float angle = 10;
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
@@ -28,7 +27,6 @@ public class ChasePlayer : Leaf {
 		BehaviourContext enemyContext = (BehaviourContext)state;
 
 		if (enemyContext.enemyInSight() || (enemyContext.playerHeard && enemyContext.playerRecentShot)) {
-		//if (enemyContext.enemyInSight()) {
 			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
 			if (enemyContext.playerRecentShot) {
 				enemyContext.playerRecentShot = false;
@@ -47,7 +45,7 @@ public class ChasePlayer : Leaf {
 
 		if (Physics.Raycast (playerPosition, Vector3.down, out playerHit, 10.0f) && Physics.Raycast (enemyContext.enemy.transform.position, Vector3.down, out enemyHit, 10.0f)) {
 
-			if (playerHit.collider.name == enemyHit.collider.name && enemyContext.enemyInSight()) {
+			if (playerHit.collider.name == enemyHit.collider.name) {
 
 				targetPosition = playerPosition;
 				rotateAndMove (enemyContext, targetPosition);
@@ -68,6 +66,7 @@ public class ChasePlayer : Leaf {
 					} else {
 
 						playerPath = PathFinder.getPath (startNode, endNode);
+						offsetMod = false;
 						pathCounter = 0;
 
 						NodeController firstNode = (NodeController)playerPath [pathCounter];
@@ -92,7 +91,6 @@ public class ChasePlayer : Leaf {
 							if (enemyContext.enemyInSight ()) {
 								targetPosition = playerPosition;
 							} else {
-								Debug.Log ("hi");
 								enemyContext.playerHeard = false;
 								return BehaviourStatus.FAILURE;
 							}

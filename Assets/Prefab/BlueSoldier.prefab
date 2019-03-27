@@ -833,7 +833,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1246918925443944}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children: []
   m_Father: {fileID: 4338305905243760}
@@ -1110,6 +1110,7 @@ MonoBehaviour:
   detectionRate: 1
   fieldOfView: 180
   viewDistance: 200
+  headTransform: {fileID: 4911031406552916}
 --- !u!114 &114846488724725468
 MonoBehaviour:
   m_ObjectHideFlags: 1

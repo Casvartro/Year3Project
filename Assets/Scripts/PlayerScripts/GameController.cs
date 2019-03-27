@@ -12,18 +12,23 @@ public class GameController : MonoBehaviour {
 	public Text totalScoreText;
 	public Text modifierText;
 	public GameObject pauseCanvas;
+	public GameObject hTPPanel;
+	public GameObject settingsPanel;
 	public bool playerNoDamageStreak = true;
 	public int modifierCount;
+	public Toggle nodeToggle;
 
 	private float gameTime;
 	private WaveController waveController;
 	private int totalScore;
 	private PlayerController player;
+	private GameObject[] pathNodes;
 
 	// Use this for initialization
 	void Start(){
 		modifierCount = 1;
 		pauseCanvas.SetActive(false);
+		pathNodes = GameObject.FindGameObjectsWithTag("PathNode");
 	}
 		
 	void Awake () {
@@ -40,6 +45,18 @@ public class GameController : MonoBehaviour {
 		totalScoreText.text = totalScore.ToString ();
 		modifierText.text = modifierCount.ToString () + "x";
 		togglePause ();
+
+		if (nodeToggle.isOn) {
+			foreach (GameObject node in pathNodes) {
+				Behaviour halo = (Behaviour)node.GetComponent ("Halo");
+				halo.enabled = true;
+			}
+		} else {
+			foreach (GameObject node in pathNodes) {
+				Behaviour halo = (Behaviour)node.GetComponent ("Halo");
+				halo.enabled = false;
+			}
+		}
 
 		if (player.getPlayerHealth () == 0) {
 			PlayerStats.setTimerText (timerLabelText.text);
@@ -69,6 +86,8 @@ public class GameController : MonoBehaviour {
 	
 		if (Input.GetKeyDown ("escape")) {
 			if (pauseCanvas.activeSelf) {
+				settingsPanel.SetActive (false);
+				hTPPanel.SetActive (false);
 				pauseCanvas.SetActive(false);
 				Time.timeScale = 1.0f;
 			} else {

@@ -61,7 +61,7 @@ public class WeaponController : MonoBehaviour {
 				ammoCountText.text = currentAmmo + " / " + maxAmmo;
 			}
 
-			if (Input.GetMouseButton (1) && !melee) {
+			if (Input.GetMouseButtonDown (1) && !melee) {
 				StartCoroutine(meleeAttack ());
 			}
 		}

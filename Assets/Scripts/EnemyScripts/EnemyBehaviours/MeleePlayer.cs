@@ -28,7 +28,8 @@ public class MeleePlayer : Leaf {
 		}
 
 		enemyContext.enemyPhysics.enemyRotation (playerPosition);
-		if (enemyContext.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("idle")) {
+		if (enemyContext.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("idle") ||
+			enemyContext.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("walk")) {
 			enemyContext.enemyAnimation.Play ("attack");
 		}
 		enemyContext.enemyPhysics.enemyMovement (playerPosition, angle);

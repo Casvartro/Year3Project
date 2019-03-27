@@ -126,7 +126,13 @@ public class PathFinder {
 		
 	public static GameObject getPlaneNode(IDictionary<string, List<GameObject>> planeNodes, Vector3 position, RaycastHit objectHit){
 
-		List<GameObject> planeList = planeNodes [objectHit.collider.name];
+		List<GameObject> planeList;
+
+		if (planeNodes.ContainsKey (objectHit.collider.name)) {
+			planeList = planeNodes [objectHit.collider.name];
+		} else {
+			planeList = new List<GameObject> ();
+		}
 		GameObject closestNode = null;
 		float closestDistance = float.PositiveInfinity;
 

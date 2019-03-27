@@ -6,8 +6,8 @@ public class ResumeOnClick : MonoBehaviour {
 
 	public void resumeGame(){
 
-		Canvas pauseCanvas = GameObject.Find ("PauseCanvas").GetComponent<Canvas> ();
-		pauseCanvas.enabled = false;
+		GameObject pauseCanvas = GameObject.Find ("PauseCanvas");
+		pauseCanvas.SetActive (false);
 		Time.timeScale = 1.0f;
 
 	}

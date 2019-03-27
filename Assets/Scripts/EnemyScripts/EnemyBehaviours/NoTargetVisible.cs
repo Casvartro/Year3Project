@@ -11,7 +11,6 @@ public class NoTargetVisible : Leaf {
 		BehaviourContext enemyContext = (BehaviourContext)state;
 
 		if (!enemyContext.enemyInSight() && !enemyContext.enemyInRange(0.5f) && !enemyContext.playerHeard) {
-		//if (!enemyContext.enemyInSight() && !enemyContext.enemyInRange(0.5f)) {
 
 			if (enemyContext.enemySight.enableDebug) {
 				Debug.Log ("Player Not Found");

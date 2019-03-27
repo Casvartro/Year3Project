@@ -1,27 +1,26 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\EnemyScripts\EnemyBulletController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\EnemyScripts\EnemyBehaviours\CloseToPlayer.cs">
     <Files>
-      <File FileName="Assets\Scripts\PlayerScripts\PlayerController.cs" Line="251" Column="8" />
-      <File FileName="Assets\Scripts\PlayerScripts\WeaponController.cs" Line="54" Column="3" />
+      <File FileName="Assets\Scripts\PlayerScripts\PlayerController.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\EnemyScripts\EnemyController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\SoldierBehaviourTree.cs" Line="10" Column="38" />
-      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\BehaviourContext.cs" Line="23" Column="38" />
-      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\NoTargetVisible.cs" Line="14" Column="73" />
-      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\PatrolMovement.cs" Line="21" Column="86" />
-      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\TargetVisible.cs" Line="14" Column="5" />
-      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\ChasePlayer.cs" Line="38" Column="66" />
-      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\CloseToPlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\SoldierBehaviourTree.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\BehaviourContext.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\NoTargetVisible.cs" Line="13" Column="103" />
+      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\PatrolMovement.cs" Line="21" Column="113" />
+      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\TargetVisible.cs" Line="13" Column="103" />
+      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\ChasePlayer.cs" Line="49" Column="57" />
+      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\CloseToPlayer.cs" Line="13" Column="36" />
       <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\MeleePlayer.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\InFiringRange.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\ShootPlayer.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\EnemyScripts\FireEnemyWeapon.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\TooCloseToPlayer.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\EnemyFallback.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\EnemyScripts\EnemyPathing\PathFinder.cs" Line="159" Column="5" />
+      <File FileName="Assets\Scripts\EnemyScripts\EnemyPathing\PathFinder.cs" Line="245" Column="65" />
       <File FileName="Assets\Scripts\EnemyScripts\WaveController.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\EnemyScripts\EnemySenses\Sight.cs" Line="9" Column="2" />
-      <File FileName="Assets\Scripts\EnemyScripts\EnemyBulletController.cs" Line="13" Column="9" />
+      <File FileName="Assets\Scripts\EnemyScripts\EnemySenses\Sight.cs" Line="39" Column="55" />
+      <File FileName="Assets\Scripts\EnemyScripts\EnemyBehaviours\BehaviourTools.cs" Line="24" Column="29" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
