@@ -37,15 +37,20 @@ public class WaveController : MonoBehaviour {
 	void Update () {
 		if (wavesOn) {
 			if (enemyCount == 0) {
+				if (waveNumber == 5) {
+					gameStatus.gameWon = true;
+				} else {
+					if (gameStatus.playerNoDamageStreak) {
+						gameStatus.modifierCount += 1;
+					}
 
-				if (gameStatus.playerNoDamageStreak) {
-					gameStatus.modifierCount += 1;
+					spawnCheck = new int[enemySpawns.Length];
+					waveNumber = waveNumber + 1;
+					if (waveNumber >= 3) {
+						powerEnemyChance += 15.0f;
+					}
+					spawnWaves ();
 				}
-
-				spawnCheck = new int[enemySpawns.Length];
-				waveNumber = waveNumber + 1;
-				powerEnemyChance += 0.05f;
-				spawnWaves ();
 			}
 		}
 	}
@@ -70,9 +75,11 @@ public class WaveController : MonoBehaviour {
 
 		int multiplier = 0;
 		if (waveNumber == 1 || waveNumber == 2) {
-			multiplier = 1;
+			multiplier = 2;
 		} else if (waveNumber <= 5) {
 			multiplier = waveNumber - 1;
+		} else {
+			multiplier = 4;
 		}
 
 		enemyCount = 5 * multiplier;
@@ -80,7 +87,7 @@ public class WaveController : MonoBehaviour {
 		int i = 0;
 		while (i < enemyCount){
 			int rSpawn = Random.Range (0, 25);
-			if (spawnCheck [rSpawn] == 0 && distanceToPlayer(enemySpawns[rSpawn].transform) > 75.0f) {
+			if (spawnCheck [rSpawn] == 0 && distanceToPlayer(enemySpawns[rSpawn].transform) > 50.0f) {
 				chooseEnemy ();
 				Instantiate(enemy, enemySpawns[rSpawn].transform.position, enemySpawns[rSpawn].transform.rotation);
 				spawnCheck [rSpawn] = 1;
@@ -98,9 +105,17 @@ public class WaveController : MonoBehaviour {
 	private void chooseEnemy(){
 
 		if (waveNumber == 1) {
-			enemy = baseZombie;
+			if (Random.value < powerEnemyChance) {
+				enemy = powerZombies [Random.Range (0, powerZombies.Length)];
+			} else {
+				enemy = baseZombie;
+			}
 		} else if (waveNumber == 2){
-			enemy = baseSoldier;
+			if (Random.value < powerEnemyChance) {
+				enemy = powerSoldiers[Random.Range (0, powerSoldiers.Length)];
+			} else {
+				enemy = baseSoldier;
+			}
 		} else {
 			if (Random.value < powerEnemyChance) {
 				if (Random.value < 0.5f) {

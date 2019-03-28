@@ -10,7 +10,7 @@ public class PatrolMovement : Leaf {
 	private int pathCounter = 0;
 	private float angle = 10;
 	private NodeController currentNode = null;
-	private float offsetValue = 0.5f;
+	private float offsetValue = 2.0f;
 	private bool offsetMod = false;
 	private Vector3 currPos;
 

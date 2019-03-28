@@ -36,6 +36,8 @@ public class PlayerController : MonoBehaviour {
 	private CharacterController player;
 	private GameController gameStatus;
 	private Image bloodImage;
+	private float timeInAir = 0.0f;
+	private float deathTimer = 5.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -111,6 +113,7 @@ public class PlayerController : MonoBehaviour {
 
 		if (player.isGrounded) {
 
+			timeInAir = 0.0f;
 			currentlyJumping = false;
 
 			if (Input.GetButton ("Sprint")) {
@@ -118,7 +121,7 @@ public class PlayerController : MonoBehaviour {
 				playerJumpSpeed = playerJumpSpeed * 1.5f;
 			}
 
-			if (Input.GetButton("Crouch")){
+			if (Input.GetButton ("Crouch")) {
 				height = 0.5f * height;
 				playerSpeed = playerSpeed - 0.5f;
 			}
@@ -137,6 +140,11 @@ public class PlayerController : MonoBehaviour {
 				currentlyJumping = true;
 			}
 
+		} else {
+			timeInAir += Time.deltaTime;
+			if (timeInAir >= deathTimer) {
+				takeDamage (100);
+			}
 		}
 
 		setPlayerHeight (height);
@@ -249,6 +257,9 @@ public class PlayerController : MonoBehaviour {
 	public void takeDamage(int damage){
 
 		if (!godToggle.isOn) {
+			if (currentPower == powerUpState.GREEN) {
+				damage = damage / 2;
+			}
 			playerHealth -= damage;
 			flashBloodFilter ();
 

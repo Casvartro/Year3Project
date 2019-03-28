@@ -2738,8 +2738,8 @@ MonoBehaviour:
     every enemy in the wave.\n\nAlong the way you can pick up powerups, ammo crates
     and health crates to help you along the way.\n\nPowerups:\nBlue - Double Speed\nRed
     - Double Damage\nGreen - Take half as Much Damage\n\nControls: \nMovement - WASD\tJump
-    - Spacebar\tSprint - Left Shift\tCrouch - X\nShoot - Left Mouse Button\nCamera
-    Control - Mouse Axis"
+    - Spacebar\tSprint - Left Shift\tCrouch - X\nShoot - Left Mouse Button\t\tMelee
+    - Right Mouse Button\nCamera Control - Mouse Axis"
 --- !u!222 &1028367319
 CanvasRenderer:
   m_ObjectHideFlags: 0

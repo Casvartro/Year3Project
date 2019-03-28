@@ -134,13 +134,18 @@ public class EnemyController : MonoBehaviour {
 		foreach(SkinnedMeshRenderer rend in renderers){
 			rend.material.color = flashColor;
 		}
-		Invoke ("ResetColor", flashTime);
+		if (state == EnemyState.ALIVE) {
+			Invoke ("ResetColor", flashTime);
+		}
 	}
 
 	private void ResetColor(){
 		foreach(SkinnedMeshRenderer rend in renderers){
-			rend.material.color = (Color) originalColor [0];
-			originalColor.RemoveAt (0);
+			try{
+				rend.material.color = (Color) originalColor [0];
+				originalColor.RemoveAt (0);
+			} catch{
+			}
 		}
 	}
 		
@@ -204,8 +209,6 @@ public class EnemyController : MonoBehaviour {
 	private void modEnemyStats(){
 
 		if (waveController.waveNumber > 2) {
-			this.enemyAnimation.speed = enemyAnimationSpeed * waveController.waveNumber/2;
-			this.enemySpeed *= waveController.waveNumber/2;
 			this.enemyDamage *= waveController.waveNumber/2;
 			this.enemyHealth *= waveController.waveNumber/2;
 		}

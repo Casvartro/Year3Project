@@ -27,7 +27,6 @@ public class WeaponMeleeController : MonoBehaviour {
 		if (col.gameObject.tag == "enemy") {
 			EnemyController enemy = col.gameObject.GetComponent<EnemyController> ();
 			enemy.damageTaken (meleeDamage);
-			Debug.Log ("melee Damage: " + meleeDamage);
 		}
 	
 	}

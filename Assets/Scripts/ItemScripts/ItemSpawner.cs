@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemSpawner : MonoBehaviour {
 
@@ -10,6 +11,7 @@ public class ItemSpawner : MonoBehaviour {
 
 	public int powerUpLimit = 1;
 	public float powerChance = 0.15f;
+	public Toggle powerEnable;
 
 	private GameObject[] itemSpawnArray;
 	private List<GameObject> itemObjectList;
@@ -19,6 +21,14 @@ public class ItemSpawner : MonoBehaviour {
 		itemSpawnArray = GameObject.FindGameObjectsWithTag("Item");
 		itemObjectList = new List<GameObject>();
 		InvokeRepeating ("spawnItems", 5.0f, 20.0f);
+	}
+
+	void Update(){
+		if (powerEnable.isOn) {
+			powerChance = 0.99f;
+		} else {
+			powerChance = 0.15f;
+		}
 	}
 
 	private void spawnItems(){
@@ -38,13 +48,15 @@ public class ItemSpawner : MonoBehaviour {
 		foreach (GameObject itemSpawn in itemSpawnArray) {
 
 			itemSpawnLocation = itemSpawn.transform;
+			float spawnChance = Random.value;
 
-			if (!isPowerSpawned && Random.value < powerChance) {
+			if (!isPowerSpawned && spawnChance < powerChance) {
 				isPowerSpawned = true;
 				item = Instantiate (powerUpPrefabs [Random.Range (0, powerUpPrefabs.Length)],
 					itemSpawnLocation.position, itemSpawnLocation.rotation);
 			} else {
-				if (Random.value < 0.5f) {
+				spawnChance = Random.value;
+				if (spawnChance < 0.5f) {
 					item = Instantiate (healthCratePrefab, 
 						itemSpawnLocation.position, itemSpawnLocation.rotation);
 				

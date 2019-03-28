@@ -33,6 +33,9 @@ public class EnemyFallback : Leaf {
 
 		if (PathFinder.atDestination (enemyContext.enemy.transform, closestNode.transform.position)) {
 			closestNode = PathFinder.getRetreatNeighbor (closestNode, enemyContext.enemy.transform, playerPosition);
+			if (closestNode == null) {
+				closestNode = PathFinder.getRetreatNode (enemyContext.pathNodes, enemyContext.enemyPhysics.transform, playerPosition);
+			}
 		} 
 
 		enemyContext.enemyPhysics.enemyRotation (playerPosition);

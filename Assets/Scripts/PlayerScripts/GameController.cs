@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour {
 	public bool playerNoDamageStreak = true;
 	public int modifierCount;
 	public Toggle nodeToggle;
+	public bool gameWon = false;
 
 	private float gameTime;
 	private WaveController waveController;
@@ -58,7 +59,7 @@ public class GameController : MonoBehaviour {
 			}
 		}
 
-		if (player.getPlayerHealth () == 0) {
+		if (player.getPlayerHealth () == 0 || gameWon) {
 			PlayerStats.setTimerText (timerLabelText.text);
 			PlayerStats.setScoreText (totalScore.ToString ());
 			PlayerStats.setShotsFired (player.shotsFired);
