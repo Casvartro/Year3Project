@@ -22,7 +22,7 @@ public class ChasePlayer : Leaf {
 	private Vector3 currPos;
 	private float angle = 10;
 	private bool chaseHearing = false;
-	private bool chaseSight = false;
+	private bool hearPath = false;
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 
@@ -30,15 +30,23 @@ public class ChasePlayer : Leaf {
 
 		if (enemyContext.enemyInSight ()) {
 			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
-			chaseSight = true;
 		} else if ( enemyContext.playerHeard && enemyContext.playerRecentShot){
-			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
 			enemyContext.playerRecentShot = false;
-			chaseHearing = true;
+			RaycastHit hit;
+			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
+			Vector3 rayDirection = playerPosition - enemyContext.enemy.transform.position;
+			if (Physics.Raycast(enemyContext.enemy.transform.position, rayDirection, out hit, enemyContext.enemySight.viewDistance)) {
+				if (hit.collider.tag == "Player") {
+					chaseHearing = true;
+				} else {
+					chaseHearing = false;
+					hearPath = true;
+				}
+			}
 		}
-
-		if(!chaseSight && !enemyContext.playerHeard && playerPath.Count == 0){
-			Debug.Log ("hi");
+			
+		if(!enemyContext.enemyInSight() && !enemyContext.playerHeard && playerPath.Count == 0){
+			enemyContext.playerHeard = false;
 			return BehaviourStatus.FAILURE;
 		}
 
@@ -47,7 +55,6 @@ public class ChasePlayer : Leaf {
 			enemyContext.playerHeard = false;
 			return BehaviourStatus.SUCCESS;
 		} else if(PathFinder.atDestination (enemyContext.enemy.transform, playerPosition) && !enemyContext.enemyInSight()){
-			chaseSight = false;
 			chaseHearing = false;
 			enemyContext.playerHeard = false;
 			return BehaviourStatus.FAILURE;
@@ -55,21 +62,20 @@ public class ChasePlayer : Leaf {
 
 		if (Physics.Raycast (playerPosition, Vector3.down, out playerHit, 30.0f) && Physics.Raycast (enemyContext.enemy.transform.position, Vector3.down, out enemyHit, 10.0f)) {
 
-			if (playerHit.collider.name == enemyHit.collider.name &&
-				((enemyContext.enemyInSight () && chaseHearing) || (enemyContext.enemyInSight() && !chaseHearing))) {
+			if (playerHit.collider.name == enemyHit.collider.name && (enemyContext.enemyInSight () || chaseHearing)) {
 
 				if (playerPath.Count > 0) {
 					playerPath.Clear ();
 				}
-				chaseHearing = false;
+
 				targetPosition = playerPosition;
 		
-			} else if (playerHit.collider.name != currentPlaneName && (enemyContext.enemyInSight () || chaseHearing)) {
+			} else if (playerHit.collider.name != currentPlaneName && (enemyContext.enemyInSight () || (!chaseHearing && hearPath))) {
 
-					startNode = PathFinder.getPlaneNode (enemyContext.planeNodes, enemyContext.enemy.transform.position, enemyHit);
-					endNode = PathFinder.getPlaneNode (enemyContext.planeNodes, playerPosition, playerHit);
-					currentPlaneName = playerHit.collider.name;
-					chaseHearing = false;
+				startNode = PathFinder.getPlaneNode (enemyContext.planeNodes, enemyContext.enemy.transform.position, enemyHit);
+				endNode = PathFinder.getPlaneNode (enemyContext.planeNodes, playerPosition, playerHit);
+				currentPlaneName = playerHit.collider.name;
+				hearPath = false;
 
 				if (startNode != null && endNode != null) {
 					if (startNode.transform == endNode.transform) {
@@ -89,8 +95,7 @@ public class ChasePlayer : Leaf {
 						}
 					}
 				} else {
-					Debug.Log ("tooHigh");
-					return BehaviourStatus.FAILURE;
+					targetPosition = playerPosition;
 				}
 
 			}
@@ -110,7 +115,6 @@ public class ChasePlayer : Leaf {
 							targetPosition = playerPosition;
 						} else {
 							enemyContext.playerHeard = false;
-							chaseSight = false;
 							return BehaviourStatus.FAILURE;
 						}
 					} else {
@@ -174,6 +178,6 @@ public class ChasePlayer : Leaf {
 		currentNode = null;
 		currPos = new Vector3 (0, 0, 0);
 		chaseHearing = false;
-		chaseSight = false;
+		hearPath = false;
 	}
 }

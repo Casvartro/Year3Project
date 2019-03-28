@@ -20,7 +20,7 @@ public class ItemSpawner : MonoBehaviour {
 	void Start () {
 		itemSpawnArray = GameObject.FindGameObjectsWithTag("Item");
 		itemObjectList = new List<GameObject>();
-		InvokeRepeating ("spawnItems", 5.0f, 20.0f);
+		InvokeRepeating ("spawnItems", 5.0f, 30.0f);
 	}
 
 	void Update(){

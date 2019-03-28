@@ -38,6 +38,9 @@ public class EnemyController : MonoBehaviour {
 	private enum EnemyState{ ALIVE, DYING, DEAD }
 	private EnemyState state;
 
+	private float timeInAir = 0.0f;
+	private float deathTimer = 5.0f;
+
 	void Start(){
 		state = EnemyState.ALIVE;
 	}
@@ -68,6 +71,15 @@ public class EnemyController : MonoBehaviour {
 
 				applyGravity ();
 
+				if (!enemy.isGrounded) {
+					timeInAir += Time.deltaTime;
+					if (timeInAir >= deathTimer) {
+						damageTaken (enemyHealth);
+					}
+				} else {
+					timeInAir = 0.0f;
+				}
+
 				if (enemyHealth <= 0) {
 					waveController.reduceEnemyCount ();
 					scoreController.setScoreText (enemyScore);
@@ -93,7 +105,7 @@ public class EnemyController : MonoBehaviour {
 				break;
 
 			case EnemyState.DEAD:
-				Destroy (this.gameObject, 5.0f);
+				Destroy (this.gameObject, 2.0f);
 				break;
 		}
 

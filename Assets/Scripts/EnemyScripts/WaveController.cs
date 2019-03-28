@@ -76,8 +76,8 @@ public class WaveController : MonoBehaviour {
 		int multiplier = 0;
 		if (waveNumber == 1 || waveNumber == 2) {
 			multiplier = 2;
-		} else if (waveNumber <= 5) {
-			multiplier = waveNumber - 1;
+		} else if (waveNumber < 5) {
+			multiplier = waveNumber;
 		} else {
 			multiplier = 4;
 		}
