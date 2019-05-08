@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour {
 
-	//Class responsible for inflicting damage to the enemies when the weapons bullet collides.
+	//Class that Controls the properties of the individual bullets.
+	//Applies PowerUP modifier if the player has it active to the bullet damage and calls the BulletCollision class to detect
+	//if a player or enemy is in collision range.
 
 	public int defaultDamage = 100;
 
@@ -32,7 +34,7 @@ public class BulletController : MonoBehaviour {
 
 	}
 		
-
+	//Base collider detection used as backup as well as for destroying bullet when colliding with a wall or floor.
 	void OnCollisionEnter(Collision col){
 		
 		if (col.gameObject.tag == "enemy") {

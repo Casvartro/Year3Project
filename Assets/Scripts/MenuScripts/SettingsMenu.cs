@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class SettingsMenu : MonoBehaviour {
 
+	//Class responsible for retrieving the saved options from the player preferences.
+	//Setting them and allowing the user to set the volume value with the sliders.
+
 	public Slider mSlider;
 	public AudioSource mSource;
 	public Text mText;

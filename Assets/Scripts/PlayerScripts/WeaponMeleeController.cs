@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WeaponMeleeController : MonoBehaviour {
 
+	//Class responsible for managing the collision of the players weapon when the melee attack is triggered.
+	//Takes into account if the player has the red powerup increasing damage and inflicts damage to the enemy if it collides.
+
 	public int defaultMeleeDamage;
 
 	private int meleeDamage;

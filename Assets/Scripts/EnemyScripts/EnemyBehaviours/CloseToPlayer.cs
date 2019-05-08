@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CloseToPlayer : Leaf {
 
-	//Node that checks whether or not it is directly close to the player for a melee attack.
+	//Leaf Node that checks whether or not it is directly close to the player for a melee attack.
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 

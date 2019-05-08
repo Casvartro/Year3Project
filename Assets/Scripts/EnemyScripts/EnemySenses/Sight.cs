@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Sight : Sense {
 
+	/*Child class of sense used to detect the player object through raycasts used as sight.
+	 * If the player is detected and seen it returns a boolean to be used. */
+
 	public int fieldOfView = 45;
 	public int viewDistance = 100;
 	public Transform headTransform;
@@ -31,12 +34,12 @@ public class Sight : Sense {
 		return playerSeen;
 	}
 
+	//Detect if the player is within the field of view.
 	private bool detectPlayer(){
 		
 		RaycastHit hit;
 		rayDirection = playerTransform.position - headTransform.position;
 		if((Vector3.Angle(rayDirection, headTransform.forward)) < fieldOfView){
-			//Detect if the player is within the field of view.
 			if (Physics.Raycast (headTransform.position, rayDirection, out hit, viewDistance)) {
 				if (hit.collider.tag == "Player") {
 					return true;
@@ -55,6 +58,7 @@ public class Sight : Sense {
 		return Vector3.Distance(playerTransform.position, headTransform.position);
 	}
 
+	//Function that draws lines based on rays showing a visual representation of the objects sight used for debugging.
 	void onDrawGizmos(){
 
 		if (playerTransform == null) {

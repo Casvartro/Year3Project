@@ -5,7 +5,7 @@ using UnityEngine;
 public class MeleeDamageController : MonoBehaviour {
 
 	//Class responsible for keeping track of collisions with the enemy's melee weapon/hands.
-	//Inflicts damage when collisions occur.
+	//Inflicts damage to the player when collisions occur.
 
 	private EnemyController enemy;
 	private PlayerController player;

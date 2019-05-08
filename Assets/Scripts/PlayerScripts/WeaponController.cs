@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour {
 
+	/* Class responsible for managing the values and functions of the player's weapon.
+	 * Handles the shooting and melee attacks, the gun shot audio as well as the notification that 
+	 * alerts enemies that the player has fired their weapon if nearby. */
+
 	public GameObject bulletPrefab;
 	public Transform bulletSpawn;
 	public float bulletSpeed;
@@ -67,6 +71,7 @@ public class WeaponController : MonoBehaviour {
 		}
 	}
 
+	//Function ran in a coroutine that changes the transform of the weapon to act as a melee attack.
 	private IEnumerator meleeAttack(){
 		melee = true;
 		this.transform.localEulerAngles = new Vector3 (Mathf.Round(-2.0f), Mathf.Round(-45.0f), Mathf.Round(1.0f));
@@ -77,8 +82,8 @@ public class WeaponController : MonoBehaviour {
 		this.transform.localEulerAngles = new Vector3 (Mathf.Round(-2.0f), Mathf.Round(-3.0f), Mathf.Round(1.0f));
 		this.transform.localPosition = new Vector3 (0.2f, -0.3f, 0.6f);
 		this.transform.localScale = new Vector3 (0.15f, 0.2f, 0.5f);
-		melee = false;
 		meleeCollider.enabled = false;
+		melee = false;
 	}
 
 	private void fire(){
@@ -102,6 +107,7 @@ public class WeaponController : MonoBehaviour {
 
 	}
 
+	//Function that plays the gun shot audio clip and calls a coroutine that fades the volume down from 100 to 0 rather than instantly.
 	private void playGunAudio(){
 
 		shotAudio.volume = startVolume;
@@ -110,12 +116,13 @@ public class WeaponController : MonoBehaviour {
 
 	}
 
+	//Function found online that handles the fade out of the volume.
+	//community.gamedev.tv/t/audio-popping-on-call-to-stop/48825/2
 	IEnumerator VolumeFade(AudioSource _AudioSource, float _EndVolume, float _FadeLength)
 	{
 		float _StartTime = Time.time;
 		while (Time.time < _StartTime + _FadeLength){
 			float alpha = (_StartTime + _FadeLength - Time.time) / _FadeLength;
-			// use the square here so that we fade faster and without popping
 			alpha = alpha * alpha; 
 			_AudioSource.volume = alpha * startVolume + _EndVolume * (1.0f - alpha);
 			yield return null;
@@ -123,6 +130,7 @@ public class WeaponController : MonoBehaviour {
 		if (_EndVolume == 0) { _AudioSource.UnPause(); }
 	}
 
+	//Function that uses OverlapSphere to alert any enemies nearby of the gunshot audio.
 	private void informEnemyOfAudio(Vector3 center, float radius){
 		
 		Collider[] hitColliders = Physics.OverlapSphere(center, radius);

@@ -1127,7 +1127,7 @@ MonoBehaviour:
   enemySpeed: 10
   enemyRotateSpeed: 5
   enemyAnimationSpeed: 2
-  enemyDamage: 20
+  enemyDamage: 10
   enemyColor: blue
   enemyType: Soldier
   gravity: 20

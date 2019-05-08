@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class FireEnemyWeapon : MonoBehaviour {
 
+	/* Class responsible for firing the soldiers weapon if a boolean is triggered from its behavior tree.
+	 * Fires the bullets in a timed interval rather than constantly. */
+
 	public Transform bulletSpawn;
 	public GameObject bulletPrefab;
 	public float bulletSpeed;

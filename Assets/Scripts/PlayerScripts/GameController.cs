@@ -6,6 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
+	/*Class responsible for monitoring the game time, the game score and the score Modifier.
+	 * Updates the UI respectively as well as freezes the game if the pause button is toggled.
+	 * Proceeds to Game Over screen if waves are completed or the players health reduce's to 0.*/
+
 	public Text timerLabelText;
 	public Text waveNumberText;
 	public Text enemyCountText;

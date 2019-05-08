@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PatrolMovement : Leaf {
 
-	//Class responsible for the patrol movements of the enemy characters in the OnBehave.
+	/* Class responsible for the patrol movements of the enemy characters in the OnBehave.
+	 * Calls the PathFinder getpath and moves to each node in the queue on its random offset. 
+	 * Fails if the player is seen, in range or heard and succeeds if it reaches the end of the path */
+
 
 	private ArrayList patrolPath =  new ArrayList();
 	private int pathCounter = 0;
@@ -56,6 +59,7 @@ public class PatrolMovement : Leaf {
 		return BehaviourStatus.RUNNING;
 	}
 
+	//Function that gets a random offset position for each node.
 	private void modPositionOffset(){
 		if (!offsetMod) {
 			currPos = currentNode.transform.position;

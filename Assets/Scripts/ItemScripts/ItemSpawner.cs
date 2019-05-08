@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class ItemSpawner : MonoBehaviour {
 
+	/*Class responsible for collecting all the item spawns on the map by their tag and spawning an item at random at
+	 * each one. Only one powerup can be spawned at a time and has a 15% chance of spawning at any spawn. There will not be an 
+	 * inbalance of items either when spawning off too many health items or ammo items. If the powerup option is toggled then
+	 * the powerup will always spawn once each wave. */
+
 	public GameObject healthCratePrefab;
 	public GameObject ammoCratePrefab;
 	public GameObject[] powerUpPrefabs;

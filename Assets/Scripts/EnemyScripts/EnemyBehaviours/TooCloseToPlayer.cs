@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TooCloseToPlayer : Leaf {
 
-	//Node that checks whether or not it is directly close to the player to back up.
+	//Leaf node that checks whether or not it is directly close to the player to back up.
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 

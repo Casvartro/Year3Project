@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TogglePanel : MonoBehaviour {
 
+	//Function that toggles the panel on and off based on object interaction.
 	public void togglePanelByObject(GameObject panel){
 
 		if (panel.activeSelf) {

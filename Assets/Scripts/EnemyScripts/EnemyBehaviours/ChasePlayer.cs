@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ChasePlayer : Leaf {
 
-	//Node that chases the player until it is right next to it for a melee attack.
+	/*Leaf action responsible for chasing the player until it is right next to it for a melee attack. */
+
 	private Vector3 playerPosition;
 	private Vector3 targetPosition;
 
@@ -28,6 +29,7 @@ public class ChasePlayer : Leaf {
 
 		BehaviourContext enemyContext = (BehaviourContext)state;
 
+		//Checks if the player is in sight, or the player has fired a shot that is has heard recently to chase.
 		if (enemyContext.enemyInSight ()) {
 			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
 		} else if ( enemyContext.playerHeard && enemyContext.playerRecentShot){
@@ -44,12 +46,15 @@ public class ChasePlayer : Leaf {
 				}
 			}
 		}
-			
+
+		//Fails if the player is not in sight, and it has not been heard after it has finished its path.
 		if(!enemyContext.enemyInSight() && !enemyContext.playerHeard && playerPath.Count == 0){
 			enemyContext.playerHeard = false;
 			return BehaviourStatus.FAILURE;
 		}
 
+		//If it has reached the players position and the player is in sight it successful, else it fails if it reaches the last known
+		//destination with no player.
 		if (atPlayer (enemyContext.enemy.transform, playerPosition, enemyContext.enemyRange) && enemyContext.enemyInSight ()) {
 			enemyContext.enemyAnimation.Play ("idle");
 			enemyContext.playerHeard = false;
@@ -62,6 +67,8 @@ public class ChasePlayer : Leaf {
 
 		if (Physics.Raycast (playerPosition, Vector3.down, out playerHit, 30.0f) && Physics.Raycast (enemyContext.enemy.transform.position, Vector3.down, out enemyHit, 10.0f)) {
 
+			//Checks if the player and enemy are on the same plane making sure they are heard or insight.
+			//If so it moves to the player position.
 			if (playerHit.collider.name == enemyHit.collider.name && (enemyContext.enemyInSight () || chaseHearing)) {
 
 				if (playerPath.Count > 0) {
@@ -70,6 +77,7 @@ public class ChasePlayer : Leaf {
 
 				targetPosition = playerPosition;
 		
+			//If not it calculates a path to the player so it avoids walls and running into obstacles.
 			} else if (playerHit.collider.name != currentPlaneName && (enemyContext.enemyInSight () || (!chaseHearing && hearPath))) {
 
 				startNode = PathFinder.getPlaneNode (enemyContext.planeNodes, enemyContext.enemy.transform.position, enemyHit);
@@ -89,6 +97,7 @@ public class ChasePlayer : Leaf {
 						offsetMod = false;
 						pathCounter = 0;
 
+						//Makes sure it does not turn around to go to a node behind it.
 						NodeController firstNode = (NodeController)playerPath [pathCounter];
 						if (PathFinder.isNodeBehind (firstNode.transform.position, enemyContext.enemy.transform)) {
 							pathCounter++;
@@ -100,6 +109,7 @@ public class ChasePlayer : Leaf {
 
 			}
 
+			//Part of the behaviour for moving through the path nodes and processing the queue.
 			if (playerPath.Count > 0) {
 
 				currentNode = (NodeController)playerPath [pathCounter];
@@ -155,6 +165,7 @@ public class ChasePlayer : Leaf {
 		context.enemyPhysics.enemyMovement (position, angle);
 	}
 
+	//Function responsible for getting a random offset of a nodes position to prevent enemy collision.
 	private void modPositionOffset(){
 		if (!offsetMod) {
 			currPos = currentNode.transform.position;

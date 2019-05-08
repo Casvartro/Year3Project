@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class WaveController : MonoBehaviour {
 
+	/*Class responsible for spawning the enemy waves as well as keeping track of the actual wave information.
+	 * After wave 2 it increases the proability of modified enemies spawning by increasing the powerEnemyChance.
+	 * After 5 waves the game will end with the gameStatus variable set to true. */
+
 	public GameObject baseZombie;
 	public GameObject[] powerZombies;
 
@@ -101,6 +105,9 @@ public class WaveController : MonoBehaviour {
 	private float distanceToPlayer(Transform enemyTransform){
 		return Vector3.Distance (enemyTransform.position, playerTransform.position);
 	}
+
+	//Function responsible for choosing the enemy (soldier or zombie) the player will face.
+	//Also checks to see if it is a modified version that will be spawned from the powerEnemyChance.
 
 	private void chooseEnemy(){
 

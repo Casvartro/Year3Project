@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
+	//Class responsible for the cameras position.
+
 	public GameObject player;
 	private Vector3 offset;
 

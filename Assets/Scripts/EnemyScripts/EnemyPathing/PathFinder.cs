@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PathFinder {
 
-	//Class responsible for finding the path between the start and the end nodes.
+	/*Class responsible for finding the path between the start and the end nodes.
+	 * Also holds functions for retrieving nodes based on specific needs of the behaviour trees. */
 
 	private static PriorityQueue NodeQueue; 
 	private static List<NodeController> resetList;
@@ -124,6 +125,7 @@ public class PathFinder {
 		return endNode;
 	}
 		
+	//Returns the closest node on the current plane the object is on.
 	public static GameObject getPlaneNode(IDictionary<string, List<GameObject>> planeNodes, Vector3 position, RaycastHit objectHit){
 
 		List<GameObject> planeList;
@@ -148,6 +150,8 @@ public class PathFinder {
 
 	}
 
+	//Function responsible for creating a dictionary based on the planes names as the keys and a array of the nodes
+	//on each plane as their values.
 	public static IDictionary<string, List<GameObject>> getPathNodePlanes(GameObject[] pathNodes){
 
 		IDictionary<string, List<GameObject>> planeNodes = new Dictionary<string, List<GameObject>>();

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GameOverController : MonoBehaviour {
 
+	//Class responsible for retrieving and showing the values in the game over screen.
+
 	public Text timeText;
 	public Text accuracyText;
 	public Text scoreText;
@@ -30,6 +32,7 @@ public class GameOverController : MonoBehaviour {
 
 	}
 
+	//Calculates accuracy based on shots fired and shots that hit enemies.
 	private void calculateAccuracy(){
 		float shotsFired = PlayerStats.getShotsFired ();
 		float shotsHitTarget = PlayerStats.getShotsHitTarget ();
@@ -41,6 +44,7 @@ public class GameOverController : MonoBehaviour {
 		}
 	}
 
+	//Function that calculates grade based off of Score and accuracy.
 	private string calculateRank(){
 
 		int rankValue = 0;

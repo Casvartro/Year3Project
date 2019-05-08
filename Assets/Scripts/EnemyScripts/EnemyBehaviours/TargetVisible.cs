@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TargetVisible : Leaf {
 
-	//Node that checks if the target is visible so it can chase.
+	//Leaf Node that checks if the target is visible or if it has been heard so it can chase.
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 

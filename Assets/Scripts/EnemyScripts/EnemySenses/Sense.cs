@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Sense : MonoBehaviour {
 
+	//Base parent script used by the Sight script.
+
 	public bool enableDebug = true;
 	public float detectionRate = 1.0f;
 

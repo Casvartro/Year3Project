@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class EnemyFallback : Leaf {
 
+	/*Leaf node responsible for allowing the soldier to retreat when the player is too close.
+	 * If the player is out of range but in sight it succeeds.
+	 * If the player is out of range and out of melee range it fails.
+	 * Proceeds to retrieve the closest node furthest away from the player and its proceeding neighbor if it needs to move again.
+	 * Shoots while retreating as well. */
+
 	private Vector3 playerPosition;
 	private GameObject closestNode = null;
 	private float angle = 180;

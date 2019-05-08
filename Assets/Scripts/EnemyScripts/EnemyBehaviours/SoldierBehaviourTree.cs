@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SoldierBehaviourTree : MonoBehaviour {
 
+	/* Class responsible for the soldier's behaviour tree and initalizing the behaviour context
+	 * for the soldier as well retrieving all of its properties for use. */
+
 	public float enemyRange;
 	public float enemyCloseRange;
 	public BehaviourContext behaviourState;
@@ -33,6 +36,7 @@ public class SoldierBehaviourTree : MonoBehaviour {
 		}
 	}
 
+	//Behaviour tree creates of the 4 sequences that are available to the soldier. All sequences are ran by the selector returned.
 	BehaviourNode createBehaviourTree(){
 		
 		Sequence patrol = new Sequence ("patrol", 

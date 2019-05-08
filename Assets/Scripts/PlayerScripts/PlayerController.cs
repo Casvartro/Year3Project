@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
+	/*Responsible for managing the values and information of the player object.
+	 * handles player movement, camera movement, health management, monitors shots fired, and 
+	 * active powerups. */
+
 	public float movementSpeed;
 	public float jumpSpeed;
 	public float gravity = 20.0f;
@@ -117,8 +121,8 @@ public class PlayerController : MonoBehaviour {
 			currentlyJumping = false;
 
 			if (Input.GetButton ("Sprint")) {
-				playerSpeed = playerSpeed * 2;
-				playerJumpSpeed = playerJumpSpeed * 1.5f;
+				playerSpeed = playerSpeed / 2;
+				playerJumpSpeed = playerJumpSpeed / 1.5f;
 			}
 
 			if (Input.GetButton ("Crouch")) {
@@ -153,7 +157,7 @@ public class PlayerController : MonoBehaviour {
 		movementDir.y = movementDir.y - (gravity * Time.fixedDeltaTime);
 		//Player is moved
 		player.Move (movementDir * Time.deltaTime);
-
+		 
 		if ((movementDir.x != 0 || movementDir.z != -0) && OnSlope (currentlyJumping)) {
 			player.Move (Vector3.down * player.height / 2 * slopeForce * Time.fixedDeltaTime);
 		}
@@ -209,7 +213,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void setPlayerHealth(int healthIncrease){
-		//Adds health item value to players health setting text as well.#
+		//Adds health item value to players health setting text as well.
 
 		playerHealth = playerHealth + healthIncrease;
 		if (playerHealth > maxHealth) {
@@ -253,6 +257,7 @@ public class PlayerController : MonoBehaviour {
 		return currentPower;
 	}
 
+
 	//Responsible for showing damage when taken from enemy attacks.
 	public void takeDamage(int damage){
 
@@ -276,6 +281,7 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
+	//Changes image to have pure red color when damage is taken and flash for as long as the bloodTime.
 	private void flashBloodFilter(){
 
 		Image bloodImage = bloodFilter.GetComponent<Image> ();

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
 
+	/*Class responsible for holding the values and information for the invidiual enemies. 
+	 * Holds the movement physics and functions as well as rotating the model towards its target.
+	 * Holds the functions for flashing the model red when damage is recieved as well as updates the health 
+	 * if damage is taken and sets the enemy in a state of alive, dying or dead. */
+
 	public int enemyHealth = 100;
 	public int enemyScore = 100;
 	public float enemySpeed = 5;
@@ -65,6 +70,9 @@ public class EnemyController : MonoBehaviour {
 
 	void Update(){
 
+		//Monitors if the enemy is alive, dead or dying with an enumerator.
+		//Also kills if the enemy if it falls off the map by checking how long it has not been grounded.
+
 		switch(state){
 
 			case EnemyState.ALIVE:
@@ -92,6 +100,7 @@ public class EnemyController : MonoBehaviour {
 				this.enemyAnimation.speed = 1.5f;
 				if (enemyType == "Zombie") {
 					enemyAnimation.Play ("fallingback");
+					//Turns off the colliders on the body when the zombie is in its death animation.
 					Collider[] colChildren = this.GetComponentsInChildren<Collider>();
 					foreach (Collider col in colChildren) {
 						col.enabled = false;
@@ -123,6 +132,7 @@ public class EnemyController : MonoBehaviour {
 		flashRed ();
 	}
 
+	//Stores the original color of the model for the reset.
 	private void getOriginalColors(){
 
 		renderers = this.GetComponentsInChildren<SkinnedMeshRenderer> ();
@@ -133,6 +143,7 @@ public class EnemyController : MonoBehaviour {
 
 	}
 
+	//Flashes the enemy's body red when hit and then resets if it is still alvive to its original color shortly after.
 	private void flashRed(){
 
 		Color flashColor;
@@ -151,6 +162,7 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 
+	//Resets the colors on the enemy's model to its original form.
 	private void ResetColor(){
 		foreach(SkinnedMeshRenderer rend in renderers){
 			try{
@@ -188,6 +200,7 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 		
+	//Function responsible for applying gravity to the enemy model.
 	private void applyGravity(){
 		if (isGrounded ()) {
 			vertSpeed = 0.0f;
@@ -218,6 +231,7 @@ public class EnemyController : MonoBehaviour {
 
 	}
 
+	//Function responsible for scaling up the enemies damage and health.
 	private void modEnemyStats(){
 
 		if (waveController.waveNumber > 2) {

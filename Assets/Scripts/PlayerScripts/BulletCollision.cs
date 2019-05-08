@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BulletCollision {
 
+	/*Function responsible for detecting collisions from the raycast sent from the bullet. If collision occurs with a player or an enemy by comparing the tags
+	 * it destroys the bullet and gives damage to the respective object*/
 	public static Vector3 bulletCollisionCast(GameObject bullet, Transform transform, Vector3 previousPosition, Rigidbody bulletRB, int damage, string name){
 		RaycastHit hitInfo;
 		Vector3 thisPosition = transform.position;

@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyBulletController : MonoBehaviour {
 
 	//Class responsible for inflicting damage to the player when the weapons bullet collides.
+	//Uses the BulletCollision class for detecting if it has collided with a player if the bullet was too fast.
+	//Also checks to see if it has collided with anything that isnt an item or another enemy to destroy itself.
 
 	public int enemyDamage;
 

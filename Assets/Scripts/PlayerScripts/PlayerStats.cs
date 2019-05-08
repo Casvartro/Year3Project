@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class PlayerStats {
 
+	//Class responsible for storing and retrieving values used in the game over screen and the GameOverController.
+
 	private static string scoreText, timerText;
 	private static float shotsFired, shotsHitTarget;
 

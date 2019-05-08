@@ -18663,12 +18663,12 @@ Prefab:
     - target: {fileID: 114796496991414624, guid: 54907656bb82a594eb8b072beeeff4e2,
         type: 2}
       propertyPath: movementSpeed
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114796496991414624, guid: 54907656bb82a594eb8b072beeeff4e2,
         type: 2}
       propertyPath: jumpSpeed
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1552242521597510, guid: 54907656bb82a594eb8b072beeeff4e2, type: 2}
       propertyPath: m_TagString
@@ -20615,7 +20615,7 @@ Prefab:
     - target: {fileID: 114313768326884276, guid: aceec8e93ee43814eb55bb7efa709a0e,
         type: 2}
       propertyPath: maxAmmo
-      value: 30
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 114313768326884276, guid: aceec8e93ee43814eb55bb7efa709a0e,
         type: 2}
