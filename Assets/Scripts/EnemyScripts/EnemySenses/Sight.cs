@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class Sight : Sense {
 
+	/*Child class of sense used to detect the player object through raycasts used as sight.
+	 * If the player is detected and seen it returns a boolean to be used. */
+
 	public int fieldOfView = 45;
 	public int viewDistance = 100;
+	public Transform headTransform;
 
 	private Transform playerTransform;
 	private Vector3 rayDirection;
@@ -30,13 +34,13 @@ public class Sight : Sense {
 		return playerSeen;
 	}
 
+	//Detect if the player is within the field of view.
 	private bool detectPlayer(){
 		
 		RaycastHit hit;
-		rayDirection = playerTransform.position - transform.position;
-		if((Vector3.Angle(rayDirection, transform.forward)) < fieldOfView){
-			//Detect if the player is within the field of view.
-			if (Physics.Raycast (transform.position, rayDirection, out hit, viewDistance)) {
+		rayDirection = playerTransform.position - headTransform.position;
+		if((Vector3.Angle(rayDirection, headTransform.forward)) < fieldOfView){
+			if (Physics.Raycast (headTransform.position, rayDirection, out hit, viewDistance)) {
 				if (hit.collider.tag == "Player") {
 					return true;
 				}
@@ -51,18 +55,19 @@ public class Sight : Sense {
 		
 
 	public float distanceToPlayer(){
-		return Vector3.Distance(playerTransform.position, this.transform.position);
+		return Vector3.Distance(playerTransform.position, headTransform.position);
 	}
 
+	//Function that draws lines based on rays showing a visual representation of the objects sight used for debugging.
 	void onDrawGizmos(){
 
 		if (playerTransform == null) {
 			return;
 		}
 
-		Debug.DrawLine (transform.position, playerTransform.position, Color.red);
+		Debug.DrawRay (headTransform.position, playerTransform.position, Color.red);
 
-		Vector3 frontRayPoint = transform.position + (transform.forward * viewDistance);
+		Vector3 frontRayPoint = headTransform.position + (headTransform.forward * viewDistance);
 
 		//Approximate perspective visualization
 		Vector3 leftRayPoint = frontRayPoint;
@@ -71,9 +76,9 @@ public class Sight : Sense {
 		Vector3 rightRayPoint = frontRayPoint;
 		rightRayPoint.x -= fieldOfView * 0.5f;
 
-		Debug.DrawLine (transform.position, frontRayPoint, Color.green);
-		Debug.DrawLine (transform.position, leftRayPoint, Color.green);
-		Debug.DrawLine (transform.position, rightRayPoint, Color.green);
+		Debug.DrawRay(headTransform.position, frontRayPoint, Color.green);
+		Debug.DrawRay (headTransform.position, leftRayPoint, Color.green);
+		Debug.DrawRay (headTransform.position, rightRayPoint, Color.green);
 
 	}
 

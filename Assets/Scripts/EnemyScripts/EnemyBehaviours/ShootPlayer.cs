@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ShootPlayer : Leaf {
 
+	/* Leaf node responsible for shooting the player and setting the enemy weapon state of firing to true.
+	 * Fails if the player is out of range, out of sight or too close. Succeeds if the player is killed. */
+
 	private Vector3 playerPosition;
 
 	public override BehaviourStatus OnBehave(BehaviourState state){

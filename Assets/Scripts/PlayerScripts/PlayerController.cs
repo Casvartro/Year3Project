@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
 
+	/*Responsible for managing the values and information of the player object.
+	 * handles player movement, camera movement, health management, monitors shots fired, and 
+	 * active powerups. */
+
 	public float movementSpeed;
 	public float jumpSpeed;
 	public float gravity = 20.0f;
@@ -16,6 +20,11 @@ public class PlayerController : MonoBehaviour {
 	public Text powerUpText;
 	public int powerMultiplier = 2;
 	public enum powerUpState{ NONE, BLUE, RED, GREEN};
+	public float shotsFired;
+	public float shotsHitTarget;
+	public GameObject bloodFilter;
+	public float bloodTime;
+	public Toggle godToggle;
 
 	private float rotY = 0.0f;
 	private float rotX = 0.0f;
@@ -30,10 +39,16 @@ public class PlayerController : MonoBehaviour {
 	private Vector3 movementDir;
 	private CharacterController player;
 	private GameController gameStatus;
+	private Image bloodImage;
+	private float timeInAir = 0.0f;
+	private float deathTimer = 5.0f;
 
 	// Use this for initialization
 	void Start () {
 
+		bloodImage = bloodFilter.GetComponent<Image> ();
+		shotsFired = 0;
+		shotsHitTarget = 0;
 		currentPower = powerUpState.NONE;
 		gameStatus = GameObject.Find ("UICanvas").GetComponent<GameController> ();
 		player = this.GetComponent<CharacterController> ();
@@ -42,7 +57,7 @@ public class PlayerController : MonoBehaviour {
 		healthText.text = playerHealth.ToString();
 		setHealthTextColor ();
 
-		cameraPos.position = new Vector3 (this.transform.position.x, this.transform.position.y - 0.5f,
+		cameraPos.position = new Vector3 (this.transform.position.x, this.transform.position.y + 0.5f,
 			this.transform.position.z);
 		
 	}
@@ -102,14 +117,15 @@ public class PlayerController : MonoBehaviour {
 
 		if (player.isGrounded) {
 
+			timeInAir = 0.0f;
 			currentlyJumping = false;
 
 			if (Input.GetButton ("Sprint")) {
-				playerSpeed = playerSpeed * 2;
-				playerJumpSpeed = playerJumpSpeed * 1.5f;
+				playerSpeed = playerSpeed / 2;
+				playerJumpSpeed = playerJumpSpeed / 1.5f;
 			}
 
-			if (Input.GetButton("Crouch")){
+			if (Input.GetButton ("Crouch")) {
 				height = 0.5f * height;
 				playerSpeed = playerSpeed - 0.5f;
 			}
@@ -128,6 +144,11 @@ public class PlayerController : MonoBehaviour {
 				currentlyJumping = true;
 			}
 
+		} else {
+			timeInAir += Time.deltaTime;
+			if (timeInAir >= deathTimer) {
+				takeDamage (100);
+			}
 		}
 
 		setPlayerHeight (height);
@@ -136,7 +157,7 @@ public class PlayerController : MonoBehaviour {
 		movementDir.y = movementDir.y - (gravity * Time.fixedDeltaTime);
 		//Player is moved
 		player.Move (movementDir * Time.deltaTime);
-
+		 
 		if ((movementDir.x != 0 || movementDir.z != -0) && OnSlope (currentlyJumping)) {
 			player.Move (Vector3.down * player.height / 2 * slopeForce * Time.fixedDeltaTime);
 		}
@@ -192,7 +213,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public void setPlayerHealth(int healthIncrease){
-		//Adds health item value to players health setting text as well.#
+		//Adds health item value to players health setting text as well.
 
 		playerHealth = playerHealth + healthIncrease;
 		if (playerHealth > maxHealth) {
@@ -236,21 +257,50 @@ public class PlayerController : MonoBehaviour {
 		return currentPower;
 	}
 
+
 	//Responsible for showing damage when taken from enemy attacks.
 	public void takeDamage(int damage){
 
-		playerHealth -= damage;
+		if (!godToggle.isOn) {
+			if (currentPower == powerUpState.GREEN) {
+				damage = damage / 2;
+			}
+			playerHealth -= damage;
+			flashBloodFilter ();
 
-		gameStatus.playerNoDamageStreak = false;
+			gameStatus.playerNoDamageStreak = false;
 
-		if (gameStatus.modifierCount > 1) {
-			gameStatus.modifierCount -= 1;
+			if (gameStatus.modifierCount > 1) {
+				gameStatus.modifierCount -= 1;
+			}
+
+			if (playerHealth < 0) {
+				playerHealth = 0;
+			}
 		}
 
-		if (playerHealth < 0) {
-			playerHealth = 0;
-		}
+	}
 
+	//Changes image to have pure red color when damage is taken and flash for as long as the bloodTime.
+	private void flashBloodFilter(){
+
+		Image bloodImage = bloodFilter.GetComponent<Image> ();
+		bloodImage.color = new Color (255f, 0f, 0f, 0.5f);
+
+		Invoke ("ResetBloodFilter", bloodTime);
+	
+	}
+
+	private void ResetBloodFilter(){
+		bloodImage.color = new Color (255f, 0f, 0f, 0f);
+	}
+
+	public void addShotFired(){
+		shotsFired += 1;
+	}
+
+	public void addShotHitTarget(){
+		shotsHitTarget += 1;
 	}
 
 }

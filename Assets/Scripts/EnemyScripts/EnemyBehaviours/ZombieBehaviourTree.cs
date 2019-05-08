@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class ZombieBehaviourTree : MonoBehaviour {
 
-	//Behaviour tree class responsible for the base zombies behaviours.
-	//Utilizies composite and leaf nodes for the zombies to operate.
+	/* Class responsible for the zombie's behaviour tree and initalizing the behaviour context
+	 * for the zombie as well retrieving all of its properties for use. */
+
 
 	public float enemyRange;
+	public BehaviourContext behaviourState;
 	private BehaviourNode behaviourTree;
-	private BehaviourContext behaviourState;
 	private CharacterController enemy;
 	private EnemyController enemyPhysics;
 	private Animator enemyAnimation;
@@ -32,6 +33,7 @@ public class ZombieBehaviourTree : MonoBehaviour {
 		}
 	}
 
+	//Behaviour tree creates of the 3 sequences that are available to the zombie. All sequences are ran by the selector returned.
 	BehaviourNode createBehaviourTree(){
 
 		Sequence patrol = new Sequence ("patrol", 

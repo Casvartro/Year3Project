@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour {
 
-	//Class responsible for inflicting damage to the enemies when the weapons bullet collides.
+	//Class that Controls the properties of the individual bullets.
+	//Applies PowerUP modifier if the player has it active to the bullet damage and calls the BulletCollision class to detect
+	//if a player or enemy is in collision range.
 
 	public int defaultDamage = 100;
 
 	private int bulletDamage;
 	private PlayerController player;
+	private Vector3 previousPosition;
+	private Rigidbody bulletRB;
 
 	void Start(){
 		bulletDamage = defaultDamage;
+		previousPosition = transform.position;
 		player = GameObject.Find ("Player").GetComponent<PlayerController> ();
+		bulletRB = this.GetComponent<Rigidbody> ();
 	}
-		
 
-	void OnCollisionEnter(Collision col){
+	void Update(){
 
 		if (player.getCurrentPower () == PlayerController.powerUpState.RED) {
 			bulletDamage *= player.powerMultiplier; 
@@ -25,10 +30,17 @@ public class BulletController : MonoBehaviour {
 			bulletDamage = defaultDamage;
 		}
 
+		previousPosition = BulletCollision.bulletCollisionCast (gameObject, transform, previousPosition, bulletRB, bulletDamage, "player");
+
+	}
+		
+	//Base collider detection used as backup as well as for destroying bullet when colliding with a wall or floor.
+	void OnCollisionEnter(Collision col){
+		
 		if (col.gameObject.tag == "enemy") {
+			player.addShotHitTarget ();
 			EnemyController enemy = col.gameObject.GetComponent<EnemyController> ();
 			enemy.damageTaken (bulletDamage);
-			Debug.Log ("Bullet Damage: " + bulletDamage);
 		}
 		Destroy (gameObject);
 	}

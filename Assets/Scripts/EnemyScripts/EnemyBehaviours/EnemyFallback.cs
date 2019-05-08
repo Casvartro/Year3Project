@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class EnemyFallback : Leaf {
 
+	/*Leaf node responsible for allowing the soldier to retreat when the player is too close.
+	 * If the player is out of range but in sight it succeeds.
+	 * If the player is out of range and out of melee range it fails.
+	 * Proceeds to retrieve the closest node furthest away from the player and its proceeding neighbor if it needs to move again.
+	 * Shoots while retreating as well. */
+
 	private Vector3 playerPosition;
 	private GameObject closestNode = null;
 	private float angle = 180;
@@ -16,7 +22,7 @@ public class EnemyFallback : Leaf {
 			playerPosition = GameObject.FindGameObjectWithTag ("Player").transform.position;
 		}
 
-		if ((!enemyContext.enemyInRange(0.5f) && !enemyContext.enemyTooClose()) || !enemyContext.enemyInSight()) {
+		if ((!enemyContext.enemyInRange(0.5f) && !enemyContext.enemyTooClose())) {
 			enemyContext.enemyWeaponController.isFiring = false;
 			return BehaviourStatus.FAILURE;
 		}
@@ -31,8 +37,11 @@ public class EnemyFallback : Leaf {
 			closestNode = PathFinder.getRetreatNode (enemyContext.pathNodes, enemyContext.enemyPhysics.transform, playerPosition);
 		}
 
-		if (atDestination (enemyContext.enemy.transform, closestNode.transform)) {
+		if (PathFinder.atDestination (enemyContext.enemy.transform, closestNode.transform.position)) {
 			closestNode = PathFinder.getRetreatNeighbor (closestNode, enemyContext.enemy.transform, playerPosition);
+			if (closestNode == null) {
+				closestNode = PathFinder.getRetreatNode (enemyContext.pathNodes, enemyContext.enemyPhysics.transform, playerPosition);
+			}
 		} 
 
 		enemyContext.enemyPhysics.enemyRotation (playerPosition);
@@ -48,20 +57,6 @@ public class EnemyFallback : Leaf {
 		////////////////////////////////////////////////////////////////
 
 		return BehaviourStatus.RUNNING;
-	}
-
-
-	//Checks if the enemy has reached its destination.
-	private bool atDestination(Transform currentPosition, Transform destPosition){
-
-		Vector3 direction = destPosition.position - currentPosition.position;
-		direction.y = 0;
-		if (direction.magnitude < .2f){
-			return true;
-		}
-
-		return false;
-
 	}
 
 	public override void OnReset(){

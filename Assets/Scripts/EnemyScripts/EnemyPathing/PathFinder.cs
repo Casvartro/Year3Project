@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PathFinder {
 
-	//Class responsible for finding the path between the start and the end nodes.
+	/*Class responsible for finding the path between the start and the end nodes.
+	 * Also holds functions for retrieving nodes based on specific needs of the behaviour trees. */
 
 	private static PriorityQueue NodeQueue; 
 	private static List<NodeController> resetList;
@@ -124,9 +125,16 @@ public class PathFinder {
 		return endNode;
 	}
 		
+	//Returns the closest node on the current plane the object is on.
 	public static GameObject getPlaneNode(IDictionary<string, List<GameObject>> planeNodes, Vector3 position, RaycastHit objectHit){
 
-		List<GameObject> planeList = planeNodes [objectHit.collider.name];
+		List<GameObject> planeList;
+
+		if (planeNodes.ContainsKey (objectHit.collider.name)) {
+			planeList = planeNodes [objectHit.collider.name];
+		} else {
+			planeList = new List<GameObject> ();
+		}
 		GameObject closestNode = null;
 		float closestDistance = float.PositiveInfinity;
 
@@ -142,6 +150,8 @@ public class PathFinder {
 
 	}
 
+	//Function responsible for creating a dictionary based on the planes names as the keys and a array of the nodes
+	//on each plane as their values.
 	public static IDictionary<string, List<GameObject>> getPathNodePlanes(GameObject[] pathNodes){
 
 		IDictionary<string, List<GameObject>> planeNodes = new Dictionary<string, List<GameObject>>();
@@ -149,12 +159,22 @@ public class PathFinder {
 
 		foreach (GameObject node in pathNodes) {
 			if (Physics.Raycast (node.transform.position, Vector3.down, out planeHit, 10.0f)) {
-				if (!planeNodes.ContainsKey (planeHit.collider.name)) {
-					planeNodes.Add (new KeyValuePair<string, List<GameObject>> (planeHit.collider.name, new List<GameObject>()));
+				if (planeHit.collider.tag == "floor") {
+					if (!planeNodes.ContainsKey (planeHit.collider.name)) {
+						planeNodes.Add (new KeyValuePair<string, List<GameObject>> 
+							(planeHit.collider.name, new List<GameObject> ()));
+					}
+					planeNodes [planeHit.collider.name].Add (node);
 				}
-				planeNodes [planeHit.collider.name].Add (node);
 			}
 		}
+
+		//foreach (KeyValuePair<string, List<GameObject>> item in planeNodes) {
+		//	Debug.Log ("Key : " + item.Key);
+		//	foreach (GameObject node in item.Value) {
+				//Debug.Log ("Node: " + node);
+		//	}
+		//}
 			
 		return planeNodes;
 	
@@ -238,6 +258,18 @@ public class PathFinder {
 		} else {
 			return true;
 		}
+	}
+
+	//Checks if the enemy has reached its node destination.
+	public static bool atDestination(Transform currentPosition, Vector3 destPosition){
+
+		Vector3 direction = destPosition - currentPosition.position;
+		direction.y = 0;
+		if (direction.magnitude < .2f){
+			return true;
+		}
+
+		return false;
 
 	}
 

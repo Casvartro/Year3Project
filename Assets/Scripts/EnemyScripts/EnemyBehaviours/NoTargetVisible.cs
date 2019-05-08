@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class NoTargetVisible : Leaf {
 
-	//Node that checks whether or not the target is not seen so it can patrol.
+	//Leaf node that checks whether or not the target is not seen or heard so it can patrol.
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 
 		BehaviourContext enemyContext = (BehaviourContext)state;
 
-		if (!enemyContext.enemyInSight() && !enemyContext.enemyInRange(0.5f)) {
+		if (!enemyContext.enemyInSight() && !enemyContext.enemyInRange(0.5f) && !enemyContext.playerHeard) {
 
 			if (enemyContext.enemySight.enableDebug) {
 				Debug.Log ("Player Not Found");

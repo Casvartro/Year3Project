@@ -111,7 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthValue: 25
-  ammoValue: 10
+  ammoValue: 25
   powerTime: 30
   rotateSpeed: 25
   itemColor: health

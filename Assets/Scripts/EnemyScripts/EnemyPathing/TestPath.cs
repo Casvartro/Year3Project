@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TestPath : MonoBehaviour {
 
+	//Class just used to test if the PathFinder getPath actually worked.
+
 	public GameObject startNode;
 	public GameObject endNode;
 

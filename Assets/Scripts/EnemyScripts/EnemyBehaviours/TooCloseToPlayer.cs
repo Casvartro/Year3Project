@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class TooCloseToPlayer : Leaf {
 
-	//Node that checks whether or not it is directly close to the player to back up.
+	//Leaf node that checks whether or not it is directly close to the player to back up.
 
 	public override BehaviourStatus OnBehave(BehaviourState state){
 
 		BehaviourContext enemyContext = (BehaviourContext)state;
 
-		if (enemyContext.enemyInSight() && enemyContext.enemyTooClose()) {
+		if (enemyContext.enemyTooClose()) {
 
 			if (enemyContext.enemySight.enableDebug) {
 				Debug.Log ("Player Too Close, Backing UP");

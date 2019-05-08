@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour {
 
+	/*Class responsible for holding the values and information for the invidiual enemies. 
+	 * Holds the movement physics and functions as well as rotating the model towards its target.
+	 * Holds the functions for flashing the model red when damage is recieved as well as updates the health 
+	 * if damage is taken and sets the enemy in a state of alive, dying or dead. */
+
 	public int enemyHealth = 100;
 	public int enemyScore = 100;
 	public float enemySpeed = 5;
@@ -14,6 +19,7 @@ public class EnemyController : MonoBehaviour {
 	public string enemyType;
 	public float gravity = 20.0f;
 	public float vertSpeed = 0.0f;
+	public float flashTime;
 
 	private CollisionFlags collisionFlag;
 
@@ -25,6 +31,9 @@ public class EnemyController : MonoBehaviour {
 	private float slopeForce = 5;
 	private float slopeForceRayLength = 1.5f;
 
+	private SkinnedMeshRenderer[] renderers;
+	private ArrayList originalColor = new ArrayList();
+
 	private WaveController waveController;
 	private GameController scoreController;
 	private CharacterController enemy;
@@ -34,13 +43,17 @@ public class EnemyController : MonoBehaviour {
 	private enum EnemyState{ ALIVE, DYING, DEAD }
 	private EnemyState state;
 
+	private float timeInAir = 0.0f;
+	private float deathTimer = 5.0f;
 
 	void Start(){
 		state = EnemyState.ALIVE;
 	}
 
 	void Awake () {
-		
+
+		getOriginalColors ();
+
 		waveController = GameObject.FindObjectOfType<WaveController> ();
 		scoreController = GameObject.FindObjectOfType<GameController> ();
 		this.enemy = this.GetComponent<CharacterController> ();
@@ -57,11 +70,23 @@ public class EnemyController : MonoBehaviour {
 
 	void Update(){
 
+		//Monitors if the enemy is alive, dead or dying with an enumerator.
+		//Also kills if the enemy if it falls off the map by checking how long it has not been grounded.
+
 		switch(state){
 
 			case EnemyState.ALIVE:
 
 				applyGravity ();
+
+				if (!enemy.isGrounded) {
+					timeInAir += Time.deltaTime;
+					if (timeInAir >= deathTimer) {
+						damageTaken (enemyHealth);
+					}
+				} else {
+					timeInAir = 0.0f;
+				}
 
 				if (enemyHealth <= 0) {
 					waveController.reduceEnemyCount ();
@@ -70,24 +95,31 @@ public class EnemyController : MonoBehaviour {
 				}
 				break;
 
-		case EnemyState.DYING:
-			this.enemyAnimation.speed = 1.5f;
-			if (enemyType == "Zombie") {
-				enemyAnimation.Play ("fallingback");
-			} else {
-				enemyAnimation.Play ("idle");
-				this.enemyWeapon.isFiring = false;
-				this.transform.rotation = Quaternion.Euler(this.transform.rotation.z, this.transform.rotation.y, -90);
-			}
+			case EnemyState.DYING:
+			
+				this.enemyAnimation.speed = 1.5f;
+				if (enemyType == "Zombie") {
+					enemyAnimation.Play ("fallingback");
+					//Turns off the colliders on the body when the zombie is in its death animation.
+					Collider[] colChildren = this.GetComponentsInChildren<Collider>();
+					foreach (Collider col in colChildren) {
+						col.enabled = false;
+					}
+				} else {
+					enemyAnimation.Play ("idle");
+					this.enemyWeapon.isFiring = false;
+					this.transform.rotation = Quaternion.Euler(this.transform.rotation.z, this.transform.rotation.y, -90);
+				}
 				state = EnemyState.DEAD;
 				break;
 
 			case EnemyState.DEAD:
-				Destroy (this.gameObject, 5.0f);
+				Destroy (this.gameObject, 2.0f);
 				break;
 		}
 
 	}
+		
 
 	//Returns the enemy health.
 	public int getEnemyHealth(){
@@ -97,8 +129,50 @@ public class EnemyController : MonoBehaviour {
 	//Subtracts damage to the enemy based on the projectile they recieved.
 	public void damageTaken(int damage){
 		enemyHealth = enemyHealth - damage;
+		flashRed ();
 	}
 
+	//Stores the original color of the model for the reset.
+	private void getOriginalColors(){
+
+		renderers = this.GetComponentsInChildren<SkinnedMeshRenderer> ();
+		foreach(SkinnedMeshRenderer rend in renderers){
+				originalColor.Add(rend.material.color);
+		}
+		originalColor.Reverse ();
+
+	}
+
+	//Flashes the enemy's body red when hit and then resets if it is still alvive to its original color shortly after.
+	private void flashRed(){
+
+		Color flashColor;
+
+		if (enemyColor == "red") {
+			flashColor = Color.blue;
+		} else {
+			flashColor = Color.red;
+		}
+
+		foreach(SkinnedMeshRenderer rend in renderers){
+			rend.material.color = flashColor;
+		}
+		if (state == EnemyState.ALIVE) {
+			Invoke ("ResetColor", flashTime);
+		}
+	}
+
+	//Resets the colors on the enemy's model to its original form.
+	private void ResetColor(){
+		foreach(SkinnedMeshRenderer rend in renderers){
+			try{
+				rend.material.color = (Color) originalColor [0];
+				originalColor.RemoveAt (0);
+			} catch{
+			}
+		}
+	}
+		
 	//Turns the enemy towards the direction of the next node or target
 	public void enemyRotation (Vector3 nodePos){
 
@@ -126,6 +200,7 @@ public class EnemyController : MonoBehaviour {
 		}
 	}
 		
+	//Function responsible for applying gravity to the enemy model.
 	private void applyGravity(){
 		if (isGrounded ()) {
 			vertSpeed = 0.0f;
@@ -156,11 +231,10 @@ public class EnemyController : MonoBehaviour {
 
 	}
 
+	//Function responsible for scaling up the enemies damage and health.
 	private void modEnemyStats(){
 
-		if (waveController.waveNumber > 1) {
-			this.enemyAnimation.speed = enemyAnimationSpeed * waveController.waveNumber/2;
-			this.enemySpeed *= waveController.waveNumber/2;
+		if (waveController.waveNumber > 2) {
 			this.enemyDamage *= waveController.waveNumber/2;
 			this.enemyHealth *= waveController.waveNumber/2;
 		}

@@ -6,24 +6,34 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour {
 
+	/*Class responsible for monitoring the game time, the game score and the score Modifier.
+	 * Updates the UI respectively as well as freezes the game if the pause button is toggled.
+	 * Proceeds to Game Over screen if waves are completed or the players health reduce's to 0.*/
+
 	public Text timerLabelText;
 	public Text waveNumberText;
 	public Text enemyCountText;
 	public Text totalScoreText;
 	public Text modifierText;
-	public Canvas pauseCanvas;
+	public GameObject pauseCanvas;
+	public GameObject hTPPanel;
+	public GameObject settingsPanel;
 	public bool playerNoDamageStreak = true;
 	public int modifierCount;
+	public Toggle nodeToggle;
+	public bool gameWon = false;
 
 	private float gameTime;
 	private WaveController waveController;
 	private int totalScore;
 	private PlayerController player;
+	private GameObject[] pathNodes;
 
 	// Use this for initialization
 	void Start(){
-		pauseCanvas.enabled = false;
 		modifierCount = 1;
+		pauseCanvas.SetActive(false);
+		pathNodes = GameObject.FindGameObjectsWithTag("PathNode");
 	}
 		
 	void Awake () {
@@ -41,7 +51,23 @@ public class GameController : MonoBehaviour {
 		modifierText.text = modifierCount.ToString () + "x";
 		togglePause ();
 
-		if (player.getPlayerHealth () == 0) {
+		if (nodeToggle.isOn) {
+			foreach (GameObject node in pathNodes) {
+				Behaviour halo = (Behaviour)node.GetComponent ("Halo");
+				halo.enabled = true;
+			}
+		} else {
+			foreach (GameObject node in pathNodes) {
+				Behaviour halo = (Behaviour)node.GetComponent ("Halo");
+				halo.enabled = false;
+			}
+		}
+
+		if (player.getPlayerHealth () == 0 || gameWon) {
+			PlayerStats.setTimerText (timerLabelText.text);
+			PlayerStats.setScoreText (totalScore.ToString ());
+			PlayerStats.setShotsFired (player.shotsFired);
+			PlayerStats.setShotsHitTarget (player.shotsHitTarget);
 			SceneManager.LoadScene ("GameOverScene");
 		}
 
@@ -64,11 +90,13 @@ public class GameController : MonoBehaviour {
 	public void togglePause(){
 	
 		if (Input.GetKeyDown ("escape")) {
-			if (pauseCanvas.enabled) {
-				pauseCanvas.enabled = false;
+			if (pauseCanvas.activeSelf) {
+				settingsPanel.SetActive (false);
+				hTPPanel.SetActive (false);
+				pauseCanvas.SetActive(false);
 				Time.timeScale = 1.0f;
 			} else {
-				pauseCanvas.enabled = true;
+				pauseCanvas.SetActive(true);
 				Time.timeScale = 0f;
 			}	
 		}
@@ -76,9 +104,13 @@ public class GameController : MonoBehaviour {
 
 	//Returns a boolean for other objects to check if the game is paused.
 	public bool checkPause(){
-		if (pauseCanvas.enabled) {
+		if (pauseCanvas.activeSelf) {
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
 			return true;
 		} else {
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Confined;
 			return false;
 		}
 	}

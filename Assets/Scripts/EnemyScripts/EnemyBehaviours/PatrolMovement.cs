@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class PatrolMovement : Leaf {
 
-	//Class responsible for the patrol movements of the enemy characters in the OnBehave.
+	/* Class responsible for the patrol movements of the enemy characters in the OnBehave.
+	 * Calls the PathFinder getpath and moves to each node in the queue on its random offset. 
+	 * Fails if the player is seen, in range or heard and succeeds if it reaches the end of the path */
+
 
 	private ArrayList patrolPath =  new ArrayList();
 	private int pathCounter = 0;
 	private float angle = 10;
 	private NodeController currentNode = null;
-	private float offsetValue = 0.5f;
+	private float offsetValue = 2.0f;
 	private bool offsetMod = false;
 	private Vector3 currPos;
 
@@ -18,7 +21,7 @@ public class PatrolMovement : Leaf {
 
 		BehaviourContext enemyContext = (BehaviourContext)state;
 
-		if (enemyContext.enemySight.getPlayerSeen() || enemyContext.enemyInRange (0.5f)) {
+		if (enemyContext.enemySight.getPlayerSeen() || enemyContext.enemyInRange (0.5f) || enemyContext.playerHeard) {
 			return BehaviourStatus.FAILURE;
 		}
 			
@@ -32,7 +35,7 @@ public class PatrolMovement : Leaf {
 			currentNode = (NodeController)patrolPath [pathCounter];
 			modPositionOffset ();
 
-			if (atDestination (enemyContext.enemy.transform, currPos)) {
+			if (PathFinder.atDestination (enemyContext.enemy.transform, currPos)) {
 				enemyContext.enemyAnimation.Play ("idle");
 				pathCounter++;
 				currentNode = (NodeController)patrolPath [pathCounter];
@@ -56,19 +59,7 @@ public class PatrolMovement : Leaf {
 		return BehaviourStatus.RUNNING;
 	}
 
-	//Checks if the character has reached its destination.
-	private bool atDestination(Transform currentPosition, Vector3 destPosition){
-
-		Vector3 direction = destPosition - currentPosition.position;
-		direction.y = 0;
-		if (direction.magnitude < .2f){
-			return true;
-		}
-
-		return false;
-
-	}
-
+	//Function that gets a random offset position for each node.
 	private void modPositionOffset(){
 		if (!offsetMod) {
 			currPos = currentNode.transform.position;

@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class ItemController : MonoBehaviour {
 
+	/* Class responsible for the indvidual items values and collision detection.
+	 	Checks to see if the collider is the player.
+		If it is a health item then it checks to see if player is at max health to restore health.
+		If not the player passes through without destroing.
+		Same works for the ammo items but with the players current ammo.
+		Power Up functionality destroys the object if in contact with the player and sets the status in the UI component.*/
+	
 	public int healthValue = 25;
 	public int ammoValue = 10;
 	public float powerTime = 30.0f;
@@ -18,13 +25,6 @@ public class ItemController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider col){
-		/*
-		 Checks to see if the collider is the player.
-		 If it is a health item then it checks to see if player is at max health to restore health.
-			If not the player passes through without destroing.
-			Same works for the ammo items but with the players current ammo.
-			Power Up functionality has being added as well.
-`		*/
 		
 		if (col.gameObject.CompareTag ("Player")) {
 			if (this.gameObject.CompareTag ("healthItem")) {

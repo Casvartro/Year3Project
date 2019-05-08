@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MeleePlayer : Leaf {
 
-	//Node responsible for handling and triggering the melee attack as well as setting the animation 
-	//state to attack or walk.
+	//Leaf node responsible for handling and triggering the melee attack as well as setting the animation 
+	//state to attack. If the player is out of range sets the animation back to walk.
 
 	private Vector3 playerPosition;
 	private float angle = 10;
@@ -28,7 +28,8 @@ public class MeleePlayer : Leaf {
 		}
 
 		enemyContext.enemyPhysics.enemyRotation (playerPosition);
-		if (enemyContext.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("idle")) {
+		if (enemyContext.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("idle") ||
+			enemyContext.enemyAnimation.GetCurrentAnimatorStateInfo (0).IsName ("walk")) {
 			enemyContext.enemyAnimation.Play ("attack");
 		}
 		enemyContext.enemyPhysics.enemyMovement (playerPosition, angle);
