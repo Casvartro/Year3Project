@@ -8,5 +8,3 @@ The player has items available to access that will restore health and ammo value
 abilities.
 
 Once the project is downloaded, unzip and open the path in the Unity client.
-The current build of the project can be downloaded from https://1drv.ms/u/s!Aq9alB7vEF3qhXzSpLkVlMPIc9qC?e=Syjk49.
-Once the build is downloaded, unzip, enter ProjectBuilds and launcht he .exe file.
